@@ -1,0 +1,27 @@
+div#settings
+  .row
+    p: label(for="type") Tournament type:
+    select#type
+      option ------
+      option League
+      option Knockout
+      option League + Knockout
+      
+  .row
+    p: label(for="players") Number of players:
+    span.spinner
+      button.minus -
+      input(id="players", type="text", value="1")
+      button.plus +
+      
+  .row
+    p: label(for="teams") Play in teams?
+    input(type="checkbox", id="teams")
+    
+      
+  .row.disabled
+    p: label(for="teamsNo") Number of teams:
+    span.spinner
+      button.minus -
+      input(id="teamsNo", type="text", value="1")
+      button.plus +

@@ -1,0 +1,45 @@
+.row
+  display: flex
+  align-items: center
+  & > :first-child
+    width: 145px
+
+select
+  margin: 16px 0px
+  height: 33px
+  font-size: 15px
+  font-weight: 100
+  border: 2px solid #ccc
+  background: white
+  width: 300px
+  outline: none
+  transition: all .2s ease-in-out
+  &:focus
+    border-color: #666
+
+.spinner
+  display: flex
+  margin: 10px 0px
+  .minus
+    border-radius: 5px 0px 0px 5px
+  .plus
+    border-radius: 0px 5px 5px 0px
+  .minus, .plus
+    cursor: pointer
+    padding: 5px 10px !important
+  .minus, .plus, input
+    height: 33px
+    border: none
+    background: #bbb
+    font-size: 18px
+    color: #fff
+    padding: 5px
+    outline: none
+    &:hover
+      background: #aaa
+    &:focus
+      background: #999
+  input
+    width: 30px
+    text-align: center
+    height: 23px

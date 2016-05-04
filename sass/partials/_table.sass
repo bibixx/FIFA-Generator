@@ -1,0 +1,26 @@
+table
+  border-spacing: 0px
+  border-collapse: separate
+  tr
+    td, th
+      border-top: 1px solid #aaa
+      border-left: 1px solid #aaa
+      padding: 5px
+      text-align: center
+      min-width: 42px
+      &:last-child
+        border-right: 1px solid #aaa
+    &:last-child
+      tr, td
+        border-bottom: 1px solid #aaa
+  thead
+    tr
+      background: #777
+      color: #FFF
+      th
+        border-color: #aaa
+        font-weight: 500
+
+  tbody
+    tr:hover
+      background: rgba(173, 216, 230, 0.47)
