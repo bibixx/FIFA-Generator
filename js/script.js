@@ -123,3 +123,12 @@ $("#teams").bind("change", function(){
     $("#teamsNo").parents(".row").stop().slideUp(200)
   }
 })
+
+$("#type").bind("change", function(){
+  var val = $(this).find(":selected").val();
+  if( val == "League" ){
+    $("#matchesvs").parents(".row").stop().slideDown(200)
+  } else {
+    $("#matchesvs").parents(".row").stop().slideUp(200)
+  }
+})
