@@ -6,28 +6,30 @@ div#settings
       option League
       option Knockout
       option League + Knockout
-      
+
   .row
     p: label(for="players") Number of players:
     span.spinner
       button.minus -
-      input(id="players", type="text", value="1")
+      input(id="players", type="text", value="4")
       button.plus +
-      
+
+  .row
+    p: label(for="preclubs") Play with prechosen clubs?
+    input(type="checkbox", id="preclubs", checked)
+
   .row
     p: label(for="teams") Play in teams?
     input(type="checkbox", id="teams")
     
-      
   .row.disabled
     p: label(for="teamsNo") Number of teams:
     span.spinner
       button.minus -
       input(id="teamsNo", type="text", value="1")
       button.plus +
-
   .row.disabled
-    p: label(for="matchesvs") Number of plays against each team:
+    p: label(for="matchesvs") Number of matches against each team:
     span.spinner
       button.minus -
       input(id="matchesvs", type="text", value="1")

@@ -3,19 +3,11 @@
   align-items: center
   & > :first-child
     width: 145px
+  &.disabled
+    opacity: 0
 
 select
   margin: 16px 0px
-  height: 33px
-  font-size: 15px
-  font-weight: 100
-  border: 2px solid #ccc
-  background: white
-  width: 300px
-  outline: none
-  transition: all .2s ease-in-out
-  &:focus
-    border-color: #666
 
 .spinner
   display: flex
@@ -43,3 +35,4 @@ select
     width: 30px
     text-align: center
     height: 23px
+    border-radius: 0px
