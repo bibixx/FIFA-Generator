@@ -106,14 +106,14 @@ $(".spinner input").bind("input", function(){
 })
 
 $(".spinner .plus").bind("click", function(){
-  var $p = $(this).siblings("input");
+  var $p = $(this).parents(".spinner").find("input");
   $p.val( $p.val()*1+1 );
   $p.trigger("input")
   $(this).blur();
 })
 
 $(".spinner .minus").bind("click", function(){
-  var $p = $(this).siblings("input");
+  var $p = $(this).parents(".spinner").find("input");
   if( $p.val() > 1 ){
     $p.val( $p.val()*1-1 );
   }
@@ -123,10 +123,10 @@ $(".spinner .minus").bind("click", function(){
 
 $("#teams").bind("change", function(){
   if( $(this).prop("checked") ){
-    $("#teamsNo").parents(".row").stop().slideDown(200)
+    $("#teamsNo").parents(".form-horizontal").stop().slideDown(200)
     $("#teamsNo").val( Math.round( $("#players").val()/2 ) ).trigger("input")
   } else {
-    $("#teamsNo").parents(".row").stop().slideUp(200)
+    $("#teamsNo").parents(".form-horizontal").stop().slideUp(200)
     $("#teamsNo").trigger("input")
   }
 })
@@ -134,9 +134,9 @@ $("#teams").bind("change", function(){
 $("#type").bind("change", function(){
   var val = $(this).find(":selected").val();
   if( val == "League" ){
-    $("#matchesvs").parents(".row").stop().slideDown(200)
+    $("#matchesvs").parents(".form-horizontal").stop().slideDown(200)
   } else {
-    $("#matchesvs").parents(".row").stop().slideUp(200)
+    $("#matchesvs").parents(".form-horizontal").stop().slideUp(200)
   }
 })
 
@@ -179,7 +179,7 @@ $("#preclubs").bind("change", function(){
 printTeams();
 
 function printTeams(){
-  $(".teams .team").remove();
+  $(".teams .center-inline-block .team").remove();
   var playersNo = $("#players").val()*1+1
   var teamsNo = $("#teamsNo").val()*1+1;
   var players = distribute();
@@ -189,19 +189,22 @@ function printTeams(){
     y = playersNo
   }
   for(x=1; x<y; x++){
-    var $team = $("<div></div>").attr("id", x).addClass("team")
+    var $team = $("<div></div>").attr("id", x).addClass("team").addClass("panel").addClass("panel-info")
+    var $head = $("<div></div>").addClass("panel-heading")
+    var $body = $("<div></div>").addClass("panel-body")
     var temp = 1
     if( !$("#teams").prop("checked") ){
-      $team.append( $("<input>").attr({"type": "text", 'name': "name1", "placeholder": "Player"}) )
+      $head.append( $("<input>").attr({"type": "text", 'name': "name", "placeholder": "Player"}).addClass("form-control") )
     } else {
       for(i=0; i<players[x-1]; i++){
-        $team.append( $("<input>").attr({"type": "text", 'name': "name"+(i+1), "placeholder": "Player "+(i+1)}) )
+        $head.append( $("<input>").attr({"type": "text", 'name': "name", "placeholder": "Player "+(i+1)}).addClass("form-control") )
       }
     }
     if( $("#preclubs").prop("checked") ){
-      $team.append( $("<input>").attr({"type": "text", 'name': "club", "placeholder": "Club name"}) )
+      $body.append( $("<input>").attr({"type": "text", 'name': "club", "placeholder": "Club name"}).addClass("form-control") )
     }
-    $(".teams").append( $team )
+    $team.append( $head ).append( $body )
+    $(".center-inline-block").append( $team )
   }
 }
 
@@ -229,4 +232,81 @@ function distribute(){
   lengths.sort(function(a,b){return b-a});
 
   return lengths;
+}
+
+
+$("#generate").bind("click", function(){
+  var temp = true
+  $(".teams input").each(function(){
+    if( $(this).val() == "" ){
+      temp = false
+    }
+  })
+
+  if(temp){
+    generate()
+  } else {
+    alert( "Please fill in all of the inputs" )
+  }
+})
+
+function generate(){
+  var teams = []
+
+  $(".team").each(function(){
+    var team = {}
+    var players = []
+    $(this).find("input[name='name']").each(function(){
+      players.push( $(this).val() )
+    })
+
+    team.players = players
+    team.club = $(this).find("input[name='club']").val()
+    teams.push(team)
+
+  })
+  // console.log(teams);
+
+  var temp = teams
+  var matches = []
+  var i = 1
+  var r = 0
+  while( temp.length>0 ){
+      for(x=1; x<temp.length; x++){
+        matches[r] = [temp[0].club, temp[x].club]
+        i++
+        r++
+      }
+      temp.shift()
+  }
+  shuffle(matches)
+
+  console.log( matches );
+  var m2 = []
+  var rand = Math.round(Math.random())
+  if( rand == 0 ){
+    for(x=0; x<matches.length; x++){
+      m2[x] = ( [matches[x][1], matches[x][0]] )
+      x++;
+      m2[x] = ( [matches[x][0], matches[x][1]] )
+    }
+  } else {
+    for(x=0; x<matches.length; x++){
+      m2[x] = ( [matches[x][0], matches[x][1]] )
+      x++;
+      m2[x] = ( [matches[x][1], matches[x][0]] )
+    }
+  }
+
+  console.log( m2 );
+}
+
+function shuffle(a) {
+    var j, x, i;
+    for (i = a.length; i; i -= 1) {
+        j = Math.floor(Math.random() * i);
+        x = a[i - 1];
+        a[i - 1] = a[j];
+        a[j] = x;
+    }
 }

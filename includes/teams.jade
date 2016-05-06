@@ -1,13 +1,15 @@
-.teams
-  .team#1
-    input(type="text", name="name1", value="", placeholder="Player")
-    //- input(type="text", name="name2", value="", placeholder="Player 2")
-    input(type="text", name="club", value="", placeholder="Club name")
-    .bg
-  .team#2
-    input(type="text", name="name1", value="", placeholder="Player")
-    //- input(type="text", name="name2", value="", placeholder="Player 2")
-    input(type="text", name="club", value="", placeholder="Club name")
-    .bg
-    
-    
+.teams.center-block.col-lg-12.col-md-12.col-sm-12.col-xs-12
+  .center-inline-block
+    .team.panel.panel-info#1
+      .panel-heading
+        input(type="text", name="name1", value="", placeholder="Player").form-control
+        //- input(type="text", name="name2", value="", placeholder="Player 2").form-control
+      .panel-body
+        input(type="text", name="club", value="", placeholder="Club name").form-control
+
+    .team.panel.panel-info#2
+      .panel-heading
+        input(type="text", name="name1", value="", placeholder="Player").form-control
+        //- input(type="text", name="name2", value="", placeholder="Player 2")
+      .panel-body
+        input(type="text", name="club", value="", placeholder="Club name").form-control

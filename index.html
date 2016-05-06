@@ -2,70 +2,118 @@
 <head>
   <meta charset="utf-8">
   <title>FIFA Tournament generator</title>
-  <link rel="stylesheet" href="css/style.css" media="screen" charset="utf-8">
 </head>
 <body>
-  <div id="settings">
-    <div class="row">
-      <p>
-        <label for="type">Tournament type:</label>
-      </p>
-      <select id="type">
-        <option>------</option>
-        <option>League</option>
-        <option>Knockout</option>
-        <option>League + Knockout</option>
-      </select>
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" class="navbar-toggle collapsed"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a href="#" class="navbar-brand">Project name</a>
+      </div>
+      <div id="navbar" class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="#">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
     </div>
-    <div class="row">
-      <p>
-        <label for="players">Number of players:</label>
-      </p><span class="spinner">
-        <button class="minus">-</button>
-        <input id="players" type="text" value="4">
-        <button class="plus">+</button></span>
+  </nav>
+  <div class="container">
+    <div id="settings">
+      <div class="row">
+        <div class="form-horizontal">
+          <div class="form-group">
+            <label for="type" class="col-md-4 control-label">Tournament type:</label>
+            <div class="col-md-3">
+              <select id="type" class="form-control">
+                <option>------</option>
+                <option>League</option>
+                <option>Knockout</option>
+                <option>League + Knockout</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="form-horizontal">
+          <div class="form-group">
+            <label for="players" class="col-md-4 control-label">Number of players:</label>
+            <div class="col-md-3">
+              <div class="input-group spinner"><span class="input-group-btn">
+                  <button class="btn minus">-</button></span>
+                <input id="players" type="text" value="4" class="form-control text-center"><span class="input-group-btn">
+                  <button class="btn plus">+</button></span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-horizontal">
+          <div class="form-group">
+            <label for="preclubs" class="col-md-4 col-sm-6 control-label">Play with prechosen clubs?</label>
+            <div class="col-md-4 col-sm-6">
+              <input type="checkbox" id="preclubs" checked class="checkbox-inline">
+            </div>
+          </div>
+        </div>
+        <div class="form-horizontal">
+          <div class="form-group">
+            <label for="teams" class="col-md-4 col-sm-6 control-label">Play in teams?</label>
+            <div class="col-md-4 col-sm-6">
+              <input type="checkbox" id="teams" class="checkbox-inline">
+            </div>
+          </div>
+        </div>
+        <div class="form-horizontal disabled">
+          <div class="form-group">
+            <label for="teamsNo" class="col-md-4 control-label">Number of teams:</label>
+            <div class="col-md-3">
+              <div class="input-group spinner"><span class="input-group-btn">
+                  <button class="btn minus">-</button></span>
+                <input id="teamsNo" type="text" value="1" class="form-control text-center"><span class="input-group-btn">
+                  <button class="btn plus">+</button></span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-horizontal disabled">
+          <div class="form-group">
+            <label for="matchesvs" class="col-md-4 control-label">Number of matches against each team:</label>
+            <div class="col-md-3">
+              <div class="input-group spinner"><span class="input-group-btn">
+                  <button class="btn minus">-</button></span>
+                <input id="matchesvs" type="text" value="1" class="form-control text-center"><span class="input-group-btn">
+                  <button class="btn plus">+</button></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="row">
-      <p>
-        <label for="preclubs">Play with prechosen clubs?</label>
-      </p>
-      <input type="checkbox" id="preclubs" checked>
+    <div class="teams center-block col-lg-12 col-md-12 col-sm-12 col-xs-12">
+      <div class="center-inline-block">
+        <div id="1" class="team panel panel-info">
+          <div class="panel-heading">
+            <input type="text" name="name1" value="" placeholder="Player" class="form-control">
+          </div>
+          <div class="panel-body">
+            <input type="text" name="club" value="" placeholder="Club name" class="form-control">
+          </div>
+        </div>
+        <div id="2" class="team panel panel-info">
+          <div class="panel-heading">
+            <input type="text" name="name1" value="" placeholder="Player" class="form-control">
+          </div>
+          <div class="panel-body">
+            <input type="text" name="club" value="" placeholder="Club name" class="form-control">
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="row">
-      <p>
-        <label for="teams">Play in teams?</label>
-      </p>
-      <input type="checkbox" id="teams">
-    </div>
-    <div class="row disabled">
-      <p>
-        <label for="teamsNo">Number of teams:</label>
-      </p><span class="spinner">
-        <button class="minus">-</button>
-        <input id="teamsNo" type="text" value="1">
-        <button class="plus">+</button></span>
-    </div>
-    <div class="row disabled">
-      <p>
-        <label for="matchesvs">Number of matches against each team:</label>
-      </p><span class="spinner">
-        <button class="minus">-</button>
-        <input id="matchesvs" type="text" value="1">
-        <button class="plus">+</button></span>
-    </div>
-  </div>
-  <div class="teams">
-    <div id="1" class="team">
-      <input type="text" name="name1" value="" placeholder="Player">
-      <input type="text" name="club" value="" placeholder="Club name">
-      <div class="bg"></div>
-    </div>
-    <div id="2" class="team">
-      <input type="text" name="name1" value="" placeholder="Player">
-      <input type="text" name="club" value="" placeholder="Club name">
-      <div class="bg"></div>
-    </div>
+    <button id="generate" class="btn">Generate</button>
   </div>
   <script src="js/jquery-1.12.3.min.js" charset="utf-8">   </script>
   <script src="js/script.js" charset="utf-8"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+  <link rel="stylesheet" href="css/style.css" media="screen" charset="utf-8">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 </body>

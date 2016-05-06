@@ -1,36 +1,56 @@
 div#settings
   .row
-    p: label(for="type") Tournament type:
-    select#type
-      option ------
-      option League
-      option Knockout
-      option League + Knockout
+    .form-horizontal
+      .form-group
+        label(for="type").col-md-4.control-label Tournament type:
+        .col-md-3
+          select.form-control#type
+            option ------
+            option League
+            option Knockout
+            option League + Knockout
+            
+    .form-horizontal
+      .form-group
+        label(for="players").col-md-4.control-label Number of players:
+        .col-md-3
+          div.input-group.spinner
+            span.input-group-btn
+              button.btn.minus -
+            input(id="players", type="text", value="4").form-control.text-center
+            span.input-group-btn
+              button.btn.plus +
 
-  .row
-    p: label(for="players") Number of players:
-    span.spinner
-      button.minus -
-      input(id="players", type="text", value="4")
-      button.plus +
-
-  .row
-    p: label(for="preclubs") Play with prechosen clubs?
-    input(type="checkbox", id="preclubs", checked)
-
-  .row
-    p: label(for="teams") Play in teams?
-    input(type="checkbox", id="teams")
+    .form-horizontal
+      .form-group
+        label(for="preclubs").col-md-4.col-sm-6.control-label Play with prechosen clubs?
+        .col-md-4.col-sm-6
+          input(type="checkbox", id="preclubs", checked).checkbox-inline
     
-  .row.disabled
-    p: label(for="teamsNo") Number of teams:
-    span.spinner
-      button.minus -
-      input(id="teamsNo", type="text", value="1")
-      button.plus +
-  .row.disabled
-    p: label(for="matchesvs") Number of matches against each team:
-    span.spinner
-      button.minus -
-      input(id="matchesvs", type="text", value="1")
-      button.plus +
+    .form-horizontal
+      .form-group
+        label(for="teams").col-md-4.col-sm-6.control-label Play in teams?
+        .col-md-4.col-sm-6
+          input(type="checkbox", id="teams").checkbox-inline
+    
+    .form-horizontal.disabled
+      .form-group
+        label(for="teamsNo").col-md-4.control-label Number of teams:
+        .col-md-3
+          div.input-group.spinner
+            span.input-group-btn
+              button.btn.minus -
+            input(id="teamsNo", type="text", value="1").form-control.text-center
+            span.input-group-btn
+              button.btn.plus +
+
+    .form-horizontal.disabled
+      .form-group
+        label(for="matchesvs").col-md-4.control-label Number of matches against each team:
+        .col-md-3
+          div.input-group.spinner
+            span.input-group-btn
+              button.btn.minus -
+            input(id="matchesvs", type="text", value="1").form-control.text-center
+            span.input-group-btn
+              button.btn.plus +
