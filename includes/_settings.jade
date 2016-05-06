@@ -2,18 +2,17 @@ div#settings
   .row
     .form-horizontal
       .form-group
-        label(for="type").col-md-4.control-label Tournament type:
-        .col-md-3
+        label(for="type").col-md-12.control-label Tournament type:
+        .col-md-5
           select.form-control#type
-            option ------
             option League
             option Knockout
             option League + Knockout
             
     .form-horizontal
       .form-group
-        label(for="players").col-md-4.control-label Number of players:
-        .col-md-3
+        label(for="players").col-md-12.control-label Number of players:
+        .col-md-2
           div.input-group.spinner
             span.input-group-btn
               button.btn.minus -
@@ -23,20 +22,24 @@ div#settings
 
     .form-horizontal
       .form-group
-        label(for="preclubs").col-md-4.col-sm-6.control-label Play with prechosen clubs?
-        .col-md-4.col-sm-6
-          input(type="checkbox", id="preclubs", checked).checkbox-inline
+        label(for="preclubs").col-md-12.control-label Play with prechosen clubs?
+        .col-md-12.checkbox
+          label
+            input(type="checkbox", id="preclubs", checked).checkbox-inline
+            | Do you want to choose a club for each player that they have to play with all the tournament?
     
     .form-horizontal
       .form-group
-        label(for="teams").col-md-4.col-sm-6.control-label Play in teams?
-        .col-md-4.col-sm-6
-          input(type="checkbox", id="teams").checkbox-inline
+        label(for="teams").col-md-12.control-label Play in teams?
+        .col-md-12.checkbox
+          label
+            input(type="checkbox", id="teams").checkbox-inline
+            | Do you want to play in teams that consist of 1 or 2 players?
     
     .form-horizontal.disabled
       .form-group
-        label(for="teamsNo").col-md-4.control-label Number of teams:
-        .col-md-3
+        label(for="teamsNo").col-md-12.control-label Number of teams:
+        .col-md-2
           div.input-group.spinner
             span.input-group-btn
               button.btn.minus -
@@ -44,10 +47,10 @@ div#settings
             span.input-group-btn
               button.btn.plus +
 
-    .form-horizontal.disabled
+    .form-horizontal
       .form-group
-        label(for="matchesvs").col-md-4.control-label Number of matches against each team:
-        .col-md-3
+        label(for="matchesvs").col-md-12.control-label Number of matches against each team:
+        .col-md-2
           div.input-group.spinner
             span.input-group-btn
               button.btn.minus -

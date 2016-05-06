@@ -2,13 +2,18 @@ doctype html
 head
   meta(charset="utf-8")
   title FIFA Tournament generator
+  meta(http-equiv='X-UA-Compatible', content='IE=edge')
+  meta(name='viewport', content='width=device-width, initial-scale=1')
+
 body
   include includes/_nav.jade
   .container
     include includes/_settings.jade
-    include includes/teams.jade  
-    button.btn#generate Generate
-  //- include includes/_table.jade
+    include includes/teams.jade
+    include includes/_summary.jade
+    //- include includes/_table.jade
+    
+  include includes/_footer.jade
   script(src="js/jquery-1.12.3.min.js", charset="utf-8")    
   script(src="js/script.js", charset="utf-8")
   

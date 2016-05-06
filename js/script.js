@@ -141,6 +141,7 @@ $("#type").bind("change", function(){
 })
 
 $("#players").bind("input", function(){
+  var playersVal = $("#players").val()
   if( $("#players").val() < 2 ){
     $("#players").val( 2 )
   }
@@ -168,11 +169,11 @@ $("#teamsNo").bind("input", function(){
   }
 })
 
-$("#players, #teamsNo").bind("input", function(){
+$("#players, #teamsNo, #matchesvs").bind("input", function(){
   printTeams();
 })
 
-$("#preclubs").bind("change", function(){
+$("#preclubs, #length").bind("change", function(){
   printTeams();
 })
 
@@ -185,11 +186,22 @@ function printTeams(){
   var players = distribute();
   if( $("#teams").prop("checked") ){
     y = teamsNo
+    $(".summary #fix").text( $("#teamsNo").val()*($("#teamsNo").val()-1)/2*$("#matchesvs").val() )
   } else {
     y = playersNo
+    $(".summary #fix").text( $("#players").val()*($("#players").val()-1)/2*$("#matchesvs").val() )
   }
+
+  var time = $(".summary #fix").text()*$("#length").find(":selected").val()*2/60
+
+  $(".summary #time").text( (time<1)? Math.floor(time*60*10)/10+" minutes": (time<2)? Math.floor(time*10)/10+" hour": Math.floor(time*10)/10+" hours")
+  $(".summary #number").text( $("#players").val() )
+  var vs = $("#matchesvs").val()*1
+  $(".summary #against").text( (vs==1)? "once" : (vs==2)? "twice" : (vs==3)? "thrice" : vs+" times" )
+
+
   for(x=1; x<y; x++){
-    var $team = $("<div></div>").attr("id", x).addClass("team").addClass("panel").addClass("panel-info")
+    var $team = $("<div></div>").attr("id", x).addClass("team").addClass("panel").addClass("panel-primary")
     var $head = $("<div></div>").addClass("panel-heading")
     var $body = $("<div></div>").addClass("panel-body")
     var temp = 1
@@ -233,6 +245,35 @@ function distribute(){
 
   return lengths;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 $("#generate").bind("click", function(){

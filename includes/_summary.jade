@@ -1,0 +1,35 @@
+.row.summary
+  .col-md-12
+    .panel.panel-info
+      .panel-heading
+        p Summary
+      .panel-body
+        ul
+          li
+            | Your tournament will contain 
+            span#number
+            |  players
+          li
+            | All teams will play against all other player's teams 
+            span#against
+          li
+            | The tournament will consist of 
+            span#fix
+            |  fixtures
+          li
+            | It will take about 
+            span#time
+            |  to play all fixtures (
+            select#length
+              option 20
+              option 15
+              option 10
+              option 9
+              option 8
+              option 8
+              option(selected="selected") 6
+              option 5
+              option 4
+            |  minutes per half)
+
+  button.btn.btn-lg.btn-success#generate Generate

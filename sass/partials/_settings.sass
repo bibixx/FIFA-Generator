@@ -1,38 +1,18 @@
-// .row
-//   display: flex
-//   align-items: center
-//   & > :first-child
-//     width: 145px
-//   &.disabled
-//     opacity: 0
-//
-// select
-//   margin: 16px 0px
-//
-// .spinner
-//   display: flex
-//   margin: 10px 0px
-//   .minus
-//     border-radius: 5px 0px 0px 5px
-//   .plus
-//     border-radius: 0px 5px 5px 0px
-//   .minus, .plus
-//     cursor: pointer
-//     padding: 5px 10px !important
-//   .minus, .plus, input
-//     height: 33px
-//     border: none
-//     background: #bbb
-//     font-size: 18px
-//     color: #fff
-//     padding: 5px
-//     outline: none
-//     &:hover
-//       background: #aaa
-//     &:focus
-//       background: #999
-//   input
-//     width: 30px
-//     text-align: center
-//     height: 23px
-//     border-radius: 0px
+.form-horizontal
+  .control-label
+    text-align: left
+
+  .multi-line
+    margin-top: 0.75em
+
+  .input-group
+    margin-top: 5px
+
+  .input-group-btn
+    .btn
+      border-color: #ccc
+
+@media (max-width: 768px)
+  .form-horizontal
+    .control-label
+      text-align: center
