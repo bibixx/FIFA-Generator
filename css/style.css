@@ -80,9 +80,7 @@ body {
   display: inline-block;
   position: relative;
   left: 50%;
-  -webkit-transform: translateX(-50%);
-      -ms-transform: translateX(-50%);
-          transform: translateX(-50%);
+  transform: translateX(-50%);
   max-width: 1115px;
 }
 
@@ -92,8 +90,20 @@ body {
   vertical-align: top;
 }
 
+@media (max-width: 768px) {
+  .teams > .center-block {
+    text-align: center;
+  }
+  .teams .center-inline-block .panel {
+    width: 100%;
+    margin: 3px 0px;
+  }
+}
+
 .summary {
   margin-top: 15px;
+  margin-left: 0px;
+  margin-right: 0px;
 }
 
 .summary > div {
@@ -115,6 +125,19 @@ body {
 
 .summary .panel .panel-body {
   padding: 15px 55px;
+}
+
+@media (min-width: 768px) {
+  .btn-block {
+    display: inline-block;
+    width: auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .summary .panel {
+    width: 100%;
+  }
 }
 
 html {

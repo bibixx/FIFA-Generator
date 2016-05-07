@@ -2,6 +2,12 @@ div#settings
   .row
     .form-horizontal
       .form-group
+        label(for="players").col-md-12.control-label Tournament name:
+        .col-md-5
+          input(id="title", type="text", placeholder="Tournament name").form-control
+            
+    .form-horizontal
+      .form-group
         label(for="type").col-md-12.control-label Tournament type:
         .col-md-5
           select.form-control#type

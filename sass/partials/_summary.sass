@@ -1,5 +1,7 @@
 .summary
   margin-top: 15px
+  margin-left: 0px
+  margin-right: 0px
   &>div
     padding: 0px
   .panel
@@ -14,3 +16,12 @@
 
     .panel-body
       padding: 15px 55px
+
+@media (min-width: 768px)
+  .btn-block
+    display: inline-block
+    width: auto
+
+@media (max-width: 768px)
+  .summary .panel
+    width: 100%
