@@ -56,7 +56,7 @@
         </tr>
       </thead>
       <tbody>
-      <?
+      <?php
         $teams = array (
           0 => array(
              'player' => array('Bartek', 'Ignacy'),

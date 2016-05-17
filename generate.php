@@ -28,7 +28,181 @@
       ),
       6 => array(
           "club" => "Lech"
-      )
+      ),
+      7 => array(
+          "club" => "Lech"
+      ),
+      8 => array(
+          "club" => "Lech"
+      ),
+      9 => array(
+          "club" => "Lech"
+      ),
+      10 => array(
+          "club" => "Lech"
+      ),
+      11 => array(
+"club" => "Lech"
+),
+12 => array(
+"club" => "Lech"
+),
+13 => array(
+"club" => "Lech"
+),
+14 => array(
+"club" => "Lech"
+),
+15 => array(
+"club" => "Lech"
+),
+16 => array(
+"club" => "Lech"
+),
+17 => array(
+"club" => "Lech"
+),
+18 => array(
+"club" => "Lech"
+),
+19 => array(
+"club" => "Lech"
+),
+20 => array(
+"club" => "Lech"
+),
+21 => array(
+"club" => "Lech"
+),
+22 => array(
+"club" => "Lech"
+),
+23 => array(
+"club" => "Lech"
+),
+24 => array(
+"club" => "Lech"
+),
+25 => array(
+"club" => "Lech"
+),
+26 => array(
+"club" => "Lech"
+),
+27 => array(
+"club" => "Lech"
+),
+28 => array(
+"club" => "Lech"
+),
+29 => array(
+"club" => "Lech"
+),
+30 => array(
+"club" => "Lech"
+),
+31 => array(
+"club" => "Lech"
+),
+32 => array(
+"club" => "Lech"
+),
+33 => array(
+"club" => "Lech"
+),
+34 => array(
+"club" => "Lech"
+),
+35 => array(
+"club" => "Lech"
+),
+36 => array(
+"club" => "Lech"
+),
+37 => array(
+"club" => "Lech"
+),
+38 => array(
+"club" => "Lech"
+),
+39 => array(
+"club" => "Lech"
+),
+40 => array(
+"club" => "Lech"
+),
+41 => array(
+"club" => "Lech"
+),
+42 => array(
+"club" => "Lech"
+),
+43 => array(
+"club" => "Lech"
+),
+44 => array(
+"club" => "Lech"
+),
+45 => array(
+"club" => "Lech"
+),
+46 => array(
+"club" => "Lech"
+),
+47 => array(
+"club" => "Lech"
+),
+48 => array(
+"club" => "Lech"
+),
+49 => array(
+"club" => "Lech"
+),
+50 => array(
+"club" => "Lech"
+),
+51 => array(
+"club" => "Lech"
+),
+52 => array(
+"club" => "Lech"
+),
+53 => array(
+"club" => "Lech"
+),
+54 => array(
+"club" => "Lech"
+),
+55 => array(
+"club" => "Lech"
+),
+56 => array(
+"club" => "Lech"
+),
+57 => array(
+"club" => "Lech"
+),
+58 => array(
+"club" => "Lech"
+),
+59 => array(
+"club" => "Lech"
+),
+60 => array(
+"club" => "Lech"
+),
+61 => array(
+"club" => "Lech"
+),
+62 => array(
+"club" => "Lech"
+),
+63 => array(
+"club" => "Lech"
+),
+64 => array(
+"club" => "Lech"
+)
   );
 
   $players = count($json);
@@ -66,15 +240,15 @@
       for($y=0; $y<count($arr1); $y++){
           if( $arr1[$y] >= 0 ){
               if( ($x%2 == 0) && ($y == 0) ){
-                  echo $arr1[$y]." vs ".$arr2[$y]."\n";
+                  // echo $arr1[$y]." vs ".$arr2[$y]."\n";
                   array_push($rounds[$x], array( $arr2[$y], $arr1[$y] ));
               } else {
-                  echo $arr1[$y]." vs ".$arr2[$y]."\n";
+                  // echo $arr1[$y]." vs ".$arr2[$y]."\n";
                   array_push($rounds[$x], array( $arr1[$y], $arr2[$y] ));
               }
           }
       }
-      echo "\n";
+      // echo "\n";
       clock();
   }
 
