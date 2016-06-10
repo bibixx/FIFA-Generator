@@ -13,12 +13,12 @@
       </div>
       <div id="navbar" class="collapse navbar-collapse">
         <ul class="nav navbar-nav">
-          <li><a href="index.html">Create new tournament</a></li>
+          <li><a href=".">Create new tournament</a></li>
           <li class="active dropdown">
               <a href="#" data-toggle="dropdown" class="dropdown-toggle">My tournament <span class="caret"></span></a>
               <ul class="dropdown-menu">
-                <li class="active"><a href="scores.php">Fixtures</a></li>
-                <li><a href="table.php">Table</a></li>
+                <li class="active"><a href="scores.php?id=<?= mysql_real_escape_string($_GET["id"]);?>">Fixtures</a></li>
+                <li><a href="table.php?id=<?= mysql_real_escape_string($_GET["id"]);?>">Table</a></li>
               </ul>
           </li>
           <li><a href="#about">Find existing tournament</a></li>
@@ -33,7 +33,8 @@
       $dbc = mysql_connect('127.0.0.1', 'root', 'admin') or die( 'błąd' );
       $dcs = mysql_select_db('tournaments');
       mysql_query('SET NAMES utf8');
-      $query = "SELECT * FROM `tournaments` WHERE (`id`=1)";
+      $id = mysql_real_escape_string($_GET["id"]);
+      $query = "SELECT * FROM `tournaments` WHERE (`id`=$id)";
       $data = mysql_query($query);
       mysql_close($dbc);
 

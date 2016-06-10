@@ -5,7 +5,6 @@
   for($x=0; $x<=4; $x++){
     array_push( $settings, array_shift($_GET) );
   }
-  print_r( $settings );
 
   $getKeys = array_keys($_GET);
   $temp = array(
@@ -82,8 +81,9 @@
   mysql_query('SET NAMES utf8');
   $query = "INSERT INTO `tournaments`(`title`, `type`, `players`, `rounds`, `fixtures`) VALUES ('tytuł', 'League', '".JSON_encode( $json )."', '".JSON_encode( $rounds )."', '".JSON_encode( $results )."')";
   $data = mysql_query($query);
+  $id = mysql_insert_id();
   mysql_close($dbc);
 
-  header("Location: scores.php");
+  header("Location: scores.php?id=".$id);
   die();
 ?>

@@ -21,6 +21,10 @@ body {
   margin-top: 30px;
 }
 
+.dropdown-menu > .active > a, .dropdown-menu > .active > a:focus, .dropdown-menu > .active > a:hover {
+  background: #000;
+}
+
 body {
   font-family: Roboto;
   font-size: 16px;
@@ -28,10 +32,6 @@ body {
 
 .form-control {
   border-radius: 3px;
-}
-
-.form-horizontal .checkbox-inline {
-  margin-top: 5px;
 }
 
 .panel-info > .panel-heading {

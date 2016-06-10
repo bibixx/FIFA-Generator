@@ -21,6 +21,10 @@ body {
   margin-top: 30px;
 }
 
+.dropdown-menu > .active > a, .dropdown-menu > .active > a:focus, .dropdown-menu > .active > a:hover {
+  background: #000;
+}
+
 body {
   font-family: Roboto;
   font-size: 16px;
@@ -33,15 +37,9 @@ body {
 .round .row {
   font-size: 1.4em;
   background: #ededed;
-  display: -webkit-flex;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-align-items: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-justify-content: flex-start;
-      -ms-flex-pack: start;
-          justify-content: flex-start;
+  align-items: center;
+  justify-content: flex-start;
   padding: 40px;
 }
 

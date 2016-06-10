@@ -13,12 +13,12 @@
       </div>
       <div id="navbar" class="collapse navbar-collapse">
         <ul class="nav navbar-nav">
-          <li><a href="index.html">Create new tournament</a></li>
+          <li><a href=".">Create new tournament</a></li>
           <li class="active dropdown">
               <a href="#" data-toggle="dropdown" class="dropdown-toggle">My tournament <span class="caret"></span></a>
               <ul class="dropdown-menu">
-                <li class="active"><a href="scores.php">Fixtures</a></li>
-                <li><a href="table.php">Table</a></li>
+                <li><a href="scores.php?id=<?=$_GET["id"];?>">Fixtures</a></li>
+                <li class="active"><a href="table.php?id=<?=$_GET["id"];?>">Table</a></li>
               </ul>
           </li>
           <li><a href="#about">Find existing tournament</a></li>
@@ -76,13 +76,13 @@
           ),
         );
 
-        $dbc = mysql_connect('127.0.0.1', 'root', 'admin') or die( 'błąd' );
-        $dcs = mysql_select_db('tournaments');
-        mysql_query('SET NAMES utf8');
-        $query = "SELECT * FROM `tournaments` WHERE (`id`=1)";
-        $data = mysql_query($query);
-        mysql_close($dbc);
-        $row = mysql_fetch_array($data);
+        $dbc = new mysqli("127.0.0.1", "root", "admin", "tournaments");
+        $dbc->query('SET NAMES utf8');
+        $id = $dbc->real_escape_string($_GET["id"]);
+        $query = "SELECT * FROM `tournaments` WHERE (`id`=$id)";
+        $data = $dbc->query($query);
+        mysqli_close($dbc);
+        $row = mysqli_fetch_array($data);
 
         $teams = json_decode($row["players"], true);
 
@@ -98,33 +98,35 @@
         $fixtures = json_decode($row["fixtures"], true);
         for($x=0; $x<count($rounds); $x++){
           for($y=0; $y<count($rounds[$x]); $y++){
-            if( $fixtures[$x][$y][0] > $fixtures[$x][$y][1] ){
-              $teams[$rounds[$x][$y][0]]["wins"] += 1;
-              $teams[$rounds[$x][$y][1]]["losses"] += 1;
+            if( array_key_exists(0, $fixtures[$x][$y]) && array_key_exists(1, $fixtures[$x][$y]) ){
+              if( $fixtures[$x][$y][0] > $fixtures[$x][$y][1] ){
+                $teams[$rounds[$x][$y][0]]["wins"] += 1;
+                $teams[$rounds[$x][$y][1]]["losses"] += 1;
 
-              $teams[$rounds[$x][$y][0]]["gf"] += $fixtures[$x][$y][0];
-              $teams[$rounds[$x][$y][0]]["ga"] += $fixtures[$x][$y][1];
+                $teams[$rounds[$x][$y][0]]["gf"] += $fixtures[$x][$y][0];
+                $teams[$rounds[$x][$y][0]]["ga"] += $fixtures[$x][$y][1];
 
-              $teams[$rounds[$x][$y][1]]["gf"] += $fixtures[$x][$y][1];
-              $teams[$rounds[$x][$y][1]]["ga"] += $fixtures[$x][$y][0];
-            } elseif( $fixtures[$x][$y][0] < $fixtures[$x][$y][1] ){
-              $teams[$rounds[$x][$y][0]]["losses"] += 1;
-              $teams[$rounds[$x][$y][1]]["wins"] += 1;
+                $teams[$rounds[$x][$y][1]]["gf"] += $fixtures[$x][$y][1];
+                $teams[$rounds[$x][$y][1]]["ga"] += $fixtures[$x][$y][0];
+              } elseif( $fixtures[$x][$y][0] < $fixtures[$x][$y][1] ){
+                $teams[$rounds[$x][$y][0]]["losses"] += 1;
+                $teams[$rounds[$x][$y][1]]["wins"] += 1;
 
-              $teams[$rounds[$x][$y][0]]["gf"] += $fixtures[$x][$y][0];
-              $teams[$rounds[$x][$y][0]]["ga"] += $fixtures[$x][$y][1];
+                $teams[$rounds[$x][$y][0]]["gf"] += $fixtures[$x][$y][0];
+                $teams[$rounds[$x][$y][0]]["ga"] += $fixtures[$x][$y][1];
 
-              $teams[$rounds[$x][$y][1]]["gf"] += $fixtures[$x][$y][1];
-              $teams[$rounds[$x][$y][1]]["ga"] += $fixtures[$x][$y][0];
-            } else {
-              $teams[$rounds[$x][$y][0]]["draws"] += 1;
-              $teams[$rounds[$x][$y][1]]["draws"] += 1;
+                $teams[$rounds[$x][$y][1]]["gf"] += $fixtures[$x][$y][1];
+                $teams[$rounds[$x][$y][1]]["ga"] += $fixtures[$x][$y][0];
+              } else {
+                $teams[$rounds[$x][$y][0]]["draws"] += 1;
+                $teams[$rounds[$x][$y][1]]["draws"] += 1;
 
-              $teams[$rounds[$x][$y][0]]["gf"] += $fixtures[$x][$y][0];
-              $teams[$rounds[$x][$y][0]]["ga"] += $fixtures[$x][$y][1];
+                $teams[$rounds[$x][$y][0]]["gf"] += $fixtures[$x][$y][0];
+                $teams[$rounds[$x][$y][0]]["ga"] += $fixtures[$x][$y][1];
 
-              $teams[$rounds[$x][$y][1]]["gf"] += $fixtures[$x][$y][1];
-              $teams[$rounds[$x][$y][1]]["ga"] += $fixtures[$x][$y][0];
+                $teams[$rounds[$x][$y][1]]["gf"] += $fixtures[$x][$y][1];
+                $teams[$rounds[$x][$y][1]]["ga"] += $fixtures[$x][$y][0];
+              }
             }
           }
         }
