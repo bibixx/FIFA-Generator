@@ -1,220 +1,43 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-  </head>
-  <body>
-    <pre>
 <?php
-  $json = array(
-      0 => array(
-          "club" => "Real",
-          "players" => array("Adam", "Marek")
-      ),
-      1 => array(
-          "club" => "FCB"
-      ),
-      2 => array(
-          "club" => "Anzy"
-      ),
-      3 => array(
-          "club" => "Legia"
-      ),
-      4 => array(
-          "club" => "Arsenal"
-      ),
-      5 => array(
-          "club" => "Wisla"
-      ),
-      6 => array(
-          "club" => "Lech"
-      ),
-      7 => array(
-          "club" => "Lech"
-      ),
-      8 => array(
-          "club" => "Lech"
-      ),
-      9 => array(
-          "club" => "Lech"
-      ),
-      10 => array(
-          "club" => "Lech"
-      ),
-      11 => array(
-"club" => "Lech"
-),
-12 => array(
-"club" => "Lech"
-),
-13 => array(
-"club" => "Lech"
-),
-14 => array(
-"club" => "Lech"
-),
-15 => array(
-"club" => "Lech"
-),
-16 => array(
-"club" => "Lech"
-),
-17 => array(
-"club" => "Lech"
-),
-18 => array(
-"club" => "Lech"
-),
-19 => array(
-"club" => "Lech"
-),
-20 => array(
-"club" => "Lech"
-),
-21 => array(
-"club" => "Lech"
-),
-22 => array(
-"club" => "Lech"
-),
-23 => array(
-"club" => "Lech"
-),
-24 => array(
-"club" => "Lech"
-),
-25 => array(
-"club" => "Lech"
-),
-26 => array(
-"club" => "Lech"
-),
-27 => array(
-"club" => "Lech"
-),
-28 => array(
-"club" => "Lech"
-),
-29 => array(
-"club" => "Lech"
-),
-30 => array(
-"club" => "Lech"
-),
-31 => array(
-"club" => "Lech"
-),
-32 => array(
-"club" => "Lech"
-),
-33 => array(
-"club" => "Lech"
-),
-34 => array(
-"club" => "Lech"
-),
-35 => array(
-"club" => "Lech"
-),
-36 => array(
-"club" => "Lech"
-),
-37 => array(
-"club" => "Lech"
-),
-38 => array(
-"club" => "Lech"
-),
-39 => array(
-"club" => "Lech"
-),
-40 => array(
-"club" => "Lech"
-),
-41 => array(
-"club" => "Lech"
-),
-42 => array(
-"club" => "Lech"
-),
-43 => array(
-"club" => "Lech"
-),
-44 => array(
-"club" => "Lech"
-),
-45 => array(
-"club" => "Lech"
-),
-46 => array(
-"club" => "Lech"
-),
-47 => array(
-"club" => "Lech"
-),
-48 => array(
-"club" => "Lech"
-),
-49 => array(
-"club" => "Lech"
-),
-50 => array(
-"club" => "Lech"
-),
-51 => array(
-"club" => "Lech"
-),
-52 => array(
-"club" => "Lech"
-),
-53 => array(
-"club" => "Lech"
-),
-54 => array(
-"club" => "Lech"
-),
-55 => array(
-"club" => "Lech"
-),
-56 => array(
-"club" => "Lech"
-),
-57 => array(
-"club" => "Lech"
-),
-58 => array(
-"club" => "Lech"
-),
-59 => array(
-"club" => "Lech"
-),
-60 => array(
-"club" => "Lech"
-),
-61 => array(
-"club" => "Lech"
-),
-62 => array(
-"club" => "Lech"
-),
-63 => array(
-"club" => "Lech"
-),
-64 => array(
-"club" => "Lech"
-)
+  $json = array();
+  $settings = array();
+
+  for($x=0; $x<=4; $x++){
+    array_push( $settings, array_shift($_GET) );
+  }
+  print_r( $settings );
+
+  $getKeys = array_keys($_GET);
+  $temp = array(
+    "players" => array(),
+    "club" => ""
   );
+
+  for($x=0; $x<count($getKeys); $x++){
+    $key = $getKeys[$x];
+    if( strpos($key, 'club') !== false ){
+      $temp["club"] = urlencode($_GET[$key]);
+      array_push($json, $temp);
+      $temp = array(
+        "players" => array(),
+        "club" => ""
+      );
+    } else {
+      array_push($temp["players"], urlencode( $_GET[$key] ));
+    }
+  }
 
   $players = count($json);
   $arr = array();
   $rounds = array();
+  $results = array();
 
   for($x=0; $x<$players; $x++){
-      array_push($arr, $x);
+    array_push($arr, $x);
   }
 
   if($players%2 != 0){
-      array_unshift($arr, -1);
+    array_unshift($arr, -1);
   }
 
   $len = count($arr)/2;
@@ -222,59 +45,45 @@
   $arr2 = array_reverse( array_slice( $arr, $len ) );
 
   function clock(){
-      global $arr1;
-      global $arr2;
-      $fix = $arr1[0];
-      array_shift( $arr1 );
-      array_unshift( $arr1, $arr2[0] );
-      array_unshift( $arr1, $fix );
-      array_shift( $arr2 );
-      array_push( $arr2, $arr1[count($arr1)-1] );
-      array_pop( $arr1 );
+    global $arr1;
+    global $arr2;
+    $fix = $arr1[0];
+    array_shift( $arr1 );
+    array_unshift( $arr1, $arr2[0] );
+    array_unshift( $arr1, $fix );
+    array_shift( $arr2 );
+    array_push( $arr2, $arr1[count($arr1)-1] );
+    array_pop( $arr1 );
   }
 
   $games = count($arr1)*2-1;
 
   for($x=0; $x<$games; $x++){
-      $rounds[$x] = array();
-      for($y=0; $y<count($arr1); $y++){
-          if( $arr1[$y] >= 0 ){
-              if( ($x%2 == 0) && ($y == 0) ){
-                  // echo $arr1[$y]." vs ".$arr2[$y]."\n";
-                  array_push($rounds[$x], array( $arr2[$y], $arr1[$y] ));
-              } else {
-                  // echo $arr1[$y]." vs ".$arr2[$y]."\n";
-                  array_push($rounds[$x], array( $arr1[$y], $arr2[$y] ));
-              }
-          }
+    $rounds[$x] = array();
+    $results[$x] = array();
+    for($y=0; $y<count($arr1); $y++){
+      if( $arr1[$y] >= 0 ){
+        array_push($results[$x], array());
+        if( ($x%2 == 0) && ($y == 0) ){
+          array_push($rounds[$x], array( $arr2[$y], $arr1[$y] ));
+        } else {
+          array_push($rounds[$x], array( $arr1[$y], $arr2[$y] ));
+        }
       }
-      // echo "\n";
-      clock();
+    }
+    clock();
   }
-
-  echo "----------------------------------------------------------------------";
-  echo "\n\n";
-
 
   shuffle( $rounds );
   shuffle( $rounds );
 
-  echo JSON_encode( $rounds );
-  echo "\n\n";
-  echo JSON_encode( $json );
-  echo "\n\n";
+  $dbc = mysql_connect('127.0.0.1', 'root', 'admin') or die( 'błąd' );
+  $dcs = mysql_select_db('tournaments');
+  mysql_query('SET NAMES utf8');
+  $query = "INSERT INTO `tournaments`(`title`, `type`, `players`, `rounds`, `fixtures`) VALUES ('tytuł', 'League', '".JSON_encode( $json )."', '".JSON_encode( $rounds )."', '".JSON_encode( $results )."')";
+  $data = mysql_query($query);
+  mysql_close($dbc);
 
-  echo "----------------------------------------------------------------------";
-  echo "\n\n";
-
-  for($r=0; $r<count($rounds); $r++){
-      for($g=0; $g<count($rounds[$r]); $g++){
-          $game = $rounds[$r][$g];
-          echo $json[$game[0]]["club"]." vs ".$json[$game[1]]["club"]."\n";
-      }
-      echo "\n";
-  }
+  header("Location: scores.php");
+  die();
 ?>
-    </pre>
-  </body>
-</html>
