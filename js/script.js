@@ -72,6 +72,9 @@ $("#teamsNo").bind("input", function(){
   if( $("#teamsNo").val() < 2 ){
     $("#teamsNo").val( 2 )
   }
+  if( $("#teamsNo").val() > 32 ){
+    $("#teamsNo").val( 32 )
+  }
   if( $("#teams").prop("checked") ){
     if( $("#players").val() > $("#teamsNo").val()*2 ){
       $("#players").val( $("#teamsNo").val()*2 )
