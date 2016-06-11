@@ -25,6 +25,10 @@ body {
   background: #000;
 }
 
+.alert {
+  display: inline-block;
+}
+
 body {
   font-family: Roboto;
   font-size: 16px;
@@ -32,6 +36,10 @@ body {
 
 .form-control {
   border-radius: 3px;
+}
+
+.form-horizontal .checkbox-inline {
+  margin-top: 5px;
 }
 
 .panel-info > .panel-heading {
@@ -70,6 +78,7 @@ body {
 
 .teams {
   padding: 0;
+  margin: 15px 0px;
 }
 
 .teams .row > div {

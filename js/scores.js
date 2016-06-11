@@ -26,11 +26,15 @@ $(document).ready(function() {
       }
     })
 
+    var href = window.location.href
+    var hrefId = href.substring(href.search(/[0-9]/), href.search(/[0-9]/)+href.match(/[0-9]/).length);
+
     if(!empty){
       $.ajax({
         method: "POST",
-        url: "save.php",
-        data: {index: $(this).parents(".round").index()+","+($(this).parents(".row").index()-1), value: [row[0]*1, row[1]*1] }
+        type: "html",
+        url: "/FIFA-Generator/save.php",
+        data: {index: $(this).parents(".round").index()-1+","+($(this).parents(".row").index()-1), value: [row[0]*1, row[1]*1], id: hrefId }
       })
       .done(function(data){
         console.log( data );
@@ -38,8 +42,9 @@ $(document).ready(function() {
     } else {
       $.ajax({
         method: "POST",
-        url: "save.php",
-        data: {index: $(this).parents(".round").index()+","+($(this).parents(".row").index()-1), value: [] }
+        type: "html",
+        url: "/FIFA-Generator/save.php",
+        data: {index: $(this).parents(".round").index()-1+","+($(this).parents(".row").index()-1), value: [], id: hrefId }
       })
       .done(function(data){
         console.log( data );

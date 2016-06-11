@@ -1,13 +1,16 @@
 <?php
+  session_start();
   $dbc = new mysqli('127.0.0.1', 'root', 'admin', 'tournaments') or die( 'błąd' );
   $json = array();
   $settings = array();
-
-  for($x=0; $x<=4; $x++){
-    array_push( $settings, array_shift($_GET) );
-  }
+  $error = false;
 
   $getKeys = array_keys($_GET);
+
+  for($x=0; $x<=4; $x++){
+    $settings[$getKeys[$x]] = array_shift($_GET);
+  }
+
   $temp = array(
     "players" => array(),
     "club" => ""
@@ -23,7 +26,12 @@
         "club" => ""
       );
     } else if( strpos($key, 'name') !== false ){
-      array_push($temp["players"], filter_input(INPUT_GET, $key, FILTER_SANITIZE_STRING));
+      if( !empty($_GET[$key]) ){
+        array_push($temp["players"], filter_input(INPUT_GET, $key, FILTER_SANITIZE_STRING));
+      } else {
+        $error = true;
+        $_SESSION["team_e"] = "You have to enter names of all the players!";
+      }
     }
   }
 
@@ -77,17 +85,24 @@
   shuffle( $rounds );
   shuffle( $rounds );
 
-  $json = $dbc->real_escape_string(JSON_encode($json));
-  $rounds = $dbc->real_escape_string(JSON_encode($rounds));
-  $results = $dbc->real_escape_string(JSON_encode($results));
+  if( !$error ){
+    $title = (isset($settings["title"]) && !empty($settings["title"])) ? "'".$dbc->real_escape_string(filter_var($settings["title"], FILTER_SANITIZE_STRING))."'" : "NULL";
 
-  $dbc->query('SET NAMES utf8');
-  $query = "INSERT INTO `tournaments`(`title`, `type`, `players`, `rounds`, `fixtures`) VALUES ('tytuł', 'League', '".$json."', '".$rounds."', '".$results."')";
-  $data = $dbc->query($query);
-  $id = $dbc->insert_id;
-  mysqli_close($dbc);
+    $json = $dbc->real_escape_string(JSON_encode($json));
+    $rounds = $dbc->real_escape_string(JSON_encode($rounds));
+    $results = $dbc->real_escape_string(JSON_encode($results));
 
 
-  header("Location: tournament/$id/scores");
+    $dbc->query('SET NAMES utf8');
+    $query = "INSERT INTO `tournaments`(`title`, `type`, `players`, `rounds`, `fixtures`) VALUES (".$title.", 'League', '".$json."', '".$rounds."', '".$results."')";
+    $data = $dbc->query($query);
+    $id = $dbc->insert_id;
+    mysqli_close($dbc);
+
+
+    header("Location: tournament/$id/scores");
+  } else {
+    header("Location: .");
+  }
   die();
 ?>

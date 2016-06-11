@@ -1,7 +1,7 @@
 <?php
   $dbc = new mysqli('127.0.0.1', 'root', 'admin', 'tournaments') or die( 'błąd' );
   $dbc->query('SET NAMES utf8');
-  $query = "SELECT * FROM `tournaments` WHERE (`id`=1)";
+  $query = "SELECT * FROM `tournaments` WHERE (`id`=".$_POST["id"].")";
   $data = $dbc->query($query);
 
   $row = mysqli_fetch_array($data);
@@ -13,7 +13,9 @@
     $fixtures[$index[0]][$index[1]] = array();
   }
 
-  $query = "UPDATE `tournaments` SET `fixtures` = '".json_encode( $fixtures )."' WHERE `tournaments`.`id` = 1";
+
+  $query = "UPDATE `tournaments` SET `fixtures` = '".json_encode( $fixtures )."' WHERE `tournaments`.`id` = ".$_POST["id"];
+  echo $query;
   $data = $dbc->query($query);
   mysqli_close($dbc);
 ?>

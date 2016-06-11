@@ -1,3 +1,21 @@
+<?php
+session_start();
+
+function print_e($key) {
+  if(isset($_SESSION[$key])){
+?>
+<div class="alert alert-danger" role="alert">
+  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+  <span class="sr-only">Error:</span>
+<?php
+    echo $_SESSION[$key];
+?>
+</div>
+<?php
+    unset($_SESSION[$key]);
+  }
+}
+?>
 <!DOCTYPE html>
 <head>
   <meta charset="utf-8">
@@ -102,7 +120,7 @@
           <div class="center-inline-block">
             <div id="1" class="team panel panel-info">
               <div class="panel-heading">
-                <input type="text" name="name1" value="" placeholder="Player" class="form-control">
+                <input type="text" name="name1" value="" placeholder="Player" class="form-control" required>
               </div>
               <div class="panel-body">
                 <input type="text" name="club" value="" placeholder="Club name" class="form-control">
@@ -110,7 +128,7 @@
             </div>
             <div id="2" class="team panel panel-info">
               <div class="panel-heading">
-                <input type="text" name="name1" value="" placeholder="Player" class="form-control">
+                <input type="text" name="name1" value="" placeholder="Player" class="form-control" required>
               </div>
               <div class="panel-body">
                 <input type="text" name="club" value="" placeholder="Club name" class="form-control">
@@ -120,6 +138,9 @@
         </div>
       </div>
     </div>
+
+    <?php print_e("team_e"); ?>
+
     <div class="row summary">
       <div class="col-md-12">
         <div class="panel panel-info">

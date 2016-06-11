@@ -1,99 +1,3 @@
-// var teams = [
-//   {
-//     "player": "Bartek",
-//     "club": "FC Bayern",
-//     "wins": 3,
-//     "draws": 1,
-//     "losses": 2,
-//     "gf": 4,
-//     "ga": 2
-//   },
-//   {
-//     "player": "Kuba",
-//     "club": "FC Barcelona",
-//     "wins": 2,
-//     "draws": 1,
-//     "losses": 3,
-//     "gf": 3,
-//     "ga": 4
-//   },
-//   {
-//     "player": "Michał",
-//     "club": "Leicester City",
-//     "wins": 4,
-//     "draws": 0,
-//     "losses": 2,
-//     "gf": 7,
-//     "ga": 2
-//   }
-// ]
-//
-// var data = eval(teams);
-// var results = data;
-//
-// results.sort(function(a,b){
-//   var aPts = a.wins*3+a.draws
-//   var aGD = a.gf-a.ga
-//   var bPts = b.wins*3+b.draws
-//   var bGD = b.gf-b.ga
-//   if(aPts == bPts){
-//
-//     if(aGD == bGD){
-//
-//       if(a.gf == b.gf){
-//         return 0;
-//       }
-//
-//       if(a.gf > b.gf){
-//         return 1;
-//       }
-//
-//       if(a.gf < b.gf){
-//         return -1;
-//       }
-//
-//     }
-//
-//     if(aGD > bGD){
-//       return 1;
-//     }
-//
-//     if(aGD < bGD){
-//       return 0;
-//     }
-//
-//   }
-//
-//   if(aPts < bPts){
-//     return -1;
-//   }
-//
-//   if(aPts > bPts){
-//     return 1;
-//   }
-// });
-// results.reverse();
-//
-// for(x=0; x<results.length; x++){
-//   var r = results[x]
-//   var tr = $("<tr></tr>")
-//   var td = tr
-//     .append( $("<td></td>").text(x+1) )
-//     .append( $("<td></td>").text(r.player) )
-//     .append( $("<td></td>").text(r.club) )
-//     .append( $("<td></td>").text(r.wins+r.draws+r.losses) )
-//     .append( $("<td></td>").text(r.wins) )
-//     .append( $("<td></td>").text(r.draws) )
-//     .append( $("<td></td>").text(r.losses) )
-//     .append( $("<td></td>").text(r.gf) )
-//     .append( $("<td></td>").text(r.ga) )
-//     .append( $("<td></td>").text(r.gf-r.ga) )
-//     .append( $("<td></td>").text(r.wins*3+r.draws) )
-//   $("tbody").append( tr )
-// }
-
-// TABLE END
-
 $(".disabled").hide().removeClass("disabled")
 
 $(".spinner input").bind("input", function(){
@@ -191,12 +95,15 @@ function printTeams(){
   var t = 0;
   var c = 0;
   $(".team").each(function(){
-    tempPlayers.push( $(this).find('[name="name"]').eq(0).val() )
-    if( typeof( $(this).find('[name="name"]').eq(1).val() ) != "undefined" ){
-      tempPlayers.push( $(this).find('[name="name"]').eq(1).val() )
+    tempPlayers.push( $(this).find('[name*="name"]').eq(0).val() )
+    if( typeof( $(this).find('[name*="name"]').eq(1).val() ) != "undefined" ){
+      tempPlayers.push( $(this).find('[name*="name"]').eq(1).val() )
     }
-    tempClubs.push( $(this).find('[name="club"]').eq(0).val() )
+    tempClubs.push( $(this).find('[name*="club"]').eq(0).val() )
   })
+
+  console.log( tempPlayers );
+
   $(".teams .center-inline-block .team").remove();
   var playersNo = $("#players").val()*1+1
   var teamsNo = $("#teamsNo").val()*1+1;
@@ -222,11 +129,11 @@ function printTeams(){
     var $body = $("<div></div>").addClass("panel-body");
     var temp = 1;
     if( !$("#teams").prop("checked") ){
-      $head.append( $("<input>").attr({"type": "text", 'name': "name"+t, "placeholder": "Player"}).addClass("form-control").val( tempPlayers[t] ) );
+      $head.append( $("<input>").attr({"type": "text", 'name': "name"+t, "placeholder": "Player", "required": true}).addClass("form-control").val( tempPlayers[t] ) );
       t++;
     } else {
       for(i=0; i<players[x-1]; i++){
-        $head.append( $("<input>").attr({"type": "text", 'name': "name"+t, "placeholder": "Player "+(i+1)}).addClass("form-control").val( tempPlayers[t] ) );
+        $head.append( $("<input>").attr({"type": "text", 'name': "name"+t, "placeholder": "Player "+(i+1), "required": true}).addClass("form-control").val( tempPlayers[t] ) );
         t++;
       }
     }

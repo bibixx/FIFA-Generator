@@ -18,6 +18,19 @@
         margin: 0
         font-size: 1.6em
 
+    .text-center
+      white-space: nowrap
+      // min-width: 157px
+
+    div p
+      margin: 0
+      &.name
+        font-size: 0.65em
+        &::before
+          content: "("
+        &::after
+          content: ")"
+
     & > div:first-child
       img
         margin: 0px 0px 0px 10px

@@ -9,7 +9,7 @@
   <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
       <div class="navbar-header">
-        <button type="button" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" class="navbar-toggle collapsed"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a href="." class="navbar-brand">FIFA tournament Generator</a>
+        <button type="button" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" class="navbar-toggle collapsed"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a href="/FIFA-Generator/." class="navbar-brand">FIFA tournament Generator</a>
       </div>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
@@ -38,10 +38,12 @@
       mysqli_close($dbc);
 
       $row = mysqli_fetch_array($data);
-      $title = $row["title"]."\n";
+      $title = ($row["title"]!=null) ? $row["title"] : "Tournament #".$id;
       $players = json_decode($row["players"], true);
       $rounds = json_decode($row["rounds"], true);
       $results = json_decode($row["fixtures"], true);
+
+      echo "<h1>$title</h1>";
 
       for($x=0; $x<count( $rounds ); $x++){
         echo '<div class="round">';
@@ -49,6 +51,9 @@
         for($y=0; $y<count($rounds[$x]); $y++){
           $teams = $rounds[$x][$y];
           $result = $results[$x][$y];
+
+          $club1 = $players[ $teams[0] ]["club"];
+          $club2 = $players[ $teams[1] ]["club"];
 
           if( count($players[ $teams[0] ]["players"]) > 1 ){
             $player1 = $players[ $teams[0] ]["players"][0]." & ".$players[ $teams[0] ]["players"][1];
@@ -63,13 +68,21 @@
           }
 
           echo '<div class="row">';
-            echo '<div class="col-md-5 text-right">'.html_entity_decode($player1, ENT_QUOTES).'</div>';
-            if( array_key_exists(0, $result) ){
-              echo '<div class="col-md-2 text-center"><span contenteditable class="home correct">'.$result[0].'</span>:<span contenteditable class="away correct">'.$result[1].'</span></div>';
+            if( !empty($club1) ){
+              echo '<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 text-right"><p>'.html_entity_decode($club1, ENT_QUOTES).'</p><p class="name">'.html_entity_decode($player1, ENT_QUOTES).'</p></div>';
             } else {
-              echo '<div class="col-md-2 text-center"><span contenteditable class="home"></span>:<span contenteditable class="away"></span></div>';
+              echo '<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 text-right"><p>'.html_entity_decode($player1, ENT_QUOTES).'</p></div>';
             }
-            echo '<div class="col-md-5 text-left">'.html_entity_decode($player2, ENT_QUOTES).'</div>';
+            if( array_key_exists(0, $result) ){
+              echo '<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 text-center"><span contenteditable class="home correct">'.$result[0].'</span>:<span contenteditable class="away correct">'.$result[1].'</span></div>';
+            } else {
+              echo '<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 text-center"><span contenteditable class="home"></span>:<span contenteditable class="away"></span></div>';
+            }
+            if( !empty($club1) ){
+              echo '<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 text-left">'.html_entity_decode($club2, ENT_QUOTES).'</p><p class="name">'.html_entity_decode($player2, ENT_QUOTES).'</p></div>';
+            } else {
+              echo '<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 text-left"><p>'.html_entity_decode($player2, ENT_QUOTES).'</p></div>';
+            }
           echo '</div>';
         }
         echo "</div>";
