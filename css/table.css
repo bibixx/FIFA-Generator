@@ -29,6 +29,14 @@ body {
   display: inline-block;
 }
 
+.navbar-inverse {
+  background: #222;
+}
+
+.dropdown-menu > li > a:focus, .dropdown-menu > li > a:hover {
+  background: #e8e8e8;
+}
+
 body {
   font-family: Roboto;
   font-size: 16px;

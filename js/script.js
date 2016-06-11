@@ -55,6 +55,9 @@ $("#players").bind("input", function(){
   if( $("#players").val() < 2 ){
     $("#players").val( 2 )
   }
+  if( $("#players").val() > 32 ){
+    $("#players").val( 32 )
+  }
   if( $("#teams").prop("checked") ){
     if( $("#players").val()/$("#teamsNo").val() < 1 ){
       $("#teamsNo").val( $("#players").val() )
@@ -128,7 +131,7 @@ function printTeams(){
     var $head = $("<div></div>").addClass("panel-heading");
     var $body = $("<div></div>").addClass("panel-body");
     var temp = 1;
-    if( !$("#teams").prop("checked") ){
+    if( !$("#teams").prop("checked") || players[x-1]==1 ){
       $head.append( $("<input>").attr({"type": "text", 'name': "name"+t, "placeholder": "Player", "required": true}).addClass("form-control").val( tempPlayers[t] ) );
       t++;
     } else {

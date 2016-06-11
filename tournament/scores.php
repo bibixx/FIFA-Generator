@@ -1,3 +1,8 @@
+<?php
+if( !isset($_GET["id"]) || empty($_GET["id"]) ){
+  header("Location: /FIFA-Generator/.");
+}
+?>
 <!DOCTYPE html>
 <head>
   <meta charset="utf-8">
@@ -87,7 +92,6 @@
         }
         echo "</div>";
       }
-
     ?>
   </div>
 

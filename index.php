@@ -149,7 +149,7 @@ function print_e($key) {
           </div>
           <div class="panel-body">
             <ul>
-              <li>Your tournament will contain <span id="number"></span> players</li>
+              <li>Your tournament will consist of <span id="number"></span> players</li>
               <li>All teams will play against all other player's teams <span id="against"></span></li>
               <li>The tournament will consist of <span id="fix"></span> fixtures</li>
               <li>It will take about <span id="time"></span> to play all fixtures (
