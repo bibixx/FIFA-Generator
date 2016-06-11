@@ -39,7 +39,7 @@ body {
   background: #ededed;
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
   padding: 40px;
 }
 
@@ -49,6 +49,7 @@ body {
 
 .round .row.head {
   background: #ccc;
+  justify-content: flex-start;
 }
 
 .round .row.head h2 {

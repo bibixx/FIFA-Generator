@@ -11,7 +11,12 @@ nav.navbar.navbar-inverse.navbar-fixed-top
       ul.nav.navbar-nav
         li.active
           a(href='.') Create new tournament
-        li
-          a(href='#about') Find existing tournament
+        li.dropdown
+          a.dropdown-toggle(href="#", data-toggle="dropdown") My tournaments <span class="caret"></span>
+          ul.dropdown-menu
+            li
+              a(href="#") Fixtures
+            li
+              a(href="#") Table
         li
           a(href='#contact') Contact

@@ -1,4 +1,5 @@
 <?php
+  $dbc = new mysqli('127.0.0.1', 'root', 'admin', 'tournaments') or die( 'błąd' );
   $json = array();
   $settings = array();
 
@@ -15,14 +16,14 @@
   for($x=0; $x<count($getKeys); $x++){
     $key = $getKeys[$x];
     if( strpos($key, 'club') !== false ){
-      $temp["club"] = urlencode($_GET[$key]);
+      $temp["club"] = filter_input(INPUT_GET, $key, FILTER_SANITIZE_STRING);
       array_push($json, $temp);
       $temp = array(
         "players" => array(),
         "club" => ""
       );
-    } else {
-      array_push($temp["players"], urlencode( $_GET[$key] ));
+    } else if( strpos($key, 'name') !== false ){
+      array_push($temp["players"], filter_input(INPUT_GET, $key, FILTER_SANITIZE_STRING));
     }
   }
 
@@ -76,14 +77,17 @@
   shuffle( $rounds );
   shuffle( $rounds );
 
-  $dbc = mysql_connect('127.0.0.1', 'root', 'admin') or die( 'błąd' );
-  $dcs = mysql_select_db('tournaments');
-  mysql_query('SET NAMES utf8');
-  $query = "INSERT INTO `tournaments`(`title`, `type`, `players`, `rounds`, `fixtures`) VALUES ('tytuł', 'League', '".JSON_encode( $json )."', '".JSON_encode( $rounds )."', '".JSON_encode( $results )."')";
-  $data = mysql_query($query);
-  $id = mysql_insert_id();
-  mysql_close($dbc);
+  $json = $dbc->real_escape_string(JSON_encode($json));
+  $rounds = $dbc->real_escape_string(JSON_encode($rounds));
+  $results = $dbc->real_escape_string(JSON_encode($results));
 
-  header("Location: scores.php?id=".$id);
+  $dbc->query('SET NAMES utf8');
+  $query = "INSERT INTO `tournaments`(`title`, `type`, `players`, `rounds`, `fixtures`) VALUES ('tytuł', 'League', '".$json."', '".$rounds."', '".$results."')";
+  $data = $dbc->query($query);
+  $id = $dbc->insert_id;
+  mysqli_close($dbc);
+
+
+  header("Location: tournament/$id/scores");
   die();
 ?>
