@@ -42,6 +42,14 @@ body {
   font-size: 16px;
 }
 
+h1.tournament-name {
+  margin-top: 0px;
+}
+
+.created_at {
+  font-style: italic;
+}
+
 .round {
   margin-bottom: 40px;
 }
@@ -66,7 +74,7 @@ body {
 
 .round .row.head h2 {
   margin: 0;
-  font-size: 1.6em;
+  font-size: 1.3em;
 }
 
 .round .row .text-center {
@@ -100,19 +108,58 @@ body {
 .round .row .home, .round .row .away {
   font-size: 1.3em;
   display: inline-block;
-  border-bottom: 2px solid #CC180E;
   min-width: 40px;
   margin: 0px 10px;
   transition: .2s all ease-in-out;
   outline: none;
 }
 
-.round .row .home.correct, .round .row .away.correct {
-  border-bottom-color: rgba(0, 176, 0, 0);
+.pagination {
+  display: flex;
+  justify-content: center;
 }
 
-.round .row .home.correct:focus, .round .row .home.correct:active, .round .row .away.correct:focus, .round .row .away.correct:active {
-  border-bottom-color: #1b73f7;
+@media screen and (max-width: 768px) {
+  body {
+    font-size: 14px;
+  }
+  .round .row {
+    padding: 40px 10px;
+  }
+  .round .row.head {
+    padding: 40px;
+  }
+  .round .row .home, .round .row .away {
+    min-width: 20px;
+    margin: 0px 8px;
+  }
+}
+
+.text-right-sm {
+  text-align: left;
+  margin-bottom: 10px;
+}
+
+@media screen and (max-width: 375px) {
+  body {
+    font-size: 12px;
+  }
+  body .round .row {
+    padding: 40px 10px;
+  }
+  body .round .row.head {
+    padding: 40px;
+  }
+  body .round .row .home, body .round .row .away {
+    min-width: 15px;
+    margin: 0px 8px;
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .text-right-sm {
+    text-align: right;
+  }
 }
 
 html {

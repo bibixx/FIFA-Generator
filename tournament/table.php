@@ -22,8 +22,8 @@ if( !isset($_GET["id"]) || empty($_GET["id"]) ){
             <li class="active dropdown">
                 <a href="#" data-toggle="dropdown" class="dropdown-toggle">My tournaments <span class="caret"></span></a>
                 <ul class="dropdown-menu">
-                  <li><a href="scores">Fixtures</a></li>
-                  <li class="active"><a href="table">Table</a></li>
+                  <li><a href="scores<?= isset( $_GET["admin"] ) ? "?admin=".$_GET["admin"] : "" ?>">Fixtures</a></li>
+                  <li class="active"><a href="table<?= isset( $_GET["admin"] ) ? "?admin=".$_GET["admin"] : "" ?>">Table</a></li>
                 </ul>
             </li>
             <li><a href="#contact">Contact</a></li>
@@ -34,6 +34,34 @@ if( !isset($_GET["id"]) || empty($_GET["id"]) ){
   </nav>
 
   <div class="container">
+    <?php
+      $dbc = new mysqli("127.0.0.1", "root", "admin", "tournaments");
+      $dbc->query('SET NAMES utf8');
+      $id = $dbc->real_escape_string($_GET["id"]);
+      $query = "SELECT * FROM `tournaments` WHERE (`id`=$id)";
+      $data = $dbc->query($query);
+      mysqli_close($dbc);
+      $row = mysqli_fetch_array($data);
+
+      $title = ($row["title"]!=null) ? $row["title"] : "Tournament #".$id;
+      $date = strtotime($row["created_at"]);
+
+      echo "<div class='row'>";
+        echo "<div class='col-xs-12 col-sm-12 col-md-6 col-lg-6'>";
+          echo "<h1 class='tournament-name'>$title</h1>";
+          echo "<p>Created on <span class='created_at'>".strftime("%d.%m.%Y at %R", $date)."</span></p>";
+        echo "</div>";
+        echo "<div class='col-xs-12 col-sm-12 col-md-6 col-lg-6 text-right'>";
+          echo '<div class="btn-group">';
+            echo '<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-share" aria-hidden="true"></span> Share tournament <span class="caret"></span></button>';
+            echo '<ul class="dropdown-menu">';
+              echo '<li><a href="'.strtok($_SERVER["REQUEST_URI"],'?').'">Read-only URL</a></li>';
+              echo '<li><a href="'.strtok($_SERVER["REQUEST_URI"],'?')."?admin=$_GET[admin]".'">Admin URL</a></li>';
+            echo '</ul>';
+          echo '</div>';
+        echo "</div>";
+      echo "</div>";
+    ?>
     <table>
       <thead>
         <tr>
@@ -81,14 +109,6 @@ if( !isset($_GET["id"]) || empty($_GET["id"]) ){
              'ga' => 2,
           ),
         );
-
-        $dbc = new mysqli("127.0.0.1", "root", "admin", "tournaments");
-        $dbc->query('SET NAMES utf8');
-        $id = $dbc->real_escape_string($_GET["id"]);
-        $query = "SELECT * FROM `tournaments` WHERE (`id`=$id)";
-        $data = $dbc->query($query);
-        mysqli_close($dbc);
-        $row = mysqli_fetch_array($data);
 
         $teams = json_decode($row["players"], true);
 

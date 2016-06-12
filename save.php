@@ -1,21 +1,25 @@
 <?php
   $dbc = new mysqli('127.0.0.1', 'root', 'admin', 'tournaments') or die( 'błąd' );
   $dbc->query('SET NAMES utf8');
-  $query = "SELECT * FROM `tournaments` WHERE (`id`=".$_POST["id"].")";
+  $query = "SELECT * FROM `tournaments` WHERE (`id`=".$dbc->real_escape_string($_POST["id"]).")";
   $data = $dbc->query($query);
 
   $row = mysqli_fetch_array($data);
-  $fixtures = json_decode($row["fixtures"], true);
-  $index = explode(",", $_POST["index"]);
-  if( array_key_exists( "value", $_POST ) ){
-    $fixtures[$index[0]][$index[1]] = [$_POST["value"][0]*1, $_POST["value"][1]*1];
-  } else {
-    $fixtures[$index[0]][$index[1]] = array();
+  $adminToken = $row["admin_token"];
+  $admin = (isset($_POST["admin"]) && $_POST["admin"] == $adminToken ) ? true: false;
+
+  if( $admin ){
+
+    $fixtures = json_decode($row["fixtures"], true);
+    $index = explode(",", $_POST["index"]);
+    if( array_key_exists( "value", $_POST ) ){
+      $fixtures[$index[0]][$index[1]] = [$_POST["value"][0]*1, $_POST["value"][1]*1];
+    } else {
+      $fixtures[$index[0]][$index[1]] = array();
+    }
+
+    $query = "UPDATE `tournaments` SET `fixtures` = '".json_encode( $fixtures )."' WHERE `tournaments`.`id` = ".$_POST["id"];
+    $data = $dbc->query($query);
+    mysqli_close($dbc);
   }
-
-
-  $query = "UPDATE `tournaments` SET `fixtures` = '".json_encode( $fixtures )."' WHERE `tournaments`.`id` = ".$_POST["id"];
-  echo $query;
-  $data = $dbc->query($query);
-  mysqli_close($dbc);
 ?>

@@ -94,11 +94,10 @@
 
 
     $dbc->query('SET NAMES utf8');
-    $query = "INSERT INTO `tournaments`(`title`, `type`, `players`, `rounds`, `fixtures`) VALUES (".$title.", 'League', '".$json."', '".$rounds."', '".$results."')";
+    $query = "INSERT INTO `tournaments`(`title`, `type`, `players`, `rounds`, `fixtures`, `admin_token`) VALUES ($title, 'League', '$json', '$rounds', '$results', '".bin2hex(openssl_random_pseudo_bytes(3))."')";
     $data = $dbc->query($query);
     $id = $dbc->insert_id;
     mysqli_close($dbc);
-
 
     header("Location: tournament/$id/scores");
   } else {

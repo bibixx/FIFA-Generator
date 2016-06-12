@@ -1,0 +1,11 @@
+.round .row .home, .round .row .away {
+  border-bottom: 2px solid #CC180E;
+}
+
+.round .row .home.correct, .round .row .away.correct {
+  border-bottom-color: rgba(0, 176, 0, 0);
+}
+
+.round .row .home.correct:focus, .round .row .home.correct:active, .round .row .away.correct:focus, .round .row .away.correct:active {
+  border-bottom-color: #1b73f7;
+}
