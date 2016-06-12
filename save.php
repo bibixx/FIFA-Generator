@@ -1,5 +1,6 @@
 <?php
-  $dbc = new mysqli('127.0.0.1', 'root', 'admin', 'tournaments') or die( 'błąd' );
+	include "passwords.php";
+  $dbc = new mysqli(HOST, LOGIN, PASSWORD, DATABASE) or die( 'błąd' );
   $dbc->query('SET NAMES utf8');
   $query = "SELECT * FROM `tournaments` WHERE (`id`=".$dbc->real_escape_string($_POST["id"]).")";
   $data = $dbc->query($query);

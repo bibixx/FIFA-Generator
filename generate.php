@@ -1,6 +1,7 @@
 <?php
   session_start();
-  $dbc = new mysqli('127.0.0.1', 'root', 'admin', 'tournaments') or die( 'błąd' );
+  include "passwords.php";
+  $dbc = new mysqli(HOST, LOGIN, PASSWORD, DATABASE) or die( 'błąd' );
   $json = array();
   $settings = array();
   $error = false;
