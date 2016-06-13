@@ -1,3 +1,4 @@
+
 $(".disabled").hide().removeClass("disabled")
 
 $(".spinner input").bind("input", function(){
@@ -95,6 +96,32 @@ $("#length").bind("change", function(){
 
 printTeams();
 
+var normalize = function( term ) {
+  var ret = "";
+  for ( var i = 0; i < term.length; i++ ) {
+    ret += accentMap[ term.charAt(i) ] || term.charAt(i);
+  }
+  return ret;
+};
+
+$( "input[name*='club']" ).autocomplete({
+  source: function( request, response ) {
+    var matcher = new RegExp( $.ui.autocomplete.escapeRegex( request.term ), "i" );
+    response( $.grep( clubNames, function( value ) {
+      value = value.label || value.value || value;
+      return matcher.test( value ) || matcher.test( normalize( value ) );
+    }) );
+  }
+})
+
+$( "input[name*='club']" ).each(function(){
+  $(this).data("ui-autocomplete")._renderItem = function( ul, item ) {
+  return $( "<li>" )
+    .append( $("<a></a>").css({"display": "flex", "align-items": "center"}).append( $("<div></div>").css({"width": "1em", "height": "1em", "background": "url(logos/"+item.value.toLowerCase().replace(/[^A-Za-z\s0-9]/g, "").replace(/\s/g, "-")+".png) center / contain no-repeat", "display": "inline-block", "margin-right": "5px"}) ).append(item.value) )
+    .appendTo( ul );
+  };
+})
+
 function printTeams(){
   var tempPlayers = [];
   var tempClubs = [];
@@ -107,8 +134,6 @@ function printTeams(){
     }
     tempClubs.push( $(this).find('[name*="club"]').eq(0).val() )
   })
-
-  console.log( tempPlayers );
 
   $(".teams .center-inline-block .team").remove();
   var playersNo = $("#players").val()*1+1
@@ -135,15 +160,15 @@ function printTeams(){
     var $body = $("<div></div>").addClass("panel-body");
     var temp = 1;
     if( !$("#teams").prop("checked") || players[x-1]==1 ){
-      $head.append( $("<input>").attr({"type": "text", 'name': "name"+t, "placeholder": "Player", "required": true}).addClass("form-control").val( tempPlayers[t] ) );
+      $head.append( $("<input>").attr({"type": "text", 'name': "name"+t, "placeholder": "Player", "required": true, "autocomplete": "off"}).addClass("form-control").val( tempPlayers[t] ) );
       t++;
     } else {
       for(i=0; i<players[x-1]; i++){
-        $head.append( $("<input>").attr({"type": "text", 'name': "name"+t, "placeholder": "Player "+(i+1), "required": true}).addClass("form-control").val( tempPlayers[t] ) );
+        $head.append( $("<input>").attr({"type": "text", 'name': "name"+t, "placeholder": "Player "+(i+1), "required": true, "autocomplete": "off"}).addClass("form-control").val( tempPlayers[t] ) );
         t++;
       }
     }
-    $body.append( $("<input>").attr({"type": "text", 'name': "club"+c, "placeholder": "Club name"}).addClass("form-control").val( tempClubs[c] ) );
+    $body.append( $("<input>").attr({"type": "text", 'name': "club"+c, "placeholder": "Club name", "autocomplete": "off"}).addClass("form-control").val( tempClubs[c] ) );
     c++;
 
     $team.append( $head ).append( $body );
