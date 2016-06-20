@@ -7,6 +7,17 @@ body {
   background-image: none;
 }
 
+.text-right-sm {
+  text-align: left;
+  margin-bottom: 10px !important;
+}
+
+@media screen and (min-width: 992px) {
+  .text-right-sm {
+    text-align: right;
+  }
+}
+
 .form-horizontal .form-group {
   margin-right: 0px;
   margin-left: 0px;
@@ -90,34 +101,81 @@ h1.tournament-name {
 table {
   border-spacing: 0px;
   border-collapse: separate;
+  width: 100%;
 }
 
 table tr td, table tr th {
-  border-top: 1px solid #aaa;
-  border-left: 1px solid #aaa;
+  border: none !important;
+  border-bottom: 1px solid #A3ABAD !important;
+  font-size: 12px;
   padding: 5px;
-  text-align: center;
+  text-align: left;
   min-width: 42px;
+  padding: 8px 5px;
+  text-align: center;
 }
 
-table tr td:last-child, table tr th:last-child {
-  border-right: 1px solid #aaa;
+table tr td:nth-child(1), table tr th:nth-child(1) {
+  width: 55px;
 }
 
-table tr:last-child tr, table tr:last-child td {
-  border-bottom: 1px solid #aaa;
+table tr td:nth-child(2), table tr th:nth-child(2) {
+  text-align: left;
+  padding-left: 20px !important;
 }
 
 table thead tr {
-  background: #777;
-  color: #FFF;
+  background: #eceeee;
+  color: #9fa9ac;
+  text-transform: uppercase;
 }
 
 table thead tr th {
-  border-color: #aaa;
   font-weight: 500;
+  padding: 10px 5px;
 }
 
-table tbody tr:hover {
-  background: rgba(173, 216, 230, 0.47);
+table tbody tr td {
+  margin-top: 10px;
+  padding: 3px 0px 0px 0px !important;
+  height: 50px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  vertical-align: middle !important;
+  color: #7F7F7F;
+  line-height: 50px !important;
+}
+
+table tbody tr td:nth-child(1), table tbody tr td:nth-child(2), table tbody tr td:nth-child(3), table tbody tr td:last-child {
+  color: black;
+}
+
+table tbody tr td:first-child span {
+  display: inline-block;
+  width: 55px;
+  height: 55px;
+  line-height: 55px !important;
+  vertical-align: middle;
+  font-size: 26px;
+  text-align: center;
+}
+
+table tbody tr:nth-child(1) td:first-child span {
+  background: #2159a6;
+  color: #ffffff;
+}
+
+table tbody tr:nth-child(2) td:first-child span {
+  background: #0491d4;
+  color: #ffffff;
+}
+
+@media screen and (max-width: 767px) {
+  table tr:last-child td {
+    border-bottom: none !important;
+  }
+  .table-responsive {
+    border-color: #A3ABAD;
+  }
 }

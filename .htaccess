@@ -1,4 +1,6 @@
 Options FollowSymLinks
 RewriteEngine On
-RewriteRule tournament/([0-9]+)/(.*)$ tournament/$2.php?id=$1 [L,QSA]
+RewriteRule tournament/([0-9]+)/scores$ tournament/scores.php?id=$1 [L,QSA]
+RewriteRule tournament/([0-9]+)/table$ tournament/table.php?id=$1 [L,QSA]
+RewriteRule tournament/([0-9]+)/(.*)$ tournament/index.php?id=$1 [L,QSA]
 RewriteRule ^js/scores\.js$ js/scores.php [L,QSA]

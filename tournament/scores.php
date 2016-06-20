@@ -9,6 +9,12 @@ if( !isset($_GET["id"]) || empty($_GET["id"]) ){
   <title>FIFA Tournament generator</title>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <script src="/FIFA-Generator/js/jquery-1.12.3.min.js" charset="utf-8"></script>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+  <link rel="stylesheet" href="/FIFA-Generator/css/scores.css" media="screen" charset="utf-8">
 </head>
 <body>
   <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -54,26 +60,23 @@ if( !isset($_GET["id"]) || empty($_GET["id"]) ){
       $offset = isset($_GET["page"]) ? ($_GET["page"]-1 >= 0 ? $_GET["page"]-1 : 0) : 0;
 
       $date = strtotime($row["created_at"]);
-      if( $admin ){
         echo "<div class='row'>";
           echo "<div class='col-xs-12 col-sm-12 col-md-6 col-lg-6'>";
             echo "<h1 class='tournament-name'>$title</h1>";
-            echo "<p>Created on <span class='created_at'>".strftime("%d.%m.%Y at %R", $date)."</span></p>";
+            echo "<p>Created on <span class='created_at'>".strftime("%d.%m.%Y</span> at <span class='created_at'>%R", $date)."</span></p>";
           echo "</div>";
           echo "<div class='col-xs-12 col-sm-12 col-md-6 col-lg-6 text-right-sm'>";
             echo '<div class="btn-group">';
               echo '<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-share" aria-hidden="true"></span> Share tournament <span class="caret"></span></button>';
               echo '<ul class="dropdown-menu">';
                 echo '<li><a href="'.strtok($_SERVER["REQUEST_URI"],'?').'">Read-only URL</a></li>';
-                echo '<li><a href="'.strtok($_SERVER["REQUEST_URI"],'?')."?admin=$_GET[admin]".'">Admin URL</a></li>';
+                if( $admin ){
+                  echo '<li><a href="'.strtok($_SERVER["REQUEST_URI"],'?')."?admin=$_GET[admin]".'">Admin URL</a></li>';
+                }
               echo '</ul>';
             echo '</div>';
           echo "</div>";
         echo "</div>";
-      } else {
-        echo "<h1 class='tournament-name'>$title</h1>";
-        echo "<p>Created on <span class='created_at'>".strftime("%d.%m.%Y at %R", $date)."</span></p>";
-      }
 
       for($x=$offset*2; $x<$offset*2+2; $x++){
         if( array_key_exists($x, $rounds) ){
@@ -165,10 +168,6 @@ if( !isset($_GET["id"]) || empty($_GET["id"]) ){
       <p class="text-muted">Made with <span class="glyphicon glyphicon-heart"></span> by <a href="https://github.com/bibixx" target="_blank">bibixx</a></p>
     </div>
   </footer>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
-  <link rel="stylesheet" href="/FIFA-Generator/css/scores.css" media="screen" charset="utf-8">
-  <script src="/FIFA-Generator/js/jquery-1.12.3.min.js" charset="utf-8"></script>
   <?php
     if($admin){
   ?>

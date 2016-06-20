@@ -7,6 +7,17 @@ body {
   background-image: none;
 }
 
+.text-right-sm {
+  text-align: left;
+  margin-bottom: 10px !important;
+}
+
+@media screen and (min-width: 992px) {
+  .text-right-sm {
+    text-align: right;
+  }
+}
+
 .form-horizontal .form-group {
   margin-right: 0px;
   margin-left: 0px;
@@ -172,11 +183,6 @@ h1.tournament-name {
   }
 }
 
-.text-right-sm {
-  text-align: left;
-  margin-bottom: 10px;
-}
-
 @media screen and (max-width: 375px) {
   body {
     font-size: 12px;
@@ -190,12 +196,6 @@ h1.tournament-name {
   body .round .row .home, body .round .row .away {
     min-width: 15px;
     margin: 0px 8px;
-  }
-}
-
-@media screen and (min-width: 992px) {
-  .text-right-sm {
-    text-align: right;
   }
 }
 
