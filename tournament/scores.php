@@ -101,7 +101,7 @@ if( !isset($_GET["id"]) || empty($_GET["id"]) ){
               $player2 = $players[ $teams[1] ]["players"][0];
             }
 
-            $contenteditable = ($admin) ? "contenteditable" : "";
+            $contenteditable = ($admin) ? "type='number'" : "type='number' disabled";
 
             echo '<div class="row">';
               if( !empty($club1) ){
@@ -110,9 +110,9 @@ if( !isset($_GET["id"]) || empty($_GET["id"]) ){
                 echo '<div class="col-xs-4 col-sm-4 col-md-5 col-lg-5 text-right"><p>'.html_entity_decode($player1, ENT_QUOTES).'</p></div>';
               }
               if( array_key_exists(0, $result) ){
-                echo '<div class="col-xs-4 col-sm-4 col-md-2 col-lg-2 text-center"><span '.$contenteditable.' class="home correct">'.$result[0].'</span>:<span '.$contenteditable.' class="away correct">'.$result[1].'</span></div>';
+                echo '<div class="col-xs-4 col-sm-4 col-md-2 col-lg-2 text-center"><input '.$contenteditable.' class="home correct" value="'.$result[0].'">:<input '.$contenteditable.' class="away correct" value="'.$result[1].'"></div>';
               } else {
-                echo '<div class="col-xs-4 col-sm-4 col-md-2 col-lg-2 text-center"><span '.$contenteditable.' class="home"></span>:<span '.$contenteditable.' class="away"></span></div>';
+                echo '<div class="col-xs-4 col-sm-4 col-md-2 col-lg-2 text-center"><input '.$contenteditable.' class="home" value="">:<input '.$contenteditable.' class="away" value=""></div>';
               }
               if( !empty($club1) ){
                 echo '<div class="col-xs-4 col-sm-4 col-md-5 col-lg-5 text-left">'.html_entity_decode($club2, ENT_QUOTES).'</p><p class="name">'.html_entity_decode($player2, ENT_QUOTES).'</p></div>';
@@ -176,6 +176,7 @@ if( !isset($_GET["id"]) || empty($_GET["id"]) ){
   <?php
     } else {
   ?>
+  <script src="/FIFA-Generator/js/scores.js" charset="utf-8"></script>
   <?php
     }
   ?>

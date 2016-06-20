@@ -47,11 +47,18 @@ h1.tournament-name
 
     .home, .away
       font-size: 1.3em
-      display: inline-block
-      min-width: 40px
-      margin: 0px 10px
+      background: none
+      border: none
+      border-radius: 0px
+
       transition: .2s all ease-in-out
       outline: none
+      margin: 0px 10px
+      text-align: center
+      box-sizing: content-box
+      &::-webkit-outer-spin-button, &::-webkit-inner-spin-button
+        -webkit-appearance: none
+        margin: 0
 
 .pagination
   display: flex
@@ -77,9 +84,5 @@ h1.tournament-name
 
     .round
       .row
-        padding: 40px 10px
-        &.head
-          padding: 40px
         .home, .away
           min-width: 15px
-          margin: 0px 8px
