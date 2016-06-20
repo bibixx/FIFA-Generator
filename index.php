@@ -22,11 +22,33 @@ function print_e($key) {
   <title>FIFA Tournament generator</title>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  
+
   <script src="js/jquery-1.12.3.min.js" charset="utf-8"></script>
   <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
   <script src="js/data/accent-map.js" charset="utf-8"></script>
   <script src="js/data/club-names.js" charset="utf-8"></script>
+
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $( "input[name*='club']" ).autocomplete({
+        source: function( request, response ) {
+          var matcher = new RegExp( $.ui.autocomplete.escapeRegex( request.term ), "i" );
+          response( $.grep( clubNames, function( value ) {
+            value = value.label || value.value || value;
+            return matcher.test( value ) || matcher.test( normalize( value ) );
+          }) );
+        }
+      })
+
+      $( "input[name*='club']" ).each(function(){
+        $(this).data("ui-autocomplete")._renderItem = function( ul, item ) {
+        return $( "<li>" )
+          .append( $("<a></a>").css({"display": "flex", "align-items": "center"}).append( $("<div></div>").css({"width": "1em", "height": "1em", "background": "url(logos/"+item.value.toLowerCase().replace(/[^A-Za-z\s0-9]/g, "").replace(/\s/g, "-")+".png) center / contain no-repeat", "display": "inline-block", "margin-right": "5px"}) ).append(item.value) )
+          .appendTo( ul );
+        };
+      })
+    })
+  </script>
 
   <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">

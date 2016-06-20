@@ -104,24 +104,6 @@ var normalize = function( term ) {
   return ret;
 };
 
-$( "input[name*='club']" ).autocomplete({
-  source: function( request, response ) {
-    var matcher = new RegExp( $.ui.autocomplete.escapeRegex( request.term ), "i" );
-    response( $.grep( clubNames, function( value ) {
-      value = value.label || value.value || value;
-      return matcher.test( value ) || matcher.test( normalize( value ) );
-    }) );
-  }
-})
-
-$( "input[name*='club']" ).each(function(){
-  $(this).data("ui-autocomplete")._renderItem = function( ul, item ) {
-  return $( "<li>" )
-    .append( $("<a></a>").css({"display": "flex", "align-items": "center"}).append( $("<div></div>").css({"width": "1em", "height": "1em", "background": "url(logos/"+item.value.toLowerCase().replace(/[^A-Za-z\s0-9]/g, "").replace(/\s/g, "-")+".png) center / contain no-repeat", "display": "inline-block", "margin-right": "5px"}) ).append(item.value) )
-    .appendTo( ul );
-  };
-})
-
 function printTeams(){
   var tempPlayers = [];
   var tempClubs = [];
