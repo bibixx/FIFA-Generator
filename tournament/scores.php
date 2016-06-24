@@ -65,23 +65,23 @@ if( !isset($_GET["id"]) || empty($_GET["id"]) ){
         header("Location: /FIFA-Generator/.");
       }
 
-        echo "<div class='row'>";
-          echo "<div class='col-xs-12 col-sm-12 col-md-6 col-lg-6'>";
-            echo "<h1 class='tournament-name'>$title</h1>";
-            echo "<p>Created on <span class='created_at'>".strftime("%d.%m.%Y</span> at <span class='created_at'>%H:%m:%S", $date)."</span></p>";
-          echo "</div>";
-          echo "<div class='col-xs-12 col-sm-12 col-md-6 col-lg-6 text-right-sm'>";
-            echo '<div class="btn-group">';
-              echo '<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-share" aria-hidden="true"></span> Share tournament <span class="caret"></span></button>';
-              echo '<ul class="dropdown-menu">';
-                echo '<li><a href="'.strtok($_SERVER["REQUEST_URI"],'?').'">Read-only URL</a></li>';
-                if( $admin ){
-                  echo '<li><a href="'.strtok($_SERVER["REQUEST_URI"],'?')."?admin=$_GET[admin]".'">Admin URL</a></li>';
-                }
-              echo '</ul>';
-            echo '</div>';
-          echo "</div>";
+      echo "<div class='row'>";
+        echo "<div class='col-xs-12 col-sm-12 col-md-6 col-lg-6'>";
+          echo "<h1 class='tournament-name'>$title</h1>";
+          echo "<p>Created on <span class='created_at'>".strftime("%d.%m.%Y</span> at <span class='created_at'>%H:%m:%S", $date)."</span></p>";
         echo "</div>";
+        echo "<div class='col-xs-12 col-sm-12 col-md-6 col-lg-6 text-right-sm'>";
+          echo '<div class="btn-group">';
+            echo '<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-share" aria-hidden="true"></span> Share tournament <span class="caret"></span></button>';
+            echo '<ul class="dropdown-menu">';
+              echo '<li><a href="'.strtok($_SERVER["REQUEST_URI"],'?').'">Read-only URL</a></li>';
+              if( $admin ){
+                echo '<li><a href="'.strtok($_SERVER["REQUEST_URI"],'?')."?admin=$_GET[admin]".'">Admin URL</a></li>';
+              }
+            echo '</ul>';
+          echo '</div>';
+        echo "</div>";
+      echo "</div>";
 
       for($x=$offset*2; $x<$offset*2+2; $x++){
         if( array_key_exists($x, $rounds) ){
@@ -106,7 +106,7 @@ if( !isset($_GET["id"]) || empty($_GET["id"]) ){
               $player2 = $players[ $teams[1] ]["players"][0];
             }
 
-            $contenteditable = ($admin) ? "type='number'" : "type='number' disabled";
+            $disabled = ($admin) ? "" : "disabled";
 
             echo '<div class="row">';
               if( !empty($club1) ){
@@ -115,9 +115,9 @@ if( !isset($_GET["id"]) || empty($_GET["id"]) ){
                 echo '<div class="col-xs-4 col-sm-4 col-md-5 col-lg-5 text-right"><p>'.html_entity_decode($player1, ENT_QUOTES).'</p></div>';
               }
               if( array_key_exists(0, $result) ){
-                echo '<div class="col-xs-4 col-sm-4 col-md-2 col-lg-2 text-center"><input '.$contenteditable.' class="home correct" value="'.$result[0].'">:<input '.$contenteditable.' class="away correct" value="'.$result[1].'"></div>';
+                echo '<div class="col-xs-4 col-sm-4 col-md-2 col-lg-2 text-center"><input type="number" '.$disabled.' class="home correct" value="'.$result[0].'">:<input type="number" '.$disabled.' class="away correct" value="'.$result[1].'"></div>';
               } else {
-                echo '<div class="col-xs-4 col-sm-4 col-md-2 col-lg-2 text-center"><input '.$contenteditable.' class="home" value="">:<input '.$contenteditable.' class="away" value=""></div>';
+                echo '<div class="col-xs-4 col-sm-4 col-md-2 col-lg-2 text-center"><input type="number" '.$disabled.' class="home" value="">:<input type="number" '.$disabled.' class="away" value=""></div>';
               }
               if( !empty($club1) ){
                 echo '<div class="col-xs-4 col-sm-4 col-md-5 col-lg-5 text-left">'.html_entity_decode($club2, ENT_QUOTES).'</p><p class="name">'.html_entity_decode($player2, ENT_QUOTES).'</p></div>';

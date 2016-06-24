@@ -122,7 +122,7 @@ $( "input[name*='club']" ).autocomplete({
 .each(function(){
   $(this).data("ui-autocomplete")._renderItem = function( ul, item ) {
   return $( "<li>" )
-    .append( $("<a></a>").css({"display": "flex", "align-items": "center"}).append( $("<div></div>").css({"width": "1em", "height": "1em", "background": "url(logos/"+item.value.toLowerCase().replace(/[^A-Za-z\s0-9]/g, "").replace(/\s/g, "-")+".png) center / contain no-repeat", "display": "inline-block", "margin-right": "5px"}) ).append(item.value) )
+    .append( $("<a></a>").css({"display": "flex", "align-items": "center"}).append( $("<div></div>").css({"width": "1em", "height": "1em", "background": "url(logos/16/"+item.value.replace("&#39;", "").toLowerCase().replace(/[^A-Za-z\s0-9\-]/g, "").replace(/\s/g, "-")+".png) center / contain no-repeat", "display": "inline-block", "margin-right": "5px"}) ).append(item.value) )
     .appendTo( ul );
   };
 });
