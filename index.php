@@ -28,28 +28,6 @@ function print_e($key) {
   <script src="js/data/accent-map.js" charset="utf-8"></script>
   <script src="js/data/club-names.js" charset="utf-8"></script>
 
-  <script type="text/javascript">
-    $(document).ready(function(){
-      $( "input[name*='club']" ).autocomplete({
-        source: function( request, response ) {
-          var matcher = new RegExp( $.ui.autocomplete.escapeRegex( request.term ), "i" );
-          response( $.grep( clubNames, function( value ) {
-            value = value.label || value.value || value;
-            return matcher.test( value ) || matcher.test( normalize( value ) );
-          }) );
-        }
-      })
-
-      $( "input[name*='club']" ).each(function(){
-        $(this).data("ui-autocomplete")._renderItem = function( ul, item ) {
-        return $( "<li>" )
-          .append( $("<a></a>").css({"display": "flex", "align-items": "center"}).append( $("<div></div>").css({"width": "1em", "height": "1em", "background": "url(logos/"+item.value.toLowerCase().replace(/[^A-Za-z\s0-9]/g, "").replace(/\s/g, "-")+".png) center / contain no-repeat", "display": "inline-block", "margin-right": "5px"}) ).append(item.value) )
-          .appendTo( ul );
-        };
-      })
-    })
-  </script>
-
   <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
@@ -64,7 +42,7 @@ function print_e($key) {
       <div id="navbar" class="collapse navbar-collapse">
         <ul class="nav navbar-nav">
           <li class="active"><a href=".">Create new tournament</a></li>
-          <li class="dropdown"><a href="#" data-toggle="dropdown" class="dropdown-toggle">My tournaments <span class="caret"></span></a>
+          <li class="dropdown hidden"><a href="#" data-toggle="dropdown" class="dropdown-toggle">My tournaments <span class="caret"></span></a>
             <ul class="dropdown-menu">
               <li><a href="#">Fixtures</a></li>
               <li><a href="#">Table</a></li>
@@ -115,7 +93,7 @@ function print_e($key) {
             <label for="teams" class="col-md-12 control-label">Play in teams?</label>
             <div class="col-md-12 checkbox">
               <label>
-                <input type="checkbox" name="teams" id="teams" class="checkbox-inline">Do you want to play in teams that consist of 1 or 2 players?
+                <input type="checkbox" name="teams" id="teamsEnabled" class="checkbox-inline">Do you want to play in teams that consist of 1 or 2 players?
               </label>
             </div>
           </div>
@@ -183,7 +161,7 @@ function print_e($key) {
             <ul>
               <li>Your tournament will consist of <span id="number"></span> players</li>
               <li>All teams will play against all other player's teams <span id="against"></span></li>
-              <li>The tournament will consist of <span id="fix"></span> fixtures</li>
+              <li>The tournament will consist of <span id="fix"></span></li>
               <li>It will take about <span id="time"></span> to play all fixtures (
                 <select id="length">
                   <option>20</option>

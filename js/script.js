@@ -1,160 +1,213 @@
+$(".disabled").hide().removeClass("disabled");
 
-$(".disabled").hide().removeClass("disabled")
-
-$(".spinner input").bind("input", function(){
+$(".spinner input").on("input", function(){
   var str = $(this).val();
   var res = str.replace(/[^0-9]/g, "");
-  if(res == ""){
-    res = "0"
+  if(res === ""){
+    res = "0";
   }
-  $(this).val( res*1 )
-})
+  $(this).val( res*1 );
+});
 
-$(".spinner .plus").bind("click", function(){
+$(".spinner .plus").on("click", function(){
   var $p = $(this).parents(".spinner").find("input");
   $p.val( $p.val()*1+1 );
-  $p.trigger("input")
+  $p.trigger("input");
   $(this).blur();
-})
+});
 
-$(".spinner .minus").bind("click", function(){
+$(".spinner .minus").on("click", function(){
   var $p = $(this).parents(".spinner").find("input");
   if( $p.val() > 1 ){
     $p.val( $p.val()*1-1 );
   }
-  $p.trigger("input")
+  $p.trigger("input");
   $(this).blur();
-})
+});
 
-$("#teams").bind("change", function(){
+$("#teamsEnabled").on("change", function(){
+  var $tNo = $("#teamsNo");
   if( $(this).prop("checked") ){
-    $("#teamsNo").parents(".form-horizontal").stop().slideDown(200)
-    $("#teamsNo").val( Math.round( $("#players").val()/2 ) ).trigger("input")
+    $tNo.parents(".form-horizontal").stop().slideDown(200);
+    $tNo.val( Math.round( $("#players").val()/2 ) ).trigger("input");
   } else {
-    $("#teamsNo").parents(".form-horizontal").stop().slideUp(200)
-    $("#teamsNo").trigger("input")
+    $tNo.parents(".form-horizontal").stop().slideUp(200);
+    $tNo.trigger("input");
   }
-})
+});
 
-$("#type").bind("change", function(){
+$("#type").on("change", function(){
   var val = $(this).find(":selected").val();
+  var $matchVsParents = $("#matchesvs").parents(".form-horizontal");
   if( val == "League" ){
-    $("#matchesvs").parents(".form-horizontal").stop().slideDown(200)
+    $matchVsParents.stop().slideDown(200);
   } else {
-    $("#matchesvs").parents(".form-horizontal").stop().slideUp(200)
+    $matchVsParents.stop().slideUp(200);
   }
-})
+});
 
-$("#matchesvs").bind("input", function(){
+$("#matchesvs").on("input", function(){
   if( $(this).val() > 2 ){
     $(this).val(2);
   }
 });
 
-$("#players").bind("input", function(){
-  var playersVal = $("#players").val()
-  if( $("#players").val() < 2 ){
-    $("#players").val( 2 )
-  }
-  if( $("#players").val() > 32 ){
-    $("#players").val( 32 )
-  }
-  if( $("#teams").prop("checked") ){
-    if( $("#players").val()/$("#teamsNo").val() < 1 ){
-      $("#teamsNo").val( $("#players").val() )
-    }
-    if( $("#players").val()/$("#teamsNo").val() > 2 ){
-      $("#teamsNo").val( Math.round( $("#players").val()/2 ) )
-    }
-  }
-})
+$("#players").on("input", function(){
+  var $players = $(this);
+  var $teamsNo = $("#teamsNo");
+  var playersVal = $players.val();
 
-$("#teamsNo").bind("input", function(){
-  if( $("#teamsNo").val() < 2 ){
-    $("#teamsNo").val( 2 )
+  if( $players.val() < 2 ){
+    $players.val( 2 );
   }
-  if( $("#teamsNo").val() > 32 ){
-    $("#teamsNo").val( 32 )
-  }
-  if( $("#teams").prop("checked") ){
-    if( $("#players").val() > $("#teamsNo").val()*2 ){
-      $("#players").val( $("#teamsNo").val()*2 )
-    }
-    if( $("#players").val() / $("#teamsNo").val() < 1 ){
-      $("#players").val( $("#teamsNo").val() )
-    }
-  }
-})
 
-$("#players, #teamsNo, #matchesvs").bind("input", function(){
+  if( $players.val() > 32 ){
+    $players.val( 32 );
+  }
+
+  if( $("#teamsEnabled").prop("checked") ){
+    if( $players.val()/$teamsNo.val() < 1 ){
+      $teamsNo.val( $players.val() );
+    }
+
+    if( $players.val()/$teamsNo.val() > 2 ){
+      $teamsNo.val( Math.round( $players.val()/2 ) );
+    }
+  }
+});
+
+$("#teamsNo").on("input", function(){
+  var $teamsNo = $(this);
+  var $players = $("#players");
+
+  if( $teamsNo.val() < 2 ){
+    $teamsNo.val( 2 );
+  }
+
+  if( $teamsNo.val() > 32 ){
+    $teamsNo.val( 32 );
+  }
+
+  if( $("#teamsEnabled").prop("checked") ){
+    if( $players.val() > $teamsNo.val()*2 ){
+      $players.val( $teamsNo.val()*2 );
+    }
+
+    if( $players.val() / $teamsNo.val() < 1 ){
+      $players.val( $teamsNo.val() );
+    }
+  }
+});
+
+$("#players, #teamsNo, #matchesvs").on("input", function(){
   printTeams();
-})
+});
 
-$("#length").bind("change", function(){
+$("#length").on("change", function(){
   printTeams();
-})
+});
 
 printTeams();
 
-var normalize = function( term ) {
+
+$( "input[name*='club']" ).autocomplete({
+  source: function( request, response ) {
+    var matcher = new RegExp( $.ui.autocomplete.escapeRegex( request.term ), "i" );
+    response( $.grep( clubNames, function( value ) {
+      value = value.label || value.value || value;
+      return matcher.test( value ) || matcher.test( normalize( value ) );
+    }) );
+  }
+})
+.each(function(){
+  $(this).data("ui-autocomplete")._renderItem = function( ul, item ) {
+  return $( "<li>" )
+    .append( $("<a></a>").css({"display": "flex", "align-items": "center"}).append( $("<div></div>").css({"width": "1em", "height": "1em", "background": "url(logos/"+item.value.toLowerCase().replace(/[^A-Za-z\s0-9]/g, "").replace(/\s/g, "-")+".png) center / contain no-repeat", "display": "inline-block", "margin-right": "5px"}) ).append(item.value) )
+    .appendTo( ul );
+  };
+});
+
+
+function normalize( term ) {
   var ret = "";
   for ( var i = 0; i < term.length; i++ ) {
     ret += accentMap[ term.charAt(i) ] || term.charAt(i);
   }
   return ret;
-};
+}
 
 function printTeams(){
   var tempPlayers = [];
   var tempClubs = [];
-  var t = 0;
-  var c = 0;
-  $(".team").each(function(){
-    tempPlayers.push( $(this).find('[name*="name"]').eq(0).val() )
-    if( typeof( $(this).find('[name*="name"]').eq(1).val() ) != "undefined" ){
-      tempPlayers.push( $(this).find('[name*="name"]').eq(1).val() )
-    }
-    tempClubs.push( $(this).find('[name*="club"]').eq(0).val() )
-  })
+  var teamIndex = 0;
+  var clubIndex = 0;
 
-  $(".teams .center-inline-block .team").remove();
-  var playersNo = $("#players").val()*1+1
-  var teamsNo = $("#teamsNo").val()*1+1;
+  $(".team").each(function(){
+    var $name = $(this).find('[name*="name"]');
+    var val0 = $name.eq(0).val();
+    var val1 = $name.eq(1).val();
+    tempPlayers.push( val0 );
+    if( typeof( val1 ) != "undefined" ){
+      tempPlayers.push( val1 );
+    }
+    tempClubs.push( val0 );
+  });
+
+
+  var $players = $("#players");
+  var $playersVal = $players.val();
+  var $teamsNo = $("#teamsNo");
+  var $teamsNoVal = $teamsNo.val();
+  var $matchesvs = $("#matchesvs");
+  var $matchesvsVal = $matchesvs.val();
+  var $summary = $(".summary");
+  var $summaryFix =  $summary.find("#fix");
+  var $teams = $(".teams");
+  var $teamsEnabled = $("#teamsEnabled");
+  var $cib = $(".center-inline-block");
   var players = distribute();
-  if( $("#teams").prop("checked") ){
-    y = teamsNo
-    $(".summary #fix").text( $("#teamsNo").val()*($("#teamsNo").val()-1)/2*$("#matchesvs").val() );
+
+  $teams.find(".team").remove();
+
+  if( $teamsEnabled.prop("checked") ){
+    y = $teamsNoVal*1+1;
+    fixturesNo = $teamsNoVal*($teamsNoVal-1)/2*$matchesvsVal;
+    $summaryFix.text( fixturesNo+" fixture"+((fixturesNo>1)?"s":"") );
   } else {
-    y = playersNo
-    $(".summary #fix").text( $("#players").val()*($("#players").val()-1)/2*$("#matchesvs").val() );
+    y = $playersVal*1+1;
+    fixturesNo = $playersVal*($playersVal-1)/2*$matchesvsVal;
+    $summaryFix.text( fixturesNo+" fixture"+((fixturesNo>1)?"s":"") );
   }
 
-  var time = $(".summary #fix").text()*$("#length").find(":selected").val()*2/60;
+  var tournamentTime = $summaryFix.text()*$("#length").find(":selected").val()*2/60;
 
-  $(".summary #time").text( (time<1)? Math.floor(time*60*10)/10+" minutes": (time<2)? Math.floor(time*10)/10+" hour": Math.floor(time*10)/10+" hours");
-  $(".summary #number").text( $("#players").val() );
-  var vs = $("#matchesvs").val()*1;
-  $(".summary #against").text( (vs==1)? "once" : "twice" )
+  $summary.find("#time").text( (tournamentTime<1)? Math.floor(time*60*10)/10+" minutes": (tournamentTime<2)? Math.floor(tournamentTime*10)/10+" hour": Math.floor(tournamentTime*10)/10+" hours");
+  $summary.find("#number").text( $("#players").val() );
+
+  var noAgainst = $matchesvsVal*1;
+  $summary.find("#against").text( (noAgainst==1)? "once" : "twice" );
 
   for(x=1; x<y; x++){
     var $team = $("<div></div>").attr("id", x).addClass("team").addClass("panel").addClass("panel-primary");
     var $head = $("<div></div>").addClass("panel-heading");
     var $body = $("<div></div>").addClass("panel-body");
     var temp = 1;
-    if( !$("#teams").prop("checked") || players[x-1]==1 ){
-      $head.append( $("<input>").attr({"type": "text", 'name': "name"+t, "placeholder": "Player", "required": true, "autocomplete": "off"}).addClass("form-control").val( tempPlayers[t] ) );
-      t++;
+    if( !$teamsEnabled.prop("checked") || players[x-1]==1 ){
+      input = $("<input>").attr({"type": "text", 'name': "name"+teamIndex, "placeholder": "Player", "required": true, "autocomplete": "off"}).addClass("form-control").val( tempPlayers[teamIndex] );
+      $head.append( input );
+      teamIndex++;
     } else {
       for(i=0; i<players[x-1]; i++){
-        $head.append( $("<input>").attr({"type": "text", 'name': "name"+t, "placeholder": "Player "+(i+1), "required": true, "autocomplete": "off"}).addClass("form-control").val( tempPlayers[t] ) );
-        t++;
+        input = $("<input>").attr({"type": "text", 'name': "name"+teamIndex, "placeholder": "Player "+(i+1), "required": true, "autocomplete": "off"}).addClass("form-control").val( tempPlayers[teamIndex] );
+        $head.append( input );
+        teamIndex++;
       }
     }
-    $body.append( $("<input>").attr({"type": "text", 'name': "club"+c, "placeholder": "Club name", "autocomplete": "off"}).addClass("form-control").val( tempClubs[c] ) );
-    c++;
+    $body.append( $("<input>").attr({"type": "text", 'name': "club"+clubIndex, "placeholder": "Club name", "autocomplete": "off"}).addClass("form-control").val( tempClubs[clubIndex] ) );
+    clubIndex++;
 
     $team.append( $head ).append( $body );
-    $(".center-inline-block").append( $team );
+    $cib.append( $team );
   }
 }
 
@@ -179,22 +232,17 @@ function distribute(){
   	lengths[x] = columns[x].length;
   }
 
-  lengths.sort(function(a,b){return b-a});
+  lengths.sort(function(a,b){ return b-a; });
 
   return lengths;
 }
 
 
-$("form").bind("submit", function(e){
-  var temp = true
+$("form").on("submit", function(e){
+  var temp = true;
   $(".teams input").each(function(){
-    if( $(this).val() == "" ){
-      temp = false
+    if( $(this).val() === "" ){
+      temp = false;
     }
-  })
-
-  if(!temp){
-    // alert( "Please fill in all of the inputs" )
-    // e.preventDefault();
-  }
-})
+  });
+});

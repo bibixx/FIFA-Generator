@@ -55,11 +55,15 @@ if( !isset($_GET["id"]) || empty($_GET["id"]) ){
       $date = strtotime($row["created_at"]);
       $adminToken = $row["admin_token"];
       $admin = (isset($_GET["admin"]) && $_GET["admin"] == $adminToken ) ? true: false;
-      
+
+      if( empty($date) ){
+        header("Location: /FIFA-Generator/.");
+      }
+
       echo "<div class='row'>";
         echo "<div class='col-xs-12 col-sm-12 col-md-6 col-lg-6'>";
           echo "<h1 class='tournament-name'>$title</h1>";
-          echo "<p>Created on <span class='created_at'>".strftime("%d.%m.%Y</span> at <span class='created_at'>%R", $date)."</span></p>";
+          echo "<p>Created on <span class='created_at'>".strftime("%d.%m.%Y</span> at <span class='created_at'>%H:%m:%S", $date)."</span></p>";
         echo "</div>";
         echo "<div class='col-xs-12 col-sm-12 col-md-6 col-lg-6 text-right-sm'>";
           echo '<div class="btn-group">';
@@ -139,45 +143,45 @@ if( !isset($_GET["id"]) || empty($_GET["id"]) ){
           }
 
           uasort($teams, function($a,$b){
-              $aPts = $a["wins"]*3+$a["draws"];
-              $aGD = $a["gf"]-$a["ga"];
-              $bPts = $b["wins"]*3+$b["draws"];
-              $bGD = $b["gf"]-$b["ga"];
-              if($aPts == $bPts){
+            $aPts = $a["wins"]*3+$a["draws"];
+            $aGD = $a["gf"]-$a["ga"];
+            $bPts = $b["wins"]*3+$b["draws"];
+            $bGD = $b["gf"]-$b["ga"];
+            if($aPts == $bPts){
 
-                if($aGD == $bGD){
+              if($aGD == $bGD){
 
-                  if($a["gf"] == $b["gf"]){
-                    return 0;
-                  }
-
-                  if($a["gf"] > $b["gf"]){
-                    return 1;
-                  }
-
-                  if($a["gf"] < $b["gf"]){
-                    return -1;
-                  }
-
-                }
-
-                if($aGD > $bGD){
-                  return 1;
-                }
-
-                if($aGD < $bGD){
+                if($a["gf"] == $b["gf"]){
                   return 0;
                 }
 
-              }
-
-              if($aPts < $bPts){
-                  return -1;
-              }
-
-              if($aPts > $bPts){
+                if($a["gf"] > $b["gf"]){
                   return 1;
+                }
+
+                if($a["gf"] < $b["gf"]){
+                  return -1;
+                }
+
               }
+
+              if($aGD > $bGD){
+                return 1;
+              }
+
+              if($aGD < $bGD){
+                return 0;
+              }
+
+            }
+
+            if($aPts < $bPts){
+                return -1;
+            }
+
+            if($aPts > $bPts){
+                return 1;
+            }
           });
 
           $teams = array_reverse( $teams );
@@ -208,6 +212,5 @@ if( !isset($_GET["id"]) || empty($_GET["id"]) ){
       <p class="text-muted">Made with <span class="glyphicon glyphicon-heart"></span> by <a href="https://github.com/bibixx" target="_blank">bibixx</a></p>
     </div>
   </footer>
-  <script src="/FIFA-Generator/js/script.js" charset="utf-8"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 </body>
