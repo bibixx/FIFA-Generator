@@ -34,6 +34,8 @@ body {
   border: 1px solid rgba(0, 0, 0, 0.15);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
   border-radius: 0px 0px 4px 4px;
+  max-height: 300px;
+  overflow-y: auto;
 }
 
 .ui-autocomplete li.ui-menu-item {
@@ -145,7 +147,9 @@ body {
   display: inline-block;
   position: relative;
   left: 50%;
-  transform: translateX(-50%);
+  -webkit-transform: translateX(-50%);
+      -ms-transform: translateX(-50%);
+          transform: translateX(-50%);
   max-width: 1115px;
 }
 

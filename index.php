@@ -58,7 +58,7 @@ function print_e($key) {
       <div class="row">
         <div class="form-horizontal">
           <div class="form-group">
-            <label for="players" class="col-md-12 control-label">Tournament name:</label>
+            <label for="title" class="col-md-12 control-label">Tournament name:</label>
             <div class="col-md-5">
               <input id="title" type="text" name="title" placeholder="Tournament name" class="form-control">
             </div>
