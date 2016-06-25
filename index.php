@@ -34,6 +34,7 @@ function print_e($key) {
   <link rel="stylesheet" href="css/style.css" media="screen" charset="utf-8">
 </head>
 <body>
+  <script src="js/fb.js" charset="utf-8"></script>
   <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
       <div class="navbar-header">
@@ -49,6 +50,14 @@ function print_e($key) {
             </ul>
           </li>
           <li><a href="#contact">Contact</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li class="dropdown"><a href="#" data-toggle="dropdown" class="dropdown-toggle">Login <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="#" onclick="fb_login();">Log in with Facebook</a></li>
+              <li><a href="#">Log in with Google</a></li>
+            </ul>
+          </li>
         </ul>
       </div>
     </div>
