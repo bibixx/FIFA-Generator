@@ -179,7 +179,7 @@ function printTeams(){
     $summaryFix.text( fixturesNo+" fixture"+((fixturesNo>1)?"s":"") );
   }
 
-  var tournamentTime = $summaryFix.text()*$("#length").find(":selected").val()*2/60;
+  var tournamentTime = $summaryFix.text().replace(/[^0-9]/g, "")*$("#length").find(":selected").val()*2/60;
 
   $summary.find("#time").text( (tournamentTime<1)? Math.floor(time*60*10)/10+" minutes": (tournamentTime<2)? Math.floor(tournamentTime*10)/10+" hour": Math.floor(tournamentTime*10)/10+" hours");
   $summary.find("#number").text( $("#players").val() );

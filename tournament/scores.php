@@ -51,6 +51,7 @@ if( !isset($_GET["id"]) || empty($_GET["id"]) ){
 
       $row = mysqli_fetch_array($data);
       $title = ($row["title"]!=null) ? $row["title"] : "Tournament #".$id;
+      $type = $row["type"];
       $players = json_decode($row["players"], true);
       $rounds = json_decode($row["rounds"], true);
       $results = json_decode($row["fixtures"], true);
@@ -82,89 +83,136 @@ if( !isset($_GET["id"]) || empty($_GET["id"]) ){
           echo '</div>';
         echo "</div>";
       echo "</div>";
+  ?>
+    </div>
+    <div>
+  <?php
 
-      for($x=$offset*2; $x<$offset*2+2; $x++){
-        if( array_key_exists($x, $rounds) ){
-          echo '<div class="round">';
-          echo '<div class="row head"><h2>Round '.($x+1).'</h2></div>';
-          for($y=0; $y<count($rounds[$x]); $y++){
-            $teams = $rounds[$x][$y];
-            $result = $results[$x][$y];
+      if( $type == "League" ){
+        for($x=$offset*2; $x<$offset*2+2; $x++){
+          if( array_key_exists($x, $rounds) ){
+            echo '<div class="round">';
+            echo '<div class="row head"><h2>Round '.($x+1).'</h2></div>';
+            for($y=0; $y<count($rounds[$x]); $y++){
+              $teams = $rounds[$x][$y];
+              $result = $results[$x][$y];
 
-            $club1 = $players[ $teams[0] ]["club"];
-            $club2 = $players[ $teams[1] ]["club"];
+              $club1 = $players[ $teams[0] ]["club"];
+              $club2 = $players[ $teams[1] ]["club"];
 
-            if( count($players[ $teams[0] ]["players"]) > 1 ){
-              $player1 = $players[ $teams[0] ]["players"][0]." & ".$players[ $teams[0] ]["players"][1];
-            } else {
-              $player1 = $players[ $teams[0] ]["players"][0];
+              if( count($players[ $teams[0] ]["players"]) > 1 ){
+                $player1 = $players[ $teams[0] ]["players"][0]." & ".$players[ $teams[0] ]["players"][1];
+              } else {
+                $player1 = $players[ $teams[0] ]["players"][0];
+              }
+
+              if( count($players[ $teams[1] ]["players"]) > 1 ){
+                $player2 = $players[ $teams[1] ]["players"][0]." & ".$players[ $teams[1] ]["players"][1];
+              } else {
+                $player2 = $players[ $teams[1] ]["players"][0];
+              }
+
+              $disabled = ($admin) ? "" : "disabled";
+
+              echo '<div class="row">';
+                if( !empty($club1) ){
+                  echo '<div class="col-xs-4 col-sm-4 col-md-5 col-lg-5 text-right"><p>'.html_entity_decode($club1, ENT_QUOTES).'</p><p class="name">'.html_entity_decode($player1, ENT_QUOTES).'</p></div>';
+                } else {
+                  echo '<div class="col-xs-4 col-sm-4 col-md-5 col-lg-5 text-right"><p>'.html_entity_decode($player1, ENT_QUOTES).'</p></div>';
+                }
+                if( array_key_exists(0, $result) ){
+                  echo '<div class="col-xs-4 col-sm-4 col-md-2 col-lg-2 text-center"><input type="number" '.$disabled.' class="home correct" value="'.$result[0].'">:<input type="number" '.$disabled.' class="away correct" value="'.$result[1].'"></div>';
+                } else {
+                  echo '<div class="col-xs-4 col-sm-4 col-md-2 col-lg-2 text-center"><input type="number" '.$disabled.' class="home" value="">:<input type="number" '.$disabled.' class="away" value=""></div>';
+                }
+                if( !empty($club1) ){
+                  echo '<div class="col-xs-4 col-sm-4 col-md-5 col-lg-5 text-left">'.html_entity_decode($club2, ENT_QUOTES).'</p><p class="name">'.html_entity_decode($player2, ENT_QUOTES).'</p></div>';
+                } else {
+                  echo '<div class="col-xs-4 col-sm-4 col-md-5 col-lg-5 text-left"><p>'.html_entity_decode($player2, ENT_QUOTES).'</p></div>';
+                }
+              echo '</div>';
             }
+            echo "</div>";
+          }
+        }
+      } else {
 
-            if( count($players[ $teams[1] ]["players"]) > 1 ){
-              $player2 = $players[ $teams[1] ]["players"][0]." & ".$players[ $teams[1] ]["players"][1];
+        $stages = array();
+
+        if( count($players) >= 16 ){
+          $stage = 16;
+        } else if ( count($players) >= 8 ){
+          $stage = 8;
+        } else if ( count($players) >= 4 ){
+          $stage = 4;
+        } else if ( count($players) >= 2 ){
+          $stage = 2;
+        }
+
+        $dummys = count($players) - $stage;
+        $players_no = $dummys+$stage/2;
+
+        for($x=0; $x<$stage/2; $x++){
+          if( !isset($stages[$x]) ){
+            array_push($stages, array());
+          }
+
+          array_push($stages[$x], $rounds[$x][0]);
+          array_push($stages[$x], $rounds[$x][1]);
+        }
+
+    ?>
+    <div class="bracket">
+    <?php
+        $rows = array( array(), array() );
+
+        if( $dummys > 0 ){
+          echo "<div class='col'>";
+          for($x=0; $x<$players_no*2; $x++) {
+            $temp = ( $x%2 != 0 ) ? ($x-1)/2 : $x/2;
+            if( isset( $stages[$x] ) ){
+              for($y=0; $y<count($stages[$x]); $y++){
+                if( is_array( $stages[$x][$y] ) ){
+                  echo "<div><span>".$players[ $stages[$x][$y][0] ]["players"][0]."</span><span class='score1'></span><span class='score2'></span></div>";
+                  echo "<div><span>".$players[ $stages[$x][$y][1] ]["players"][0]."</span><span class='score1'></span><span class='score2'></span></div>";
+                }
+              }
             } else {
-              $player2 = $players[ $teams[1] ]["players"][0];
+              echo "<div class='bracket-hidden'></div>";
             }
-
-            $disabled = ($admin) ? "" : "disabled";
-
-            echo '<div class="row">';
-              if( !empty($club1) ){
-                echo '<div class="col-xs-4 col-sm-4 col-md-5 col-lg-5 text-right"><p>'.html_entity_decode($club1, ENT_QUOTES).'</p><p class="name">'.html_entity_decode($player1, ENT_QUOTES).'</p></div>';
-              } else {
-                echo '<div class="col-xs-4 col-sm-4 col-md-5 col-lg-5 text-right"><p>'.html_entity_decode($player1, ENT_QUOTES).'</p></div>';
-              }
-              if( array_key_exists(0, $result) ){
-                echo '<div class="col-xs-4 col-sm-4 col-md-2 col-lg-2 text-center"><input type="number" '.$disabled.' class="home correct" value="'.$result[0].'">:<input type="number" '.$disabled.' class="away correct" value="'.$result[1].'"></div>';
-              } else {
-                echo '<div class="col-xs-4 col-sm-4 col-md-2 col-lg-2 text-center"><input type="number" '.$disabled.' class="home" value="">:<input type="number" '.$disabled.' class="away" value=""></div>';
-              }
-              if( !empty($club1) ){
-                echo '<div class="col-xs-4 col-sm-4 col-md-5 col-lg-5 text-left">'.html_entity_decode($club2, ENT_QUOTES).'</p><p class="name">'.html_entity_decode($player2, ENT_QUOTES).'</p></div>';
-              } else {
-                echo '<div class="col-xs-4 col-sm-4 col-md-5 col-lg-5 text-left"><p>'.html_entity_decode($player2, ENT_QUOTES).'</p></div>';
-              }
-            echo '</div>';
           }
           echo "</div>";
         }
-      }
-    ?>
 
-    <ul class="pagination">
-      <?php
-        $url = "?";
-        foreach ($_GET as $key => $value) {
-          if( $key != 'page' && $key != 'id' ){
-            $url .= $key."=".$value."&";
-          }
-        }
-
-        $url1 = $url.'page='.$offset;
-        $url2 = $url.'page='.($offset+2);
-
-        if( ceil($count/2)-1 > 0 ){
-
-          if( $offset > 0 ){
-            echo '<li><a href="'.$url1.'" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>';
-          }
-
-          for($x=1; $x<=ceil($count/2); $x++){
-            $urlX = $url."page=".$x;
-            if( $x == ($offset+1) ){
-              echo "<li class=\"active\"><a href=\"$urlX\">$x</a></li>";
+        echo "<div class='col'>";
+        for($x=0; $x<count($stages); $x++) {
+          for($y=0; $y<count($stages[$x]); $y++) {
+            if( is_array($stages[$x][$y]) ){
+              echo "<div><span class='score1'></span><span class='score2'></span></div>";
             } else {
-              echo "<li><a href=\"$urlX\">$x</a></li>";
+              echo "<div><span>".$players[ $stages[$x][$y] ]["players"][0]."</span><span class='score1'>2</span><span class='score2'>2</span></div>";
             }
           }
-
-          if( $offset < ceil($count/2)-1 ){
-            echo '<li><a href="'.$url2.'" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>';
-          }
-
         }
-      ?>
-    </ul>
+        echo "</div>";
+
+        $temp_stage = $stage/2;
+
+        while( $temp_stage > 1 ){
+          echo "<div class='col'>";
+          for($x=0; $x<$temp_stage; $x++) {
+            echo "<div><span class='score1'></span><span class='score2'></span></div>";
+          }
+          echo "</div>";
+
+          $temp_stage /= 2;
+        }
+
+        echo "<div class='col final'><div></div>";
+
+      }
+    ?>
+    </div>
 
   </div>
 

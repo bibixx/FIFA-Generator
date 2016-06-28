@@ -1,0 +1,46 @@
+.bracket
+  display: flex
+  flex-direction: row
+  justify-content: center
+  font-size: 1.6em
+  line-height: 1.42857143em
+  width: 100%
+
+  &.scroll
+    justify-content: flex-start
+    overflow-x: scroll
+
+  .col
+    display: flex
+    flex-direction: column
+    justify-content: space-around
+
+    div
+      background: #ededed
+      border: 1px solid #ddd
+      border-radius: 3px
+      height: 1.6em
+      min-width: 250px
+      margin: 10px
+      text-align: center
+      font-family: Roboto
+      display: flex
+      justify-content: flex-end
+
+      span
+        width: 80%
+        line-height: 1.6em
+
+      .score, .score1, .score2
+        width: 20%
+        display: inline-block
+        background: #F5F5F5
+        padding: 0
+        border-radius: 0px 3px 3px 0px
+        &.score1
+          border-radius: 0px
+          border-right: 1px solid #ddd
+
+      &.bracket-hidden
+        background: white
+        border: none

@@ -214,6 +214,80 @@ h1.tournament-name {
   }
 }
 
+.bracket {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  font-size: 1.6em;
+  line-height: 1.42857143em;
+  width: 100%;
+}
+
+.bracket.scroll {
+  -webkit-justify-content: flex-start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  overflow-x: scroll;
+}
+
+.bracket .col {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-justify-content: space-around;
+      -ms-flex-pack: distribute;
+          justify-content: space-around;
+}
+
+.bracket .col div {
+  background: #ededed;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  height: 1.6em;
+  min-width: 250px;
+  margin: 10px;
+  text-align: center;
+  font-family: Roboto;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-justify-content: flex-end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+}
+
+.bracket .col div span {
+  width: 80%;
+  line-height: 1.6em;
+}
+
+.bracket .col div .score, .bracket .col div .score1, .bracket .col div .score2 {
+  width: 20%;
+  display: inline-block;
+  background: #F5F5F5;
+  padding: 0;
+  border-radius: 0px 3px 3px 0px;
+}
+
+.bracket .col div .score.score1, .bracket .col div .score1.score1, .bracket .col div .score2.score1 {
+  border-radius: 0px;
+  border-right: 1px solid #ddd;
+}
+
+.bracket .col div.bracket-hidden {
+  background: white;
+  border: none;
+}
+
 html {
   position: relative;
   min-height: 100%;

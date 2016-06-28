@@ -1,5 +1,14 @@
 <?php header('Content-Type: application/javascript'); ?>
+
+
 $(document).ready(function() {
+
+  checkWidth();
+
+  $(window).on("resize", function(){
+    checkWidth();
+  });
+
   $('.home, .away').each(function(index) {
     var $t = $(this);
 
@@ -75,6 +84,14 @@ $(document).ready(function() {
       $(id).css('width', valueInitW);
     } else {
       $(id).width(20);
+    }
+  }
+
+  function checkWidth(){
+    if( $(window).width() < $(".col").first().width()*$(".col").length ){
+      $(".bracket").addClass("scroll")
+    } else {
+      $(".bracket").removeClass("scroll")
     }
   }
 
