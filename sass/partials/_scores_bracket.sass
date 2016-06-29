@@ -1,46 +1,163 @@
+// .bracket
+//   display: flex
+//   flex-direction: row
+//   justify-content: center
+//   font-size: 1.6em
+//   line-height: 1.42857143em
+//   width: 100%
+//
+//   &.scroll
+//     justify-content: flex-start
+//     overflow-x: scroll
+//
+//   .col
+//     display: flex
+//     flex-direction: column
+//     justify-content: space-around
+//
+//     div
+//       background: #ededed
+//       border: 1px solid #ddd
+//       border-radius: 3px
+//       height: 1.6em
+//       min-width: 250px
+//       margin: 10px 0px
+//
+//       text-align: center
+//       font-family: Roboto
+//       display: flex
+//       position: relative
+//       justify-content: flex-end
+//
+//       &.bracket-hidden::after
+//         display: none
+//
+//       &:nth-child(2n+1)::after
+//         background-image: url(/FIFA-Generator/css/leg1.png)
+//
+//       &:nth-child(2n)::after
+//         background-image: url(/FIFA-Generator/css/leg2.png)
+//
+//       &::after
+//         // content: ""
+//         display: block
+//         width: 20px
+//         position: absolute
+//         background-size: 100% 100%
+//         top: -11px
+//         bottom: -11px
+//         right: -20px
+//
+//
+//
+//       span
+//         width: 80%
+//         line-height: 1.6em
+//
+//       .score, .score1, .score2
+//         width: 25%
+//         display: inline-block
+//         background: #F5F5F5
+//         padding: 0
+//         border-radius: 0px 3px 3px 0px
+//         &.score1
+//           border-radius: 0px
+//           border-right: 1px solid #ddd
+//
+//       &.bracket-hidden
+//         background: white
+//         border: none
+//
+
 .bracket
-  display: flex
-  flex-direction: row
+  display:flex
+  flex-direction:row
   justify-content: center
   font-size: 1.6em
-  line-height: 1.42857143em
-  width: 100%
-
-  &.scroll
-    justify-content: flex-start
-    overflow-x: scroll
 
   .col
+    display:flex
+    flex-direction:column
+    justify-content:center
+    width:200px
+    list-style:none
+    padding:0
+
+  .col .spacer
+    flex-grow:1
+
+  .col .spacer:first-child,  .col .spacer:last-child
+    flex-grow:.5
+
+  .col .game-spacer
+    flex-grow: 1
+
+  .game
+    // padding-left:20px
+    height: 1.6em
+
+  .game-top
+    // border-bottom:1px solid #aaa
+
+  .game-spacer
+    border-right:1px solid #ddd
+    min-height: 150px
+
+  .game-bottom
+    // border-top: 1px solid #aaa
+    margin-bottom: 30px
+
+  .game-hidden
+    border: none
+
+
+
+
+
+
+
+
+
+
+
+
+  .game-top > div, .game-bottom > div
+    background: #ededed
+    border: 1px solid #ddd
+    border-radius: 3px
+    height: 1.6em
+    // min-width: 250px
+    // margin: 10px 0px
+
+    text-align: center
+    font-family: Roboto
     display: flex
-    flex-direction: column
-    justify-content: space-around
+    position: relative
+    justify-content: flex-end
 
-    div
-      background: #ededed
-      border: 1px solid #ddd
-      border-radius: 3px
-      height: 1.6em
-      min-width: 250px
-      margin: 10px
-      text-align: center
-      font-family: Roboto
-      display: flex
-      justify-content: flex-end
+    span
+      width: 80%
+      line-height: 1.6em
 
-      span
-        width: 80%
-        line-height: 1.6em
+    .score, .score1, .score2
+      width: 25%
+      display: inline-block
+      background: #F5F5F5
+      padding: 0
+      border-radius: 0px 3px 3px 0px
+      &.score1
+        border-radius: 0px
+        border-right: 1px solid #ddd
 
-      .score, .score1, .score2
-        width: 20%
-        display: inline-block
-        background: #F5F5F5
-        padding: 0
-        border-radius: 0px 3px 3px 0px
-        &.score1
-          border-radius: 0px
-          border-right: 1px solid #ddd
 
-      &.bracket-hidden
-        background: white
-        border: none
+
+  .home, .away
+    min-width: 100%
+    margin: 0
+    padding: 0
+    height: calc(100% - 1px)
+    font-size: 0.8em
+    display: block
+
+  .col:first-child .game-top > div, .col:first-child .game-bottom > div
+    transform: none

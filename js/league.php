@@ -2,13 +2,6 @@
 
 
 $(document).ready(function() {
-
-  checkWidth();
-
-  $(window).on("resize", function(){
-    checkWidth();
-  });
-
   $('.home, .away').each(function(index) {
     var $t = $(this);
 
@@ -42,8 +35,8 @@ $(document).ready(function() {
         }
       });
 
-      var token = "<?= $_GET["admin"] ?>";
-      var tournamentId = "<?= $_GET["id"] ?>";
+      var token = "<?= $_GET["admin"]; ?>";
+      var tournamentId = "<?= $_GET["id"]; ?>";
 
       if(!empty){
 
@@ -72,7 +65,9 @@ $(document).ready(function() {
 
     });
 
-<?php } ?>
+<?php
+  }
+?>
 
   function inputResize(id, pad) {
     var valueCur = $(id).val();
@@ -84,14 +79,6 @@ $(document).ready(function() {
       $(id).css('width', valueInitW);
     } else {
       $(id).width(20);
-    }
-  }
-
-  function checkWidth(){
-    if( $(window).width() < $(".col").first().width()*$(".col").length ){
-      $(".bracket").addClass("scroll")
-    } else {
-      $(".bracket").removeClass("scroll")
     }
   }
 

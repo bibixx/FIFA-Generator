@@ -163,7 +163,7 @@ h1.tournament-name {
   margin: 0px 10px 0px 0px;
 }
 
-.round .row .home, .round .row .away {
+.home, .away {
   font-size: 1.3em;
   background: none;
   border: none;
@@ -175,7 +175,7 @@ h1.tournament-name {
   box-sizing: content-box;
 }
 
-.round .row .home::-webkit-outer-spin-button, .round .row .home::-webkit-inner-spin-button, .round .row .away::-webkit-outer-spin-button, .round .row .away::-webkit-inner-spin-button {
+.home::-webkit-outer-spin-button, .home::-webkit-inner-spin-button, .away::-webkit-outer-spin-button, .away::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
@@ -199,7 +199,7 @@ h1.tournament-name {
   .round .row.head {
     padding: 40px;
   }
-  .round .row .home, .round .row .away {
+  .home, .away {
     min-width: 20px;
     margin: 0px 8px;
   }
@@ -209,7 +209,7 @@ h1.tournament-name {
   body {
     font-size: 12px;
   }
-  body .round .row .home, body .round .row .away {
+  .home, .away {
     min-width: 15px;
   }
 }
@@ -225,15 +225,6 @@ h1.tournament-name {
       -ms-flex-pack: center;
           justify-content: center;
   font-size: 1.6em;
-  line-height: 1.42857143em;
-  width: 100%;
-}
-
-.bracket.scroll {
-  -webkit-justify-content: flex-start;
-      -ms-flex-pack: start;
-          justify-content: flex-start;
-  overflow-x: scroll;
 }
 
 .bracket .col {
@@ -243,49 +234,96 @@ h1.tournament-name {
   -webkit-flex-direction: column;
       -ms-flex-direction: column;
           flex-direction: column;
-  -webkit-justify-content: space-around;
-      -ms-flex-pack: distribute;
-          justify-content: space-around;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  width: 200px;
+  list-style: none;
+  padding: 0;
 }
 
-.bracket .col div {
+.bracket .col .spacer {
+  -webkit-flex-grow: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+}
+
+.bracket .col .spacer:first-child, .bracket .col .spacer:last-child {
+  -webkit-flex-grow: .5;
+      -ms-flex-positive: .5;
+          flex-grow: .5;
+}
+
+.bracket .col .game-spacer {
+  -webkit-flex-grow: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+}
+
+.bracket .game {
+  height: 1.6em;
+}
+
+.bracket .game-spacer {
+  border-right: 1px solid #ddd;
+  min-height: 150px;
+}
+
+.bracket .game-bottom {
+  margin-bottom: 30px;
+}
+
+.bracket .game-hidden {
+  border: none;
+}
+
+.bracket .game-top > div, .bracket .game-bottom > div {
   background: #ededed;
   border: 1px solid #ddd;
   border-radius: 3px;
   height: 1.6em;
-  min-width: 250px;
-  margin: 10px;
   text-align: center;
   font-family: Roboto;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  position: relative;
   -webkit-justify-content: flex-end;
       -ms-flex-pack: end;
           justify-content: flex-end;
 }
 
-.bracket .col div span {
+.bracket .game-top > div span, .bracket .game-bottom > div span {
   width: 80%;
   line-height: 1.6em;
 }
 
-.bracket .col div .score, .bracket .col div .score1, .bracket .col div .score2 {
-  width: 20%;
+.bracket .game-top > div .score, .bracket .game-top > div .score1, .bracket .game-top > div .score2, .bracket .game-bottom > div .score, .bracket .game-bottom > div .score1, .bracket .game-bottom > div .score2 {
+  width: 25%;
   display: inline-block;
   background: #F5F5F5;
   padding: 0;
   border-radius: 0px 3px 3px 0px;
 }
 
-.bracket .col div .score.score1, .bracket .col div .score1.score1, .bracket .col div .score2.score1 {
+.bracket .game-top > div .score.score1, .bracket .game-top > div .score1.score1, .bracket .game-top > div .score2.score1, .bracket .game-bottom > div .score.score1, .bracket .game-bottom > div .score1.score1, .bracket .game-bottom > div .score2.score1 {
   border-radius: 0px;
   border-right: 1px solid #ddd;
 }
 
-.bracket .col div.bracket-hidden {
-  background: white;
-  border: none;
+.bracket .home, .bracket .away {
+  min-width: 100%;
+  margin: 0;
+  padding: 0;
+  height: calc(100% - 1px);
+  font-size: 0.8em;
+  display: block;
+}
+
+.bracket .col:first-child .game-top > div, .bracket .col:first-child .game-bottom > div {
+  -webkit-transform: none;
+      -ms-transform: none;
+          transform: none;
 }
 
 html {

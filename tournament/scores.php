@@ -1,3 +1,4 @@
+
 <?php
 if( !isset($_GET["id"]) || empty($_GET["id"]) ){
   header("Location: /FIFA-Generator/.");
@@ -164,33 +165,66 @@ if( !isset($_GET["id"]) || empty($_GET["id"]) ){
     ?>
     <div class="bracket">
     <?php
-        $rows = array( array(), array() );
+        $rows = array();
+
+        $n_of_matches = $stage*2;
 
         if( $dummys > 0 ){
           echo "<div class='col'>";
-          for($x=0; $x<$players_no*2; $x++) {
+          echo "<div class='spacer'></div>";
+          $x = 0;
+          while($n_of_matches>0) {
             $temp = ( $x%2 != 0 ) ? ($x-1)/2 : $x/2;
             if( isset( $stages[$x] ) ){
               for($y=0; $y<count($stages[$x]); $y++){
                 if( is_array( $stages[$x][$y] ) ){
-                  echo "<div><span>".$players[ $stages[$x][$y][0] ]["players"][0]."</span><span class='score1'></span><span class='score2'></span></div>";
-                  echo "<div><span>".$players[ $stages[$x][$y][1] ]["players"][0]."</span><span class='score1'></span><span class='score2'></span></div>";
+                  echo "<div class='game game-top'><div><span>".$players[ $stages[$x][$y][0] ]["players"][0].'</span><span class="score1"><input type="number" class="home" value="" min="0" max="999"></span><span class="score2"><input type="number" class="home" value="" min="0" max="999"></span></div></div>';
+                  echo "<div class='game game-spacer'></div>";
+                  echo "<div class='game game-bottom'><div><span>".$players[ $stages[$x][$y][1] ]["players"][0].'</span><span class="score1"><input type="number" class="home" value="" min="0" max="999"></span><span class="score2"><input type="number" class="home" value="" min="0" max="999"></span></div></div>';
+                  echo "<div class='spacer'></div>";
+                  $n_of_matches-=2;
+                } else {
+                  echo "<div class='game game-top game-hidden'></div>";
+                  echo "<div class='game game-spacer game-hidden'></div>";
+                  echo "<div class='game game-bottom game-hidden'></div>";
+                  echo "<div class='spacer'></div>";
+                  $n_of_matches-=2;
                 }
               }
             } else {
-              echo "<div class='bracket-hidden'></div>";
+              echo "<div class='game game-top game-hidden'></div>";
+              echo "<div class='game game-spacer game-hidden'></div>";
+              echo "<div class='game game-bottom game-hidden'></div>";
+              echo "<div class='spacer'></div>";
+              $n_of_matches-=2;
             }
+            $x++;
           }
           echo "</div>";
         }
 
         echo "<div class='col'>";
+        echo "<div class='spacer'></div>";
         for($x=0; $x<count($stages); $x++) {
           for($y=0; $y<count($stages[$x]); $y++) {
             if( is_array($stages[$x][$y]) ){
-              echo "<div><span class='score1'></span><span class='score2'></span></div>";
+              if( $y === 0 ){
+                echo '<div class="game game-top"><div><span></span><span class="score1"><input type="number" class="home" value="" min="0" max="999" disabled></span><span class="score2"><input type="number" class="home" value="" min="0" max="999" disabled></span></div></div>';
+              } else {
+                echo '<div class="game game-bottom"><div><span></span><span class="score1"><input type="number" class="home" value="" min="0" max="999" disabled></span><span class="score2"><input type="number" class="home" value="" min="0" max="999" disabled></span></div></div>';
+              }
             } else {
-              echo "<div><span>".$players[ $stages[$x][$y] ]["players"][0]."</span><span class='score1'>2</span><span class='score2'>2</span></div>";
+              if( $y === 0 ){
+                echo '<div class="game game-top"><div><span>'.$players[ $stages[$x][$y] ]["players"][0].'</span><span class="score1"><input type="number" class="home" value="" min="0" max="999"></span><span class="score2"><input type="number" class="home" value="" min="0" max="999"></span></div></div>';
+              } else {
+                echo '<div class="game game-bottom"><div><span>'.$players[ $stages[$x][$y] ]["players"][0].'</span><span class="score1"><input type="number" class="home" value="" min="0" max="999"></span><span class="score2"><input type="number" class="home" value="" min="0" max="999"></span></div></div>';
+              }
+            }
+
+            if( $y === 0 ){
+              echo "<div class='game game-spacer'></div>";
+            } else {
+              echo "<div class='spacer'></div>";
             }
           }
         }
@@ -200,15 +234,19 @@ if( !isset($_GET["id"]) || empty($_GET["id"]) ){
 
         while( $temp_stage > 1 ){
           echo "<div class='col'>";
-          for($x=0; $x<$temp_stage; $x++) {
-            echo "<div><span class='score1'></span><span class='score2'></span></div>";
+          echo "<div class='spacer'></div>";
+          for($x=0; $x<$temp_stage/2; $x++) {
+            echo "<div class='game game-top'>".'<div><span></span><span class="score1"><input type="number" class="home" value="" min="0" max="999" disabled></span><span class="score2"><input type="number" class="home" value="" min="0" max="999" disabled></span></div>'."</div>";
+            echo "<div class='game game-spacer'></div>";
+            echo "<div class='game game-bottom'>".'<div><span></span><span class="score1"><input type="number" class="home" value="" min="0" max="999" disabled></span><span class="score2"><input type="number" class="home" value="" min="0" max="999" disabled></span></div>'."</div>";
+            echo "<div class='spacer'></div>";
           }
           echo "</div>";
 
           $temp_stage /= 2;
         }
 
-        echo "<div class='col final'><div></div>";
+        echo "<div class='col final'><div class='game game-top'><div></div></div></div>";
 
       }
     ?>
@@ -221,16 +259,30 @@ if( !isset($_GET["id"]) || empty($_GET["id"]) ){
       <p class="text-muted">Made with <span class="glyphicon glyphicon-heart"></span> by <a href="https://github.com/bibixx" target="_blank">bibixx</a></p>
     </div>
   </footer>
-  <?php
-    if($admin){
-  ?>
-  <script src="/FIFA-Generator/js/scores.js<?= "?id=".$_GET["id"]."&admin=".$_GET["admin"]?>" charset="utf-8"></script>
+
   <link rel="stylesheet" href="/FIFA-Generator/css/scores_admin.css" media="screen" charset="utf-8">
   <?php
-    } else {
-  ?>
-  <script src="/FIFA-Generator/js/scores.js" charset="utf-8"></script>
-  <?php
+    $params = "";
+
+    if($admin){
+      $params = "?id=".$_GET["id"]."&admin=".$_GET["admin"];
+    }
+
+    switch ($type) {
+      case 'League':
+        ?>
+    <script src="/FIFA-Generator/js/league.js<?= $params ?>" charset="utf-8"></script>
+        <?php
+        break;
+
+      case 'Knockout':
+      ?>
+    <script src="/FIFA-Generator/js/cup.js<?= $params ?>" charset="utf-8"></script>
+      <?php
+        break;
+
+      default:
+        break;
     }
   ?>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
