@@ -110,17 +110,42 @@
     }
     die();
   } elseif ($settings["type"] == "Knockout") {
-    // $players = 10;
+
+
+
+
+
+
+
+
+    // $players = 31;
     if( $players < 33 ) {
-      $rounds = array();
+      $rounds = array( array() );
 
       if( $players == 16 || $players == 8 || $players == 4 || $players == 2 ){
 
         for($x=0; $x<$players; $x+=2){
-          array_push($rounds, array($x, $x+1));
+          array_push($rounds[0], array($x, $x+1));
         }
 
+
+        if($players > 2){
+          $temp_stage = $players/4;
+          while ( $temp_stage > 1 ) {
+            $temp_arr = array();
+            for($x=0; $x<$temp_stage; $x++){
+              array_push($temp_arr, array());
+            }
+            array_push($rounds, $temp_arr);
+            $temp_stage /= 2;
+          }
+
+          array_push($rounds, array( array() ) );
+        }
+        array_push($rounds, array() );
+
       } else {
+
         $temp_rounds = array();
 
         if( $players > 16 ){
@@ -135,9 +160,6 @@
 
         $dummys = $players - $stage;
 
-        echo ($dummys+$stage/2)."<br><br>";
-
-        $i = 0;
         $n = 0;
         $players_used = 0;
 
@@ -152,23 +174,21 @@
 
         for( $x=1; $x<=$dummys; $x++ ){
           array_push($temp_rounds, array($ava_players[$n], $ava_players[$n+1]));
-          echo $i.": ".$ava_players[$n]."v".$ava_players[$n+1]."<br>";
           $players_used += 2;
           $n += 2;
-          $i++;
         }
 
 
         while( $players_used < $players ){
           array_push($temp_rounds, $ava_players[$n]);
-          echo $i.": ".$ava_players[$n]."<br>";
           $players_used++;
           $n++;
-          $i++;
         }
 
+
+
         for($x=0; $x<count($temp_rounds); $x+=2){
-          array_push($rounds, array($temp_rounds[$x], $temp_rounds[$x+1]));
+          array_push($rounds[0], array($temp_rounds[$x], $temp_rounds[$x+1]));
 
           if( is_array($temp_rounds[$x]) && is_array($temp_rounds[$x]) ){
             array_push($results, array(array(), array()));
@@ -180,6 +200,23 @@
             array_push($results, array());
           }
         }
+
+        if($players > 2){
+          $temp_stage = $stage/4;
+
+          while ( $temp_stage > 1 ) {
+            $temp_arr = array();
+            for($x=0; $x<$temp_stage; $x++){
+              array_push($temp_arr, array());
+            }
+            array_push($rounds, $temp_arr);
+            $temp_stage /= 2;
+          }
+
+          array_push($rounds, array( array() ) );
+        }
+        array_push($rounds, array() );
+
       }
 
       $title = (isset($settings["title"]) && !empty($settings["title"])) ? "'".$dbc->real_escape_string(filter_var($settings["title"], FILTER_SANITIZE_STRING))."'" : "NULL";

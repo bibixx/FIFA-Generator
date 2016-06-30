@@ -138,8 +138,9 @@ if( !isset($_GET["id"]) || empty($_GET["id"]) ){
         }
       } else {
 
-        $stages = array();
-
+    ?>
+    <div class="bracket">
+    <?php
         if( count($players) >= 16 ){
           $stage = 16;
         } else if ( count($players) >= 8 ){
@@ -150,103 +151,81 @@ if( !isset($_GET["id"]) || empty($_GET["id"]) ){
           $stage = 2;
         }
 
-        $dummys = count($players) - $stage;
-        $players_no = $dummys+$stage/2;
+        $html = "";
 
-        for($x=0; $x<$stage/2; $x++){
-          if( !isset($stages[$x]) ){
-            array_push($stages, array());
-          }
+        $n_rounds = count($rounds);
+        for($x=0; $x<$n_rounds; $x++){
+          $column_a = "";
+          $column_b = "";
+          $column_a .= "<div class='col'>";
+          $column_a .= "<div class='spacer'></div>";
 
-          array_push($stages[$x], $rounds[$x][0]);
-          array_push($stages[$x], $rounds[$x][1]);
-        }
+          if($x==$n_rounds-1) {
+            $player0 = (array_key_exists(0, $rounds[$x]) && $rounds[$x][0] >= 0) ? $players[ $rounds[$x][0] ]["players"][0]: "";
+            $column_a .= '<div class="col final"><div class="game game-top"><div><span>'.$player0.'</span></div></div></div>';
+          } else if($x>0){
+            for($y=0; $y<count($rounds[$x]); $y++){
+              if( (array_key_exists(0, $rounds[$x][$y]) && $rounds[$x][$y][0] >= 0) && (array_key_exists(1, $rounds[$x][$y]) && $rounds[$x][$y][1] >= 0) ){
+                $player0 = $players[ $rounds[$x][$y][0] ]["players"][0];
+                $player1 = $players[ $rounds[$x][$y][1] ]["players"][0];
+                $result0 = (array_key_exists(0, $results[$x][$y])) ? $results[$x][$y][0]: "";
+                $result1 = (array_key_exists(1, $results[$x][$y])) ? $results[$x][$y][1]: "";
 
-    ?>
-    <div class="bracket">
-    <?php
-        $rows = array();
+                $column_a .= '<div class="game game-top"><div><span>'.$player0.'</span><span class="score1"><input type="number" class="home" value="'.$result0.'" min="0" max="999"></span><span class="score2"><input type="number" class="home" value="" min="0" max="999"></span></div></div>';
+                $column_a .= '<div class="game game-spacer"></div>';
+                $column_a .= '<div class="game game-bottom"><div><span>'.$player1.'</span><span class="score1"><input type="number" class="home" value="'.$result1.'" min="0" max="999"></span><span class="score2"><input type="number" class="home" value="" min="0" max="999"></span></div></div>';
+                $column_a .= '<div class="spacer"></div>';
+              } else {
+                $column_a .= '<div class="game game-top"><div><span></span><span class="score1"><input type="number" class="home" value="" min="0" max="999" disabled></span><span class="score2"><input type="number" class="home" value="" min="0" max="999" disabled></span></div></div>';
+                $column_a .= '<div class="game game-spacer"></div>';
+                $column_a .= '<div class="game game-bottom"><div><span></span><span class="score1"><input type="number" class="home" value="" min="0" max="999" disabled></span><span class="score2"><input type="number" class="home" value="" min="0" max="999" disabled></span></div></div>';
+                $column_a .= '<div class="spacer"></div>';
+              }
+            }
+          } else {
+            if( count($rounds[$x]) > 0 ){
+              for($y=0; $y<$stage; $y++){
+                $player0 = $player1 = $result0 = $result1 = "";
 
-        $n_of_matches = $stage*2;
+                if( array_key_exists($y, $rounds[$x] ) ){
+                  if( (array_key_exists(0, $rounds[$x][$y]) && $rounds[$x][$y][0] >= 0) && array_key_exists(1, $rounds[$x][$y]) && $rounds[$x][$y][1] >= 0 ){
+                    $player0 = $players[ $rounds[$x][$y][0] ]["players"][0];
+                    $player1 = $players[ $rounds[$x][$y][1] ]["players"][0];
+                    $result0 = (array_key_exists(0, $results[$x][$y])) ? $results[$x][$y][0]: "";
+                    $result1 = (array_key_exists(1, $results[$x][$y])) ? $results[$x][$y][1]: "";
+                  }
 
-        if( $dummys > 0 ){
-          echo "<div class='col'>";
-          echo "<div class='spacer'></div>";
-          $x = 0;
-          while($n_of_matches>0) {
-            $temp = ( $x%2 != 0 ) ? ($x-1)/2 : $x/2;
-            if( isset( $stages[$x] ) ){
-              for($y=0; $y<count($stages[$x]); $y++){
-                if( is_array( $stages[$x][$y] ) ){
-                  echo "<div class='game game-top'><div><span>".$players[ $stages[$x][$y][0] ]["players"][0].'</span><span class="score1"><input type="number" class="home" value="" min="0" max="999"></span><span class="score2"><input type="number" class="home" value="" min="0" max="999"></span></div></div>';
-                  echo "<div class='game game-spacer'></div>";
-                  echo "<div class='game game-bottom'><div><span>".$players[ $stages[$x][$y][1] ]["players"][0].'</span><span class="score1"><input type="number" class="home" value="" min="0" max="999"></span><span class="score2"><input type="number" class="home" value="" min="0" max="999"></span></div></div>';
-                  echo "<div class='spacer'></div>";
-                  $n_of_matches-=2;
+                  $column_b .= '<div class="game game-top"><div><span>'.$player0.'</span><span class="score1"><input type="number" class="home" value="'.$result0.'" min="0" max="999"></span><span class="score2"><input type="number" class="home" value="" min="0" max="999"></span></div></div>';
+                  $column_b .= '<div class="game game-spacer"></div>';
+                  $column_b .= '<div class="game game-bottom"><div><span>'.$player1.'</span><span class="score1"><input type="number" class="home" value="'.$result1.'" min="0" max="999"></span><span class="score2"><input type="number" class="home" value="" min="0" max="999"></span></div></div>';
+                  $column_b .= '<div class="spacer"></div>';
                 } else {
-                  echo "<div class='game game-top game-hidden'></div>";
-                  echo "<div class='game game-spacer game-hidden'></div>";
-                  echo "<div class='game game-bottom game-hidden'></div>";
-                  echo "<div class='spacer'></div>";
-                  $n_of_matches-=2;
+                  $column_b .= '<div class="game game-top game-hidden"></div>';
+                  $column_b .= '<div class="game game-spacer game-hidden"></div>';
+                  $column_b .= '<div class="game game-bottom game-hidden"></div>';
+                  $column_b .= '<div class="spacer"></div>';
                 }
               }
-            } else {
-              echo "<div class='game game-top game-hidden'></div>";
-              echo "<div class='game game-spacer game-hidden'></div>";
-              echo "<div class='game game-bottom game-hidden'></div>";
-              echo "<div class='spacer'></div>";
-              $n_of_matches-=2;
-            }
-            $x++;
-          }
-          echo "</div>";
-        }
-
-        echo "<div class='col'>";
-        echo "<div class='spacer'></div>";
-        for($x=0; $x<count($stages); $x++) {
-          for($y=0; $y<count($stages[$x]); $y++) {
-            if( is_array($stages[$x][$y]) ){
-              if( $y === 0 ){
-                echo '<div class="game game-top"><div><span></span><span class="score1"><input type="number" class="home" value="" min="0" max="999" disabled></span><span class="score2"><input type="number" class="home" value="" min="0" max="999" disabled></span></div></div>';
-              } else {
-                echo '<div class="game game-bottom"><div><span></span><span class="score1"><input type="number" class="home" value="" min="0" max="999" disabled></span><span class="score2"><input type="number" class="home" value="" min="0" max="999" disabled></span></div></div>';
-              }
-            } else {
-              if( $y === 0 ){
-                echo '<div class="game game-top"><div><span>'.$players[ $stages[$x][$y] ]["players"][0].'</span><span class="score1"><input type="number" class="home" value="" min="0" max="999"></span><span class="score2"><input type="number" class="home" value="" min="0" max="999"></span></div></div>';
-              } else {
-                echo '<div class="game game-bottom"><div><span>'.$players[ $stages[$x][$y] ]["players"][0].'</span><span class="score1"><input type="number" class="home" value="" min="0" max="999"></span><span class="score2"><input type="number" class="home" value="" min="0" max="999"></span></div></div>';
-              }
-            }
-
-            if( $y === 0 ){
-              echo "<div class='game game-spacer'></div>";
-            } else {
-              echo "<div class='spacer'></div>";
             }
           }
-        }
-        echo "</div>";
+          $column_a .= "</div>";
 
-        $temp_stage = $stage/2;
-
-        while( $temp_stage > 1 ){
-          echo "<div class='col'>";
-          echo "<div class='spacer'></div>";
-          for($x=0; $x<$temp_stage/2; $x++) {
-            echo "<div class='game game-top'>".'<div><span></span><span class="score1"><input type="number" class="home" value="" min="0" max="999" disabled></span><span class="score2"><input type="number" class="home" value="" min="0" max="999" disabled></span></div>'."</div>";
-            echo "<div class='game game-spacer'></div>";
-            echo "<div class='game game-bottom'>".'<div><span></span><span class="score1"><input type="number" class="home" value="" min="0" max="999" disabled></span><span class="score2"><input type="number" class="home" value="" min="0" max="999" disabled></span></div>'."</div>";
-            echo "<div class='spacer'></div>";
+          if($x>0){
+            $html .= $column_a;
           }
-          echo "</div>";
 
-          $temp_stage /= 2;
+          if( $column_b != "" ){
+            $column_b = "<div class='col'><div class='spacer'></div>". $column_b;
+            $column_b .= "</div>";
+            $html = $column_b.$html;
+          }
+
         }
 
-        echo "<div class='col final'><div class='game game-top'><div></div></div></div>";
+        // echo "</pre>";
+
+
+        echo $html;
 
       }
     ?>
