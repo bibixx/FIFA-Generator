@@ -42,8 +42,8 @@ if( !isset($_GET["id"]) || empty($_GET["id"]) ){
 
   <div class="container">
     <?php
-			include "../passwords.php";
-			$dbc = new mysqli(HOST, LOGIN, PASSWORD, DATABASE) or die( 'błąd' );
+      include "../passwords.php";
+      $dbc = new mysqli(HOST, LOGIN, PASSWORD, DATABASE) or die( 'błąd' );
       $dbc->query('SET NAMES utf8');
       $id = $dbc->real_escape_string($_GET["id"]);
       $query = "SELECT * FROM `tournaments` WHERE (`id`=$id)";
@@ -88,7 +88,6 @@ if( !isset($_GET["id"]) || empty($_GET["id"]) ){
     </div>
     <div>
   <?php
-
       if( $type == "League" ){
         for($x=$offset*2; $x<$offset*2+2; $x++){
           if( array_key_exists($x, $rounds) ){
@@ -221,9 +220,6 @@ if( !isset($_GET["id"]) || empty($_GET["id"]) ){
           }
 
         }
-
-        // echo "</pre>";
-
 
         echo $html;
 

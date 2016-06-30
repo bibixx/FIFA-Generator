@@ -111,23 +111,27 @@
     die();
   } elseif ($settings["type"] == "Knockout") {
 
+    $players = 10;
 
-
-
-
-
-
-
-    // $players = 31;
     if( $players < 33 ) {
       $rounds = array( array() );
+      $results = array( array() );
 
       if( $players == 16 || $players == 8 || $players == 4 || $players == 2 ){
 
-        for($x=0; $x<$players; $x+=2){
-          array_push($rounds[0], array($x, $x+1));
+        $ava_players = array();
+
+        for( $x=0; $x<$players; $x++ ){
+          array_push($ava_players, $x);
         }
 
+        shuffle($ava_players);
+        shuffle($ava_players);
+
+        for($x=0; $x<$players; $x+=2){
+          array_push($rounds[0], array($ava_players[$x], $ava_players[$x+1]));
+          array_push($results[0], array());
+        }
 
         if($players > 2){
           $temp_stage = $players/4;
@@ -137,16 +141,23 @@
               array_push($temp_arr, array());
             }
             array_push($rounds, $temp_arr);
+            array_push($results, $temp_arr);
             $temp_stage /= 2;
           }
 
           array_push($rounds, array( array() ) );
+          array_push($results, array( array() ) );
         }
+
+        array_unshift($rounds, array());
+        array_unshift($results, array());
         array_push($rounds, array() );
+        array_push($results, array() );
 
       } else {
 
         $temp_rounds = array();
+        $temp_dummys = array();
 
         if( $players > 16 ){
           $stage = 16;
@@ -160,9 +171,6 @@
 
         $dummys = $players - $stage;
 
-        $n = 0;
-        $players_used = 0;
-
         $ava_players = array();
 
         for( $x=0; $x<$players; $x++ ){
@@ -172,34 +180,40 @@
         shuffle($ava_players);
         shuffle($ava_players);
 
-        for( $x=1; $x<=$dummys; $x++ ){
-          array_push($temp_rounds, array($ava_players[$n], $ava_players[$n+1]));
-          $players_used += 2;
-          $n += 2;
+        $dummy_ava_players = array();
+
+        // echo $dummys;
+
+        for( $x=0; $x<$dummys*2; $x++ ){
+          array_push($dummy_ava_players, $ava_players[0]);
+          array_shift($ava_players);
         }
 
 
-        while( $players_used < $players ){
-          array_push($temp_rounds, $ava_players[$n]);
-          $players_used++;
-          $n++;
+        echo "<br>";
+        print_r( $ava_players );
+        echo "<br>";
+        print_r( $dummy_ava_players );
+        echo "<br>";
+
+        for( $x=0; $x<count($ava_players); $x++ ){
+          array_push($temp_rounds, $ava_players[$x]);
+        }
+
+        for( $x=0; $x<count($dummy_ava_players); $x+=2 ){
+          array_push($temp_rounds, -1);
+          array_push($temp_dummys, array($dummy_ava_players[$x], $dummy_ava_players[$x+1]));
         }
 
 
 
         for($x=0; $x<count($temp_rounds); $x+=2){
-          array_push($rounds[0], array($temp_rounds[$x], $temp_rounds[$x+1]));
 
-          if( is_array($temp_rounds[$x]) && is_array($temp_rounds[$x]) ){
-            array_push($results, array(array(), array()));
-          } else if( is_array($temp_rounds[$x]) && !is_array($temp_rounds[$x]) ){
-            array_push($results, array(array()));
-          } else if( !is_array($temp_rounds[$x]) && is_array($temp_rounds[$x]) ){
-            array_push($results, array(array()));
-          } else if( !is_array($temp_rounds[$x]) && !is_array($temp_rounds[$x]) ){
-            array_push($results, array());
-          }
+          array_push($rounds[0], array($temp_rounds[$x], $temp_rounds[$x+1]));
         }
+
+        array_unshift($rounds, $temp_dummys);
+
 
         if($players > 2){
           $temp_stage = $stage/4;
@@ -217,6 +231,9 @@
         }
         array_push($rounds, array() );
 
+        echo json_encode($rounds);
+        echo "<br><br>";
+        echo json_encode($results);
       }
 
       $title = (isset($settings["title"]) && !empty($settings["title"])) ? "'".$dbc->real_escape_string(filter_var($settings["title"], FILTER_SANITIZE_STRING))."'" : "NULL";
@@ -225,7 +242,6 @@
       $rounds = $dbc->real_escape_string(JSON_encode($rounds));
       $results = $dbc->real_escape_string(JSON_encode($results));
 
-
       $dbc->query('SET NAMES utf8');
       $token = bin2hex(openssl_random_pseudo_bytes(3));
       $query = "INSERT INTO `tournaments`(`title`, `type`, `players`, `rounds`, `fixtures`, `admin_token`) VALUES ($title, 'Knockout', '$json', '$rounds', '$results', '".$token."')";
@@ -233,7 +249,7 @@
       $id = $dbc->insert_id;
       mysqli_close($dbc);
 
-      header("Location: tournament/$id/scores?admin=$token");
+      // header("Location: tournament/$id/scores?admin=$token");
     }
     // header("Location: .");
   }
