@@ -178,7 +178,7 @@ if( !isset($_GET["id"]) || empty($_GET["id"]) ){
                 $disabled0 = !($rounds[$x][$y][0] >= 0);
                 $disabled1 = !($rounds[$x][$y][1] >= 0);
 
-                if($stage/2-1 == $x){
+                if( count($rounds[$x]) == 1 ){
                   if( Game::$are_two_legs_final ){
                     $result01 = (array_key_exists(0, $results[1][$x][$y])) ? $results[1][$x][$y][0]: "";
                     $result11 = (array_key_exists(1, $results[1][$x][$y])) ? $results[1][$x][$y][1]: "";
@@ -204,9 +204,9 @@ if( !isset($_GET["id"]) || empty($_GET["id"]) ){
 
                 $game = new Game($player0, $player1, $results0, $results1, $disabled0, $disabled1);
               } else {
-                if($stage/2-1 == $x){
+                if( count($rounds[$x]) == 1 ){
                   if( Game::$are_two_legs_final ){
-                    $game = new Game("", "", array("", "0"), array("", "0"), true, true);
+                    $game = new Game("", "", array("", ""), array("", ""), true, true);
                   } else {
                     $game = new Game("", "", array(""), array(""), true, true);
                   }
@@ -236,28 +236,15 @@ if( !isset($_GET["id"]) || empty($_GET["id"]) ){
                     $disabled1 = !($rounds[$x][$y][1] >= 0);
                   }
 
-                  if($stage/2-1 == $x){
-                    if( Game::$are_two_legs_final ){
-                      $result01 = (array_key_exists(0, $results[1][$x][$y])) ? $results[1][$x][$y][0]: "";
-                      $result11 = (array_key_exists(1, $results[1][$x][$y])) ? $results[1][$x][$y][1]: "";
+                  if( Game::$are_two_legs ){
+                    $result01 = (array_key_exists(0, $results[1][$x][$y])) ? $results[1][$x][$y][0]: "";
+                    $result11 = (array_key_exists(1, $results[1][$x][$y])) ? $results[1][$x][$y][1]: "";
 
-                      $results0 = array($result0, $result01);
-                      $results1 = array($result1, $result11);
-                    } else {
-                      $results0 = array($result0);
-                      $results1 = array($result1);
-                    }
+                    $results0 = array($result0, $result01);
+                    $results1 = array($result1, $result11);
                   } else {
-                    if( Game::$are_two_legs ){
-                      $result01 = (array_key_exists(0, $results[1][$x][$y])) ? $results[1][$x][$y][0]: "";
-                      $result11 = (array_key_exists(1, $results[1][$x][$y])) ? $results[1][$x][$y][1]: "";
-
-                      $results0 = array($result0, $result01);
-                      $results1 = array($result1, $result11);
-                    } else {
-                      $results0 = array($result0);
-                      $results1 = array($result1);
-                    }
+                    $results0 = array($result0);
+                    $results1 = array($result1);
                   }
 
                   $game = new Game($player0, $player1, $results0, $results1, false, false);
