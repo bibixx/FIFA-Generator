@@ -186,16 +186,16 @@ if( !isset($_GET["id"]) || empty($_GET["id"]) ){
                     $results0 = array($result0, $result01);
                     $results1 = array($result1, $result11);
                   } else {
-                    $results0 = array(0);
-                    $results1 = array(0);
+                    $results0 = array($result0);
+                    $results1 = array($result1);
                   }
                 } else {
                   if( Game::$are_two_legs ){
                     $result01 = (array_key_exists(0, $results[1][$x][$y])) ? $results[1][$x][$y][0]: "";
                     $result11 = (array_key_exists(1, $results[1][$x][$y])) ? $results[1][$x][$y][1]: "";
 
-                    $results0 = array(1, 0);
-                    $results1 = array(1, 0);
+                    $results0 = array($result0, $result01);
+                    $results1 = array($result1, $result11);
                   } else {
                     $results0 = array($result0);
                     $results1 = array($result1);
@@ -212,7 +212,7 @@ if( !isset($_GET["id"]) || empty($_GET["id"]) ){
                   }
                 } else {
                   if( Game::$are_two_legs ){
-                    $game = new Game("", "", array("", "0"), array("", "0"), true, true);
+                    $game = new Game("", "", array("", ""), array("", ""), true, true);
                   } else {
                     $game = new Game("", "", array(""), array(""), true, true);
                   }

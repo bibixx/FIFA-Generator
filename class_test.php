@@ -6,6 +6,10 @@
     private $results1;
     private $disabled0;
     private $disabled1;
+    private $correct00;
+    private $correct01;
+    private $correct10;
+    private $correct11;
     private $hidden;
 
     public static $are_two_legs = false;
@@ -34,6 +38,30 @@
         $this->results1 = $d;
       }
 
+      if( is_array($c) && array_key_exists(0, $c) && $c[0] !== "" ){
+        $this->correct00 = " correct";
+      } else {
+        $this->correct00 = "";
+      }
+
+      if( is_array($c) && array_key_exists(1, $c) && $c[1] !== "" ){
+        $this->correct01 = " correct";
+      } else {
+        $this->correct01 = "";
+      }
+
+      if( is_array($d) && array_key_exists(0, $d) && $d[0] !== "" ){
+        $this->correct10 = " correct";
+      } else {
+        $this->correct10 = "";
+      }
+
+      if( is_array($d) && array_key_exists(1, $d) && $d[1] !== "" ){
+        $this->correct11 = " correct";
+      } else {
+        $this->correct11 = "";
+      }
+
       if( $e ) {
         $this->disabled0 = " disabled";
       }
@@ -59,18 +87,25 @@
         $player1   = $this->player1;
         $results0  = $this->results0;
         $results1  = $this->results1;
+
+        $correct00  = $this->correct00;
+        $correct01  = $this->correct01;
+        $correct10  = $this->correct10;
+        $correct11  = $this->correct11;
+
         $disabled0 = $this->disabled0;
         $disabled1 = $this->disabled1;
 
         if( count($results0) > 1 ){
-          $input2 = '<span class="score2"><input type="number" class="home" value="'.$results0[1].'" min="0" max="999"'.$disabled0.'></span>';
-          $input4 = '<span class="score2"><input type="number" class="home" value="'.$results1[1].'" min="0" max="999"'.$disabled1.'></span>';
+          $input2 = '<span class="score2"><input type="number'.$correct01.'" class="home" value="'.$results0[1].'" min="0" max="999"'.$disabled0.'></span>';
+          $input4 = '<span class="score2"><input type="number'.$correct11.'" class="home" value="'.$results1[1].'" min="0" max="999"'.$disabled1.'></span>';
         } else {
           $input2 = $input4 = "";
         }
 
-        $input1 = '<span class="score1"><input type="number" class="home" value="'.$results0[0].'" min="0" max="999"'.$disabled0.'></span>';
-        $input3 = '<span class="score1"><input type="number" class="home" value="'.$results1[0].'" min="0" max="999"'.$disabled1.'></span>';
+        $input1 = '<span class="score1"><input type="number" class="home'.$correct00.'" value="'.$results0[0].'" min="0" max="999"'.$disabled0.'></span>';
+
+        $input3 = '<span class="score1"><input type="number" class="home'.$correct10.'" value="'.$results1[0].'" min="0" max="999"'.$disabled1.'></span>';
         $game_top = '<div class="game game-top"><div><span>'.$player0.'</span>'.$input1.$input2.'</div></div>';
 
 
