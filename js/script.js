@@ -1,6 +1,6 @@
 $(".disabled").hide().removeClass("disabled");
 
-$(".spinner input").on("input", function(){
+$(".spinner input").on("change", function(){
   var str = $(this).val();
   var res = str.replace(/[^0-9]/g, "");
   if(res === ""){
@@ -12,7 +12,7 @@ $(".spinner input").on("input", function(){
 $(".spinner .plus").on("click", function(){
   var $p = $(this).parents(".spinner").find("input");
   $p.val( $p.val()*1+1 );
-  $p.trigger("input");
+  $p.trigger("change");
   $(this).blur();
 });
 
@@ -21,7 +21,7 @@ $(".spinner .minus").on("click", function(){
   if( $p.val() > 1 ){
     $p.val( $p.val()*1-1 );
   }
-  $p.trigger("input");
+  $p.trigger("change");
   $(this).blur();
 });
 
@@ -29,30 +29,38 @@ $("#teamsEnabled").on("change", function(){
   var $tNo = $("#teamsNo");
   if( $(this).prop("checked") ){
     $tNo.parents(".form-horizontal").stop().slideDown(200);
-    $tNo.val( Math.round( $("#players").val()/2 ) ).trigger("input");
+    $tNo.val( Math.round( $("#players").val()/2 ) ).trigger("change");
   } else {
     $tNo.parents(".form-horizontal").stop().slideUp(200);
-    $tNo.trigger("input");
+    $tNo.trigger("change");
   }
 });
 
 $("#type").on("change", function(){
   var val = $(this).find(":selected").val();
   var $matchVsParents = $("#matchesvs").parents(".form-horizontal");
+  var $legsParents = $("#legsKnockout").parents(".form-horizontal");
   if( val == "League" ){
     $matchVsParents.stop().slideDown(200);
   } else {
     $matchVsParents.stop().slideUp(200);
   }
+
+  if( val == "Knockout" ){
+    $legsParents.stop().slideDown(200);
+  } else {
+    $legsParents.stop().slideUp(200);
+  }
+
 });
 
-$("#matchesvs").on("input", function(){
+$("#matchesvs").on("change", function(){
   if( $(this).val() > 2 ){
     $(this).val(2);
   }
 });
 
-$("#players").on("input", function(){
+$("#players").on("change", function(){
   var $players = $(this);
   var $teamsNo = $("#teamsNo");
   var playersVal = $players.val();
@@ -76,7 +84,7 @@ $("#players").on("input", function(){
   }
 });
 
-$("#teamsNo").on("input", function(){
+$("#teamsNo").on("change", function(){
   var $teamsNo = $(this);
   var $players = $("#players");
 
@@ -99,7 +107,7 @@ $("#teamsNo").on("input", function(){
   }
 });
 
-$("#players, #teamsNo, #matchesvs").on("input", function(){
+$("#players, #teamsNo, #matchesvs").on("change", function(){
   printTeams();
 });
 
@@ -144,13 +152,15 @@ function printTeams(){
 
   $(".team").each(function(){
     var $name = $(this).find('[name*="name"]');
+    var $club = $(this).find('[name*="club"]').val();
     var val0 = $name.eq(0).val();
     var val1 = $name.eq(1).val();
+
     tempPlayers.push( val0 );
     if( typeof( val1 ) != "undefined" ){
       tempPlayers.push( val1 );
     }
-    tempClubs.push( val0 );
+    tempClubs.push( $club );
   });
 
 
@@ -181,7 +191,7 @@ function printTeams(){
 
   var tournamentTime = $summaryFix.text().replace(/[^0-9]/g, "")*$("#length").find(":selected").val()*2/60;
 
-  $summary.find("#time").text( (tournamentTime<1)? Math.floor(time*60*10)/10+" minutes": (tournamentTime<2)? Math.floor(tournamentTime*10)/10+" hour": Math.floor(tournamentTime*10)/10+" hours");
+  $summary.find("#time").text( (tournamentTime<1)? Math.floor(tournamentTime*60*10)/10+" minutes": (tournamentTime<2)? Math.floor(tournamentTime*10)/10+" hour": Math.floor(tournamentTime*10)/10+" hours");
   $summary.find("#number").text( $("#players").val() );
 
   var noAgainst = $matchesvsVal*1;
@@ -212,27 +222,8 @@ function printTeams(){
 }
 
 function distribute(){
-  var items = [];
-  var columns = [];
-  var lengths = [];
   var its = $("#players").val()*1;
-  var cols = $("#teamsNo").val()*1;
-  for(x=0; x<its; x++){
-  	items.push([]);
-  }
-  for(x=0; x<cols; x++){
-  	columns.push([]);
-  }
-
-  for (x=0; x<items.length; x++) {
-    columns[Math.floor(x * columns.length / items.length)].push(items[x]);
-  }
-
-  for(x=0; x<columns.length; x++){
-  	lengths[x] = columns[x].length;
-  }
-
-  lengths.sort(function(a,b){ return b-a; });
+  var lengths = its;
 
   return lengths;
 }

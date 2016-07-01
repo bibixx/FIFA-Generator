@@ -119,6 +119,9 @@ function print_e($key) {
             </div>
           </div>
         </div>
+
+        <!-- League START -->
+
         <div class="form-horizontal">
           <div class="form-group">
             <label for="matchesvs" class="col-md-12 control-label">Number of matches against each team:</label>
@@ -131,6 +134,28 @@ function print_e($key) {
             </div>
           </div>
         </div>
+
+        <!-- League END -->
+        <!-- Cup START -->
+
+        <div class="form-horizontal disabled">
+          <div class="form-group">
+            <label for="teams" class="col-md-12 control-label">Play with legs?</label>
+            <div class="col-md-12 checkbox">
+              <label>
+                <input type="checkbox" name="legsKnockout" id="legsKnockout" class="checkbox-inline">Do you want to play with two legs per match in knockout stage?
+              </label>
+            </div>
+            <div class="col-md-12 checkbox">
+              <label>
+                <input type="checkbox" name="legsFinal" id="legsFinal" class="checkbox-inline">Do you want to play with two legs in final?
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Cup END -->
+
       </div>
     </div>
     <div class="teams">

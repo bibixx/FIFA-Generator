@@ -7,11 +7,13 @@
   $error = false;
 
   $getKeys = array_keys($_GET);
+  $settingKeys = array_search("name0", $getKeys);
 
-
-  for($x=0; $x<=4; $x++){
+  for($x=0; $x<$settingKeys; $x++){
     $settings[$getKeys[$x]] = array_shift($_GET);
   }
+
+  print_r($settings);
 
   $temp = array(
     "players" => array(),
@@ -111,7 +113,9 @@
     die();
   } elseif ($settings["type"] == "Knockout") {
 
-    $players = 10;
+    // $players = 11;
+
+    $leg = ( isset($settings["legsKnockout"]) ) ? true : false;
 
     if( $players < 33 ) {
       $rounds = array( array() );
@@ -154,10 +158,19 @@
         array_push($rounds, array() );
         array_push($results, array() );
 
+        $results_temp = array();
+        array_push($results_temp, $results);
+        if( $leg ){
+          array_push($results_temp, $results);
+        }
+        $results = $results_temp;
+
       } else {
 
         $temp_rounds = array();
+        $temp_results = array();
         $temp_dummys = array();
+        $temp_dummys_results = array();
 
         if( $players > 16 ){
           $stage = 16;
@@ -182,37 +195,30 @@
 
         $dummy_ava_players = array();
 
-        // echo $dummys;
-
         for( $x=0; $x<$dummys*2; $x++ ){
           array_push($dummy_ava_players, $ava_players[0]);
           array_shift($ava_players);
         }
 
+        for( $x=0; $x<count($dummy_ava_players); $x+=2 ){
+          array_push($temp_rounds, -1);
+          array_push($temp_dummys, array($dummy_ava_players[$x], $dummy_ava_players[$x+1]));
+          array_push($temp_dummys_results, array());
+        }
 
-        echo "<br>";
-        print_r( $ava_players );
-        echo "<br>";
-        print_r( $dummy_ava_players );
-        echo "<br>";
 
         for( $x=0; $x<count($ava_players); $x++ ){
           array_push($temp_rounds, $ava_players[$x]);
         }
 
-        for( $x=0; $x<count($dummy_ava_players); $x+=2 ){
-          array_push($temp_rounds, -1);
-          array_push($temp_dummys, array($dummy_ava_players[$x], $dummy_ava_players[$x+1]));
-        }
-
-
-
         for($x=0; $x<count($temp_rounds); $x+=2){
-
           array_push($rounds[0], array($temp_rounds[$x], $temp_rounds[$x+1]));
+          array_push($results[0], array());
         }
+
 
         array_unshift($rounds, $temp_dummys);
+        array_unshift($results, $temp_dummys_results);
 
 
         if($players > 2){
@@ -220,16 +226,28 @@
 
           while ( $temp_stage > 1 ) {
             $temp_arr = array();
+            $temp_arr_results = array();
             for($x=0; $x<$temp_stage; $x++){
               array_push($temp_arr, array());
+              array_push($temp_arr_results, array());
             }
             array_push($rounds, $temp_arr);
+            array_push($results, $temp_arr_results);
             $temp_stage /= 2;
           }
 
           array_push($rounds, array( array() ) );
+          array_push($results, array( array() ));
         }
         array_push($rounds, array() );
+        array_push($results, array() );
+
+        $results_temp = array();
+        array_push($results_temp, $results);
+        if( $leg ){
+          array_push($results_temp, $results);
+        }
+        $results = $results_temp;
 
         echo json_encode($rounds);
         echo "<br><br>";
@@ -249,8 +267,7 @@
       $id = $dbc->insert_id;
       mysqli_close($dbc);
 
-      // header("Location: tournament/$id/scores?admin=$token");
+      header("Location: tournament/$id/scores?admin=$token");
     }
-    // header("Location: .");
   }
 ?>

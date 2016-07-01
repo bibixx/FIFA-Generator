@@ -140,6 +140,8 @@ if( !isset($_GET["id"]) || empty($_GET["id"]) ){
     ?>
     <div class="bracket">
     <?php
+        include "../class_test.php";
+
         if( count($players) >= 16 ){
           $stage = 16;
         } else if ( count($players) >= 8 ){
@@ -152,6 +154,9 @@ if( !isset($_GET["id"]) || empty($_GET["id"]) ){
 
         $html = "";
 
+        Game::$are_two_legs = ( count($results)>1 );
+        Game::$are_two_legs_final = false;
+
         $n_rounds = count($rounds);
         for($x=0; $x<$n_rounds; $x++){
           $column_a = "";
@@ -161,48 +166,106 @@ if( !isset($_GET["id"]) || empty($_GET["id"]) ){
 
           if($x==$n_rounds-1) {
             $player0 = (array_key_exists(0, $rounds[$x]) && $rounds[$x][0] >= 0) ? $players[ $rounds[$x][0] ]["players"][0]: "";
-            $column_a .= '<div class="col final"><div class="game game-top"><div><span>'.$player0.'</span></div></div></div>';
+            $game = new Game($player0);
+            $column_a .= $game->outputFinalHTML();
           } else if($x>0){
             for($y=0; $y<count($rounds[$x]); $y++){
-              if( (array_key_exists(0, $rounds[$x][$y]) && $rounds[$x][$y][0] >= 0) && (array_key_exists(1, $rounds[$x][$y]) && $rounds[$x][$y][1] >= 0) ){
-                $player0 = $players[ $rounds[$x][$y][0] ]["players"][0];
-                $player1 = $players[ $rounds[$x][$y][1] ]["players"][0];
-                $result0 = (array_key_exists(0, $results[$x][$y])) ? $results[$x][$y][0]: "";
-                $result1 = (array_key_exists(1, $results[$x][$y])) ? $results[$x][$y][1]: "";
+              if( array_key_exists(0, $rounds[$x][$y]) && array_key_exists(1, $rounds[$x][$y]) ){
+                $player0 = ($rounds[$x][$y][0] >= 0) ? $players[ $rounds[$x][$y][0] ]["players"][0]."(".$rounds[$x][$y][0].")" : "";
+                $player1 = ($rounds[$x][$y][1] >= 0) ? $players[ $rounds[$x][$y][1] ]["players"][0]."(".$rounds[$x][$y][1].")" : "";
+                $result0 = (array_key_exists(0, $results[0][$x][$y])) ? $results[0][$x][$y][0]: "";
+                $result1 = (array_key_exists(1, $results[0][$x][$y])) ? $results[0][$x][$y][1]: "";
+                $disabled0 = !($rounds[$x][$y][0] >= 0);
+                $disabled1 = !($rounds[$x][$y][1] >= 0);
 
-                $column_a .= '<div class="game game-top"><div><span>'.$player0.'</span><span class="score1"><input type="number" class="home" value="'.$result0.'" min="0" max="999"></span><span class="score2"><input type="number" class="home" value="" min="0" max="999"></span></div></div>';
-                $column_a .= '<div class="game game-spacer"></div>';
-                $column_a .= '<div class="game game-bottom"><div><span>'.$player1.'</span><span class="score1"><input type="number" class="home" value="'.$result1.'" min="0" max="999"></span><span class="score2"><input type="number" class="home" value="" min="0" max="999"></span></div></div>';
-                $column_a .= '<div class="spacer"></div>';
+                if($stage/2-1 == $x){
+                  if( Game::$are_two_legs_final ){
+                    $result01 = (array_key_exists(0, $results[1][$x][$y])) ? $results[1][$x][$y][0]: "";
+                    $result11 = (array_key_exists(1, $results[1][$x][$y])) ? $results[1][$x][$y][1]: "";
+
+                    $results0 = array($result0, $result01);
+                    $results1 = array($result1, $result11);
+                  } else {
+                    $results0 = array(0);
+                    $results1 = array(0);
+                  }
+                } else {
+                  if( Game::$are_two_legs ){
+                    $result01 = (array_key_exists(0, $results[1][$x][$y])) ? $results[1][$x][$y][0]: "";
+                    $result11 = (array_key_exists(1, $results[1][$x][$y])) ? $results[1][$x][$y][1]: "";
+
+                    $results0 = array(1, 0);
+                    $results1 = array(1, 0);
+                  } else {
+                    $results0 = array($result0);
+                    $results1 = array($result1);
+                  }
+                }
+
+                $game = new Game($player0, $player1, $results0, $results1, $disabled0, $disabled1);
               } else {
-                $column_a .= '<div class="game game-top"><div><span></span><span class="score1"><input type="number" class="home" value="" min="0" max="999" disabled></span><span class="score2"><input type="number" class="home" value="" min="0" max="999" disabled></span></div></div>';
-                $column_a .= '<div class="game game-spacer"></div>';
-                $column_a .= '<div class="game game-bottom"><div><span></span><span class="score1"><input type="number" class="home" value="" min="0" max="999" disabled></span><span class="score2"><input type="number" class="home" value="" min="0" max="999" disabled></span></div></div>';
-                $column_a .= '<div class="spacer"></div>';
+                if($stage/2-1 == $x){
+                  if( Game::$are_two_legs_final ){
+                    $game = new Game("", "", array("", "0"), array("", "0"), true, true);
+                  } else {
+                    $game = new Game("", "", array(""), array(""), true, true);
+                  }
+                } else {
+                  if( Game::$are_two_legs ){
+                    $game = new Game("", "", array("", "0"), array("", "0"), true, true);
+                  } else {
+                    $game = new Game("", "", array(""), array(""), true, true);
+                  }
+                }
               }
+
+              $column_a .= $game->outputHTML();
             }
           } else {
             if( count($rounds[$x]) > 0 ){
               for($y=0; $y<$stage; $y++){
-                $player0 = $player1 = $result0 = $result1 = "";
+                $player0 = $player1 = $result0 = $result01 = $result1 = $result11 = "";
 
                 if( array_key_exists($y, $rounds[$x] ) ){
-                  if( (array_key_exists(0, $rounds[$x][$y]) && $rounds[$x][$y][0] >= 0) && array_key_exists(1, $rounds[$x][$y]) && $rounds[$x][$y][1] >= 0 ){
-                    $player0 = $players[ $rounds[$x][$y][0] ]["players"][0];
-                    $player1 = $players[ $rounds[$x][$y][1] ]["players"][0];
-                    $result0 = (array_key_exists(0, $results[$x][$y])) ? $results[$x][$y][0]: "";
-                    $result1 = (array_key_exists(1, $results[$x][$y])) ? $results[$x][$y][1]: "";
+                  if( array_key_exists(0, $rounds[$x][$y]) && array_key_exists(1, $rounds[$x][$y]) ){
+                    $player0 = ($rounds[$x][$y][0] >= 0) ? $players[ $rounds[$x][$y][0] ]["players"][0] : "";
+                    $player1 = ($rounds[$x][$y][1] >= 0) ? $players[ $rounds[$x][$y][1] ]["players"][0] : "";
+                    $result0 = (array_key_exists(0, $results[0][$x][$y])) ? $results[0][$x][$y][0]: "";
+                    $result1 = (array_key_exists(1, $results[0][$x][$y])) ? $results[0][$x][$y][1]: "";
+                    $disabled0 = !($rounds[$x][$y][0] >= 0);
+                    $disabled1 = !($rounds[$x][$y][1] >= 0);
                   }
 
-                  $column_b .= '<div class="game game-top"><div><span>'.$player0.'</span><span class="score1"><input type="number" class="home" value="'.$result0.'" min="0" max="999"></span><span class="score2"><input type="number" class="home" value="" min="0" max="999"></span></div></div>';
-                  $column_b .= '<div class="game game-spacer"></div>';
-                  $column_b .= '<div class="game game-bottom"><div><span>'.$player1.'</span><span class="score1"><input type="number" class="home" value="'.$result1.'" min="0" max="999"></span><span class="score2"><input type="number" class="home" value="" min="0" max="999"></span></div></div>';
-                  $column_b .= '<div class="spacer"></div>';
+                  if($stage/2-1 == $x){
+                    if( Game::$are_two_legs_final ){
+                      $result01 = (array_key_exists(0, $results[1][$x][$y])) ? $results[1][$x][$y][0]: "";
+                      $result11 = (array_key_exists(1, $results[1][$x][$y])) ? $results[1][$x][$y][1]: "";
+
+                      $results0 = array($result0, $result01);
+                      $results1 = array($result1, $result11);
+                    } else {
+                      $results0 = array($result0);
+                      $results1 = array($result1);
+                    }
+                  } else {
+                    if( Game::$are_two_legs ){
+                      $result01 = (array_key_exists(0, $results[1][$x][$y])) ? $results[1][$x][$y][0]: "";
+                      $result11 = (array_key_exists(1, $results[1][$x][$y])) ? $results[1][$x][$y][1]: "";
+
+                      $results0 = array($result0, $result01);
+                      $results1 = array($result1, $result11);
+                    } else {
+                      $results0 = array($result0);
+                      $results1 = array($result1);
+                    }
+                  }
+
+                  $game = new Game($player0, $player1, $results0, $results1, false, false);
+
+                  $column_b .= $game->outputHTML();
                 } else {
-                  $column_b .= '<div class="game game-top game-hidden"></div>';
-                  $column_b .= '<div class="game game-spacer game-hidden"></div>';
-                  $column_b .= '<div class="game game-bottom game-hidden"></div>';
-                  $column_b .= '<div class="spacer"></div>';
+                  $game = new Game();
+                  $column_b .= $game->outputHiddenHTML();
                 }
               }
             }
