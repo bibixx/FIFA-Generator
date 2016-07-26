@@ -1,6 +1,6 @@
 <?php
-  define("HOST", "127.0.0.1");
+  define("HOST", "localhost");
   define("LOGIN", "root");
-  define("PASSWORD", "admin");
+  define("PASSWORD", "admin123");
   define("DATABASE", "tournaments");
 ?>

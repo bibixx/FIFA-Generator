@@ -72,7 +72,7 @@
     }
 
     public function outputHiddenHTML(){
-      return '<div class="game game-top game-hidden"></div><div class="game game-spacer game-hidden"></div><div class="game game-bottom game-hidden"></div><div class="spacer"></div>';
+      return '<div class="game game-top game-hidden"></div><div class="game-spacer game-hidden"></div><div class="game game-bottom game-hidden"></div><div class="spacer"></div>';
     }
 
     public function outputFinalHTML(){
@@ -81,7 +81,7 @@
 
     public function outputHTML(){
       if( $this->hidden ){
-        $string_to_return = '<div class="game game-top game-hidden"></div><div class="game game-spacer game-hidden"></div><div class="game game-bottom game-hidden"></div><div class="spacer"></div>';
+        $string_to_return = '<div class="game game-top game-hidden"></div><div class="game-spacer game-hidden"></div><div class="game game-bottom game-hidden"></div><div class="spacer"></div>';
       } else {
         $player0   = $this->player0;
         $player1   = $this->player1;
@@ -111,7 +111,7 @@
 
         $game_bottom = '<div class="game game-bottom"><div><span>'.$player1.'</span>'.$input3.$input4.'</div></div>';
 
-        $string_to_return = $game_top.'<div class="game game-spacer"></div>'.$game_bottom.'<div class="spacer"></div>';
+        $string_to_return = $game_top.'<div class="game-spacer"></div>'.$game_bottom.'<div class="spacer"></div>';
       }
 
       return $string_to_return;

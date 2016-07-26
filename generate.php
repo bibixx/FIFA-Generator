@@ -13,7 +13,7 @@
     $settings[$getKeys[$x]] = array_shift($_GET);
   }
 
-  print_r($settings);
+  // print_r($settings);
 
   $temp = array(
     "players" => array(),
@@ -113,9 +113,10 @@
     die();
   } elseif ($settings["type"] == "Knockout") {
 
-    // $players = 11;
+    $players = 5;
 
     $leg = ( isset($settings["legsKnockout"]) ) ? true : false;
+    // $leg = true;
 
     if( $players < 33 ) {
       $rounds = array( array() );
@@ -164,6 +165,9 @@
           array_push($results_temp, $results);
         }
         $results = $results_temp;
+
+        // echo json_encode($rounds);
+        // echo json_encode($results);
 
       } else {
 

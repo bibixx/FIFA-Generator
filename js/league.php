@@ -44,7 +44,7 @@ $(document).ready(function() {
           method: "POST",
           type: "html",
           url: "/FIFA-Generator/save.php",
-          data: {index: $(this).parents(".round").index()-1+","+($(this).parents(".row").index()-1), value: [row[0]*1, row[1]*1], id: tournamentId, admin: token }
+          data: {type: "Knockout", index: $(this).parents(".round").index()+","+($(this).parents(".row").index()-1), value: [row[0]*1, row[1]*1], id: tournamentId, admin: token }
         })
         .fail(function(data){
           console.log( data );
@@ -55,7 +55,7 @@ $(document).ready(function() {
           method: "POST",
           type: "html",
           url: "/FIFA-Generator/save.php",
-          data: {index: $(this).parents(".round").index()-1+","+($(this).parents(".row").index()-1), value: [], id: tournamentId, admin: token }
+          data: {type: "Knockout", index: $(this).parents(".round").index()+","+($(this).parents(".row").index()-1), value: [], id: tournamentId, admin: token }
         })
         .fail(function(data){
           console.log( data );

@@ -273,6 +273,7 @@ h1.tournament-name {
 .bracket .col .game-spacer {
   border-right: 1px solid #ddd;
   min-height: 150px;
+  height: 1.6em;
 }
 
 .bracket .col .game-bottom {
