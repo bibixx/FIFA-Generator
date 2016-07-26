@@ -23,35 +23,31 @@
 	  } else if( $_POST["type"] == "Cup" ) {
 			$p = explode(":", $_POST["index"]);
 
-			// print_r($rounds[$p[0]+1][floor($p[2]/2)][$p[2]%2]);
-
 			if( array_key_exists( "value", $_POST ) ){
-				$fixtures[0][$p[1]][$p[2]] = [$_POST["value"][0]*1, $_POST["value"][1]*1];
+				$fixtures[0][$p[0]][$p[1]] = [$_POST["value"][0]*1, $_POST["value"][1]*1];
 
 				if( count($rounds[$p[0]]) > 1 ){
 					if( $_POST["value"][0]*1 > $_POST["value"][1]*1 ){
-						$rounds[$p[0]+1][floor($p[2]/2)][$p[2]%2] = $rounds[$p[0]][$p[2]][0];
+						$rounds[$p[0]+1][floor($p[1]/2)][$p[1]%2] = $rounds[$p[0]][$p[1]][0];
 					} else if( $_POST["value"][0]*1 < $_POST["value"][1]*1 ){
-						$rounds[$p[0]+1][floor($p[2]/2)][$p[2]%2] = $rounds[$p[0]][$p[2]][1];
+						$rounds[$p[0]+1][floor($p[1]/2)][$p[1]%2] = $rounds[$p[0]][$p[1]][1];
 					}
 
-					if( !array_key_exists( 0, $rounds[$p[0]+1][floor($p[2]/2)]) ){
-						$rounds[$p[0]+1][floor($p[2]/2)][0] = -1;
+					if( !array_key_exists( 0, $rounds[$p[0]+1][floor($p[1]/2)]) ){
+						$rounds[$p[0]+1][floor($p[1]/2)][0] = -1;
 					}
-					if( !array_key_exists( 1, $rounds[$p[0]+1][floor($p[2]/2)]) ){
-						$rounds[$p[0]+1][floor($p[2]/2)][1] = -1;
+					if( !array_key_exists( 1, $rounds[$p[0]+1][floor($p[1]/2)]) ){
+						$rounds[$p[0]+1][floor($p[1]/2)][1] = -1;
 					}
 				} else {
 					if( $_POST["value"][0]*1 > $_POST["value"][1]*1 ){
-						$rounds[$p[0]+1] = array($rounds[$p[0]][$p[2]][0]);
+						$rounds[$p[0]+1] = array($rounds[$p[0]][$p[1]][0]);
 					} else if( $_POST["value"][0]*1 < $_POST["value"][1]*1 ){
-						$rounds[$p[0]+1] = array($rounds[$p[0]][$p[2]][1]);
+						$rounds[$p[0]+1] = array($rounds[$p[0]][$p[1]][1]);
 					}
 				}
 			}
 		}
-
-		// print_r($_POST);
 
 		$query1 = "UPDATE `tournaments` SET `fixtures` = '".json_encode( $fixtures )."' WHERE `tournaments`.`id` = ".$dbc->real_escape_string($_POST["id"]);
 		$query2 = "UPDATE `tournaments` SET `rounds` = '".json_encode( $rounds )."' WHERE `tournaments`.`id` = ".$dbc->real_escape_string($_POST["id"]);

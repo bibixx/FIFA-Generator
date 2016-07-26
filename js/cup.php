@@ -62,12 +62,10 @@ $(document).ready(function() {
 
       var dummy = (($(".col").eq(0).children(".game:not(.game-hidden)").length / $(".col").eq(1).children(".game:not(.game-hidden)").length) != 2) ? 0 : 1;
 
-      var index = ($(this).parents(".col").index())+":"+($(this).parents(".col").index())+":"+Math.floor($(this).parent().parent().parent(".game").prevAll(".game").length/2);
+      var index = ($(this).parents(".col").index()+dummy)+":"+Math.floor($(this).parent().parent().parent(".game").prevAll(".game").length/2);
       var v1 = $m1.val();
       var v2 = $m2.val();
 
-      // console.log( v1 );
-      // console.log( v2 );
       console.log( index );
 
       if(!empty && completed){
@@ -78,7 +76,9 @@ $(document).ready(function() {
           data: {type: "Cup", "index": index, value: [v1*1, v2*1], id: tournamentId, admin: token }
         })
         .success(function(data){
-          console.log( data );
+          if( data !== "" ){
+            console.log( data );
+          }
         })
         .fail(function(data){
           console.log( data );
