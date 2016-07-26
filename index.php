@@ -80,7 +80,7 @@ function print_e($key) {
               <select name="type" id="type" class="form-control">
                 <option>League</option>
                 <option>Knockout</option>
-                <option>League + Knockout</option>
+                <option disabled>League + Knockout - Comming in the future!</option>
               </select>
             </div>
           </div>

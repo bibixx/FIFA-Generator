@@ -135,6 +135,38 @@ if( !isset($_GET["id"]) || empty($_GET["id"]) ){
             echo "</div>";
           }
         }
+        ?>
+        <nav aria-label="...">
+          <ul class="pagination">
+
+            <?php
+              $count = ceil(count($rounds)/2);
+
+              if( $_GET["page"] == "1" ){
+                echo '<li class="disabled"><a aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>';
+              } else {
+                echo '<li><a href="?page='.($_GET["page"]-1).'" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>';
+              }
+
+              for( $x=1; $x<$count+1; $x++ ){
+                $class = "";
+                if( $x == $_GET["page"] ){
+                  echo '<li class="active"><a>'.$x.' <span class="sr-only">(current)</span></a></li>';
+                } else {
+                  echo '<li><a href="?page='.$x.'">'.$x.'</a></li>';
+                }
+              }
+
+              if( $_GET["page"] == $count ){
+                echo '<li class="disabled"><a aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>';
+              } else {
+                echo '<li><a href="?page='.($_GET["page"]+1).'" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>';
+              }
+
+            ?>
+          </ul>
+        </nav>
+        <?php
       } else {
 
     ?>
@@ -171,8 +203,8 @@ if( !isset($_GET["id"]) || empty($_GET["id"]) ){
           } else if($x>0){
             for($y=0; $y<count($rounds[$x]); $y++){
               if( array_key_exists(0, $rounds[$x][$y]) && array_key_exists(1, $rounds[$x][$y]) ){
-                $player0 = ($rounds[$x][$y][0] >= 0) ? $players[ $rounds[$x][$y][0] ]["players"][0]."(".$rounds[$x][$y][0].")" : "";
-                $player1 = ($rounds[$x][$y][1] >= 0) ? $players[ $rounds[$x][$y][1] ]["players"][0]."(".$rounds[$x][$y][1].")" : "";
+                $player0 = ($rounds[$x][$y][0] >= 0) ? $players[ $rounds[$x][$y][0] ]["players"][0] : "";
+                $player1 = ($rounds[$x][$y][1] >= 0) ? $players[ $rounds[$x][$y][1] ]["players"][0] : "";
                 $result0 = (array_key_exists(0, $results[0][$x][$y])) ? $results[0][$x][$y][0]: "";
                 $result1 = (array_key_exists(1, $results[0][$x][$y])) ? $results[0][$x][$y][1]: "";
                 $disabled0 = !($rounds[$x][$y][0] >= 0);
@@ -310,5 +342,5 @@ if( !isset($_GET["id"]) || empty($_GET["id"]) ){
         break;
     }
   ?>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+  <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script> -->
 </body>

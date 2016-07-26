@@ -1,135 +1,46 @@
-// .bracket
-//   display: flex
-//   flex-direction: row
-//   justify-content: center
-//   font-size: 1.6em
-//   line-height: 1.42857143em
-//   width: 100%
-//
-//   &.scroll
-//     justify-content: flex-start
-//     overflow-x: scroll
-//
-//   .col
-//     display: flex
-//     flex-direction: column
-//     justify-content: space-around
-//
-//     div
-//       background: #ededed
-//       border: 1px solid #ddd
-//       border-radius: 3px
-//       height: 1.6em
-//       min-width: 250px
-//       margin: 10px 0px
-//
-//       text-align: center
-//       font-family: Roboto
-//       display: flex
-//       position: relative
-//       justify-content: flex-end
-//
-//       &.bracket-hidden::after
-//         display: none
-//
-//       &:nth-child(2n+1)::after
-//         background-image: url(/FIFA-Generator/css/leg1.png)
-//
-//       &:nth-child(2n)::after
-//         background-image: url(/FIFA-Generator/css/leg2.png)
-//
-//       &::after
-//         // content: ""
-//         display: block
-//         width: 20px
-//         position: absolute
-//         background-size: 100% 100%
-//         top: -11px
-//         bottom: -11px
-//         right: -20px
-//
-//
-//
-//       span
-//         width: 80%
-//         line-height: 1.6em
-//
-//       .score, .score1, .score2
-//         width: 25%
-//         display: inline-block
-//         background: #F5F5F5
-//         padding: 0
-//         border-radius: 0px 3px 3px 0px
-//         &.score1
-//           border-radius: 0px
-//           border-right: 1px solid #ddd
-//
-//       &.bracket-hidden
-//         background: white
-//         border: none
-//
-
 .bracket
-  display:flex
-  flex-direction:row
+  display: flex
+  flex-direction: row
   justify-content: center
   font-size: 1.6em
 
   .col
-    display:flex
-    flex-direction:column
-    justify-content:center
-    width:200px
-    list-style:none
-    padding:0
+    display: flex
+    flex-direction: column
+    justify-content: center
+    width: 200px
+    list-style: none
+    padding: 0
 
-    .spacer
-      flex-grow:1
-
-    .game-spacer
+    .spacer, .game-spacer
       flex-grow: 1
 
     .spacer:first-child, .spacer:last-child
-      flex-grow:.5
+      flex-grow: .5
 
     &:last-child .spacer
-        flex-grow: 0
+      flex-grow: 0
 
     .game
-      // padding-left:20px
       height: 1.6em
 
-    .game-top
-      // border-bottom:1px solid #aaa
-
     .game-spacer
-      border-right:1px solid #ddd
+      border-right: 2px solid #ededed
       min-height: 150px
       height: 1.6em
 
     .game-bottom
-      // border-top: 1px solid #aaa
       margin-bottom: 30px
 
     .game-hidden
       border: none
 
-
-
-    &:first-child
-      .game-top > div, .game-bottom > div
-        border: 1px solid #ddd
-
-
     .game-top > div, .game-bottom > div
       background: #ededed
-      border: 1px solid #ddd
-      border-radius: 3px
+      border: 1px solid #ededed
+      border-right-width: 2px
       height: 1.6em
       border-left: none
-      // min-width: 250px
-      // margin: 10px 0px
-
       text-align: center
       font-family: Roboto
       display: flex
@@ -145,14 +56,11 @@
         display: inline-block
         background: #F5F5F5
         padding: 0
-        border-radius: 0px 3px 3px 0px
-        &.score1
+        &.score1:not(:last-child)
           border-radius: 0px
-          border-right: 1px solid #ddd
 
     &:last-child .game-top > div span, .bracket .col .game-bottom > div span
       width: 100%
-
 
     .home, .away
       min-width: 100%

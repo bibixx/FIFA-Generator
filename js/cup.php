@@ -42,6 +42,7 @@ $(document).ready(function() {
     $("input").on("input", function(){
       var row = [];
       var empty = false;
+      var completed = true;
       var $m1, $m2;
 
       if( $(this).parents(".game").index(".game")%2 === 0){
@@ -61,20 +62,23 @@ $(document).ready(function() {
 
       var dummy = (($(".col").eq(0).children(".game:not(.game-hidden)").length / $(".col").eq(1).children(".game:not(.game-hidden)").length) != 2) ? 0 : 1;
 
-      var index = ($(this).parent("span").index()-1)+":"+($(this).parents(".col").index()+dummy)+":"+Math.floor($(this).parents(".game:not(.game-hidden)").index( ".game" ) /2);
+      var index = ($(this).parents(".col").index())+":"+($(this).parents(".col").index())+":"+Math.floor($(this).parent().parent().parent(".game").prevAll(".game").length/2);
       var v1 = $m1.val();
       var v2 = $m2.val();
 
-      console.log( v1 );
-      console.log( v2 );
+      // console.log( v1 );
+      // console.log( v2 );
       console.log( index );
 
-      if(!empty){
+      if(!empty && completed){
         $.ajax({
           method: "POST",
           type: "html",
           url: "/FIFA-Generator/save.php",
           data: {type: "Cup", "index": index, value: [v1*1, v2*1], id: tournamentId, admin: token }
+        })
+        .success(function(data){
+          console.log( data );
         })
         .fail(function(data){
           console.log( data );
@@ -86,6 +90,9 @@ $(document).ready(function() {
           type: "html",
           url: "/FIFA-Generator/save.php",
           data: {type: "Cup", "index": index, value: [], id: tournamentId, admin: token }
+        })
+        .success(function(data){
+          console.log( data );
         })
         .fail(function(data){
           console.log( data );

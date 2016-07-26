@@ -13,8 +13,6 @@
     $settings[$getKeys[$x]] = array_shift($_GET);
   }
 
-  // print_r($settings);
-
   $temp = array(
     "players" => array(),
     "club" => ""
@@ -113,7 +111,7 @@
     die();
   } elseif ($settings["type"] == "Knockout") {
 
-    $players = 5;
+    // $players = 5;
 
     $leg = ( isset($settings["legsKnockout"]) ) ? true : false;
     // $leg = true;
@@ -266,6 +264,7 @@
 
       $dbc->query('SET NAMES utf8');
       $token = bin2hex(openssl_random_pseudo_bytes(3));
+      echo $token;
       $query = "INSERT INTO `tournaments`(`title`, `type`, `players`, `rounds`, `fixtures`, `admin_token`) VALUES ($title, 'Knockout', '$json', '$rounds', '$results', '".$token."')";
       $data = $dbc->query($query);
       $id = $dbc->insert_id;
