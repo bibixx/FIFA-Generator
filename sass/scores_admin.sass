@@ -1,1 +1,8 @@
-@import partials/scores_table_admin
+.home:not([disabled]), .away:not([disabled])
+  border-bottom: 2px solid #cc180e
+  &:focus
+    border-bottom-color: #ff6700
+  &.correct
+    border-bottom-color: rgba(0, 176, 0, 0)
+    &:focus, &:active
+      border-bottom-color: #1b73f7

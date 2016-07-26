@@ -185,11 +185,13 @@ if( !isset($_GET["id"]) || empty($_GET["id"]) ){
           </ul>
         </nav>
         <?php
-      } else {
+      } if( $type == "Knockout" ) {
 
     ?>
     <div class="bracket">
     <?php
+        $disabled = ($admin) ? "" : "disabled";
+
         include "../class_test.php";
 
         if( count($players) >= 16 ){
@@ -206,6 +208,7 @@ if( !isset($_GET["id"]) || empty($_GET["id"]) ){
 
         Game::$are_two_legs = ( count($results)>1 );
         Game::$are_two_legs_final = false;
+        Game::$admin = $admin;
 
         $n_rounds = count($rounds);
         for($x=0; $x<$n_rounds; $x++){
@@ -335,8 +338,12 @@ if( !isset($_GET["id"]) || empty($_GET["id"]) ){
     </div>
   </footer>
 
-  <link rel="stylesheet" href="/FIFA-Generator/css/scores_admin.css" media="screen" charset="utf-8">
   <?php
+    if( $admin ){
+  ?>
+    <link rel="stylesheet" href="/FIFA-Generator/css/scores_admin.css" media="screen" charset="utf-8">
+  <?php
+    }
     $params = "";
 
     if($admin){

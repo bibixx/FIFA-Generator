@@ -14,6 +14,7 @@
 
     public static $are_two_legs = false;
     public static $are_two_legs_final = true;
+    public static $admin = true;
 
     public function __construct($a="", $b="", $c=array("",""), $d=array("",""), $e=false, $f=false) {
       if(gettype($a) == "boolean"){
@@ -62,11 +63,11 @@
         $this->correct11 = "";
       }
 
-      if( $e ) {
+      if( $e || !Game::$admin ) {
         $this->disabled0 = " disabled";
       }
 
-      if( $f ) {
+      if( $f || !Game::$admin ) {
         $this->disabled1 = " disabled";
       }
     }

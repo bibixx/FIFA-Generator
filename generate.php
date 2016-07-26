@@ -268,6 +268,8 @@
       $query = "INSERT INTO `tournaments`(`title`, `type`, `players`, `rounds`, `fixtures`, `admin_token`) VALUES ($title, 'Knockout', '$json', '$rounds', '$results', '".$token."')";
       $data = $dbc->query($query);
       $id = $dbc->insert_id;
+
+      echo "<br>".$id;
       mysqli_close($dbc);
 
       header("Location: tournament/$id/scores?admin=$token");

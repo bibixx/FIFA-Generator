@@ -28,7 +28,7 @@
 			if( array_key_exists( "value", $_POST ) ){
 				$fixtures[0][$p[1]][$p[2]] = [$_POST["value"][0]*1, $_POST["value"][1]*1];
 
-				if( count( $rounds[$p[0]+1] ) > 0 ){
+				if( count($rounds[$p[0]]) > 1 ){
 					if( $_POST["value"][0]*1 > $_POST["value"][1]*1 ){
 						$rounds[$p[0]+1][floor($p[2]/2)][$p[2]%2] = $rounds[$p[0]][$p[2]][0];
 					} else if( $_POST["value"][0]*1 < $_POST["value"][1]*1 ){
