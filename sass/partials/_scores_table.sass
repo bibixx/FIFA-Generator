@@ -14,6 +14,10 @@ h1.tournament-name
     align-items: center
     justify-content: center
     padding: 40px
+
+    & > div > div
+      display: inline-block
+
     &:nth-child(2n+1)
       background: #F5F5F5
 
@@ -50,7 +54,6 @@ h1.tournament-name
   background: none
   border: none
   border-radius: 0px
-
   transition: .2s all ease-in-out
   outline: none
   margin: 0px 10px
@@ -77,6 +80,20 @@ h1.tournament-name
   .home, .away
     min-width: 20px
     margin: 0px 8px
+
+.crest
+  width: 40px
+  height: 40px
+  background: black
+  display: inline-block
+  background: url(/FIFA-Generator/logos/16/legia-warszawa.png)
+  background-size: contain
+
+.text-right .crest
+  margin-left: 15px
+
+.text-left .crest
+  margin-right: 15px
 
 @media screen and (max-width: 375px)
   body

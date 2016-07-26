@@ -199,7 +199,15 @@ if( !isset($_GET["id"]) || empty($_GET["id"]) ){
               }
             }
             $club = (isset($teams[$x]["club"]) && $teams[$x]["club"] != "")? " (".$teams[$x]["club"].")" : "";
-            echo "<tr><td><span>".($x+1)."</span></td><td>".$players.$club."</td><td>".$played."</td><td>".$teams[$x]["wins"]."</td><td>".$teams[$x]["draws"]."</td><td>".$teams[$x]["losses"]."</td><td>".$teams[$x]["gf"].":".$teams[$x]["ga"]."</td><td>".$gd."</td><td>".$pts."</td></tr>";
+
+            $crestPath = '/FIFA-Generator/logos/16/'.strtolower(preg_replace("/[^a-zA-Z0-9\-]+/", "", html_entity_decode(str_replace(" ", "-", $teams[$x]["club"]), ENT_QUOTES))).'.png';
+            $crest = "";
+
+            if( file_exists($_SERVER['DOCUMENT_ROOT'].$crestPath) ){
+              $crest = "<img src='".$crestPath."'>";
+            }
+
+            echo "<tr><td><span>".($x+1)."</span></td><td>".$crest.$players.$club."</td><td>".$played."</td><td>".$teams[$x]["wins"]."</td><td>".$teams[$x]["draws"]."</td><td>".$teams[$x]["losses"]."</td><td>".$teams[$x]["gf"].":".$teams[$x]["ga"]."</td><td>".$gd."</td><td>".$pts."</td></tr>";
           }
         ?>
         </tbody>

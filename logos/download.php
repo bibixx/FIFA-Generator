@@ -7,7 +7,7 @@
     mkdir($fifaVersion."/");
   }
 
-  $html = file_get_html("http://www.futhead.com/16/players/");
+  $html = file_get_html("http://www.futhead.com/$fifaVersion/players/");
 
   $allLeaguesList = array();
   $allTeamsList = json_decode( file_get_contents("club-names.js") , true);
@@ -29,7 +29,7 @@
 print_r( $allLeaguesList[37] );
 
   $key = $allLeaguesList[$_GET["i"]*1];
-  $html = file_get_html("http://www.futhead.com/16/players/?league=".$key*1);
+  $html = file_get_html("http://www.futhead.com/$fifaVersion/players/?league=".$key*1);
 
   foreach( $html->find('.subnav ul li.dropdown') as $li) {
     foreach( $li->find('a span') as $span) {
@@ -38,7 +38,7 @@ print_r( $allLeaguesList[37] );
           $team = trim($league->plaintext);
           array_push($allTeamsList, $team);
 
-          $search = json_decode( file_get_contents("http://www.futhead.com/quicksearch/club/16/?term=".str_replace("%26%2339%3B", "%27", urlencode($team))), true );
+          $search = json_decode( file_get_contents("http://www.futhead.com/quicksearch/club/$fifaVersion/?term=".str_replace("%26%2339%3B", "%27", urlencode($team))), true );
 
           $remoteURL = $search[0]["image"];
           $urlTeamName = $fifaVersion."/".strtolower(preg_replace("/[^a-zA-Z0-9\-]+/", "", html_entity_decode(str_replace(" ", "-", $team), ENT_QUOTES))).".png";

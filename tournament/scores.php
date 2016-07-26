@@ -100,6 +100,14 @@ if( !isset($_GET["id"]) || empty($_GET["id"]) ){
               $club1 = $players[ $teams[0] ]["club"];
               $club2 = $players[ $teams[1] ]["club"];
 
+              $disabled = ($admin) ? "" : "disabled";
+
+              $crestPath1 = '/FIFA-Generator/logos/16/'.strtolower(preg_replace("/[^a-zA-Z0-9\-]+/", "", html_entity_decode(str_replace(" ", "-", $club1), ENT_QUOTES))).'.png';
+              $crest1 = ' style="background-image: url('.$crestPath1.')"';
+
+              $crestPath2 = '/FIFA-Generator/logos/16/'.strtolower(preg_replace("/[^a-zA-Z0-9\-]+/", "", html_entity_decode(str_replace(" ", "-", $club2), ENT_QUOTES))).'.png';
+              $crest2 = ' style="background-image: url('.$crestPath2.')"';
+
               if( count($players[ $teams[0] ]["players"]) > 1 ){
                 $player1 = $players[ $teams[0] ]["players"][0]." & ".$players[ $teams[0] ]["players"][1];
               } else {
@@ -112,23 +120,31 @@ if( !isset($_GET["id"]) || empty($_GET["id"]) ){
                 $player2 = $players[ $teams[1] ]["players"][0];
               }
 
-              $disabled = ($admin) ? "" : "disabled";
 
               echo '<div class="row">';
                 if( !empty($club1) ){
-                  echo '<div class="col-xs-4 col-sm-4 col-md-5 col-lg-5 text-right"><p>'.html_entity_decode($club1, ENT_QUOTES).'</p><p class="name">'.html_entity_decode($player1, ENT_QUOTES).'</p></div>';
+                  if( file_exists($_SERVER['DOCUMENT_ROOT'].$crestPath1) ){
+                    echo '<div class="col-xs-4 col-sm-4 col-md-5 col-lg-5 text-right"><div><p>'.html_entity_decode($club1, ENT_QUOTES).'</p><p class="name">'.html_entity_decode($player1, ENT_QUOTES).'</p></div><div class="crest hidden-xs"'.$crest1.'></div></div>';
+                  } else {
+                    echo '<div class="col-xs-4 col-sm-4 col-md-5 col-lg-5 text-right"><div><p>'.html_entity_decode($club1, ENT_QUOTES).'</p><p class="name">'.html_entity_decode($player1, ENT_QUOTES).'</p></div></div>';
+                  }
                 } else {
-                  echo '<div class="col-xs-4 col-sm-4 col-md-5 col-lg-5 text-right"><p>'.html_entity_decode($player1, ENT_QUOTES).'</p></div>';
+                  echo '<div class="col-xs-4 col-sm-4 col-md-5 col-lg-5 text-right"><div><p>'.html_entity_decode($player1, ENT_QUOTES).'</p></div></div>';
                 }
                 if( array_key_exists(0, $result) ){
                   echo '<div class="col-xs-4 col-sm-4 col-md-2 col-lg-2 text-center"><input type="number" '.$disabled.' class="home correct" value="'.$result[0].'">:<input type="number" '.$disabled.' class="away correct" value="'.$result[1].'"></div>';
                 } else {
                   echo '<div class="col-xs-4 col-sm-4 col-md-2 col-lg-2 text-center"><input type="number" '.$disabled.' class="home" value="">:<input type="number" '.$disabled.' class="away" value=""></div>';
                 }
-                if( !empty($club1) ){
-                  echo '<div class="col-xs-4 col-sm-4 col-md-5 col-lg-5 text-left">'.html_entity_decode($club2, ENT_QUOTES).'</p><p class="name">'.html_entity_decode($player2, ENT_QUOTES).'</p></div>';
+
+                if( !empty($club2) ){
+                  if( file_exists($_SERVER['DOCUMENT_ROOT'].$crestPath2) ){
+                    echo '<div class="col-xs-4 col-sm-4 col-md-5 col-lg-5 text-left"><div class="crest hidden-xs"'.$crest2.'></div><div>'.html_entity_decode($club2, ENT_QUOTES).'</p><p class="name">'.html_entity_decode($player2, ENT_QUOTES).'</p></div></div>';
+                  } else {
+                    echo '<div class="col-xs-4 col-sm-4 col-md-5 col-lg-5 text-left"><div>'.html_entity_decode($club2, ENT_QUOTES).'</p><p class="name">'.html_entity_decode($player2, ENT_QUOTES).'</p></div></div>';
+                  }
                 } else {
-                  echo '<div class="col-xs-4 col-sm-4 col-md-5 col-lg-5 text-left"><p>'.html_entity_decode($player2, ENT_QUOTES).'</p></div>';
+                  echo '<div class="col-xs-4 col-sm-4 col-md-5 col-lg-5 text-left"><div><p>'.html_entity_decode($player2, ENT_QUOTES).'</p></div></div>';
                 }
               echo '</div>';
             }
@@ -344,5 +360,5 @@ if( !isset($_GET["id"]) || empty($_GET["id"]) ){
         break;
     }
   ?>
-  <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script> -->
+  <script src="/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 </body>

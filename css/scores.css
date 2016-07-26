@@ -113,6 +113,10 @@ h1.tournament-name {
   padding: 40px;
 }
 
+.round .row > div > div {
+  display: inline-block;
+}
+
 .round .row:nth-child(2n+1) {
   background: #F5F5F5;
 }
@@ -191,6 +195,23 @@ h1.tournament-name {
     min-width: 20px;
     margin: 0px 8px;
   }
+}
+
+.crest {
+  width: 40px;
+  height: 40px;
+  background: black;
+  display: inline-block;
+  background: url(/FIFA-Generator/logos/16/legia-warszawa.png);
+  background-size: contain;
+}
+
+.text-right .crest {
+  margin-left: 15px;
+}
+
+.text-left .crest {
+  margin-right: 15px;
 }
 
 @media screen and (max-width: 375px) {

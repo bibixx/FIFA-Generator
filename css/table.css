@@ -149,6 +149,13 @@ table tbody tr td {
   line-height: 50px !important;
 }
 
+table tbody tr td img {
+  height: 70%;
+  display: inline-block;
+  margin-right: 10px;
+  line-height: 100%;
+}
+
 table tbody tr td:nth-child(1), table tbody tr td:nth-child(2), table tbody tr td:nth-child(3), table tbody tr td:last-child {
   color: black;
 }
