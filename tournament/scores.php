@@ -142,25 +142,27 @@ if( !isset($_GET["id"]) || empty($_GET["id"]) ){
             <?php
               $count = ceil(count($rounds)/2);
 
-              if( $_GET["page"] == "1" ){
+              $curPage = (isset($_GET["page"])) ? $_GET["page"] : 1;
+
+              if( $curPage == "1" ){
                 echo '<li class="disabled"><a aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>';
               } else {
-                echo '<li><a href="?page='.($_GET["page"]-1).'" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>';
+                echo '<li><a href="?page='.($curPage-1).'" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>';
               }
 
               for( $x=1; $x<$count+1; $x++ ){
                 $class = "";
-                if( $x == $_GET["page"] ){
+                if( $x == $curPage ){
                   echo '<li class="active"><a>'.$x.' <span class="sr-only">(current)</span></a></li>';
                 } else {
                   echo '<li><a href="?page='.$x.'">'.$x.'</a></li>';
                 }
               }
 
-              if( $_GET["page"] == $count ){
+              if( $curPage == $count ){
                 echo '<li class="disabled"><a aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>';
               } else {
-                echo '<li><a href="?page='.($_GET["page"]+1).'" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>';
+                echo '<li><a href="?page='.($curPage+1).'" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>';
               }
 
             ?>
