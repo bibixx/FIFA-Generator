@@ -43,19 +43,29 @@ $(document).ready(function() {
       var row = [];
       var empty = false;
       var completed = true;
-      var $m1, $m2;
+      var $m1s1, $m2s1;
 
       if( $(this).parents(".game").index(".game")%2 === 0){
-        $m1 = $(this);
-        $m2 = $(this).parents(".game").next().next().find("input");
+        $m1s1 = $(this).parent().parent("div").find(".score1 input");
+        $m2s1 = $(this).parents(".game").next().next().find(".score1 input");
+        $m1s2 = $(this).parent().parent("div").find(".score2 input");
+        $m2s2 = $(this).parents(".game").next().next().find(".score2 input");
       } else {
-        $m1 = $(this).parents(".game").prev().prev().find("input");
-        $m2 = $(this);
+        $m1s1 = $(this).parents(".game").prev().prev().find(".score1 input");
+        $m2s1 = $(this).parent().parent("div").find(".score1 input");
+        $m1s2 = $(this).parents(".game").prev().prev().find(".score2 input");
+        $m2s2 = $(this).parent().parent("div").find(".score2 input");
       }
 
-      if( $m1.val() === "" || $m2.val() === "" ){
+      if( $m1s1.val() === "" || $m2s1.val() === "" ){
         empty = true;
       }
+
+      // if( $m1s2.val() === "" && $m2s2.val() === "" ){
+      //   empty = true;
+      // }
+
+      empty = false;
 
       var token = "<?= $_GET["admin"]; ?>";
       var tournamentId = "<?= $_GET["id"]; ?>";
@@ -63,17 +73,19 @@ $(document).ready(function() {
       var dummy = (($(".col").eq(0).children(".game:not(.game-hidden)").length / $(".col").eq(1).children(".game:not(.game-hidden)").length) != 2) ? 0 : 1;
 
       var index = ($(this).parents(".col").index()+dummy)+":"+Math.floor($(this).parent().parent().parent(".game").prevAll(".game").length/2);
-      var v1 = $m1.val();
-      var v2 = $m2.val();
+      var v1 = ($m1s1.val() !== "") ? $m1s1.val() : -1;
+      var v2 = ($m2s1.val() !== "") ? $m2s1.val() : -1;
+      var v3 = ($m1s2.val() !== "") ? $m1s2.val() : -1;
+      var v4 = ($m2s2.val() !== "") ? $m2s2.val() : -1;
 
-      console.log( index );
+      console.log( index+", "+[v1,v2,v3,v4] );
 
       if(!empty && completed){
         $.ajax({
           method: "POST",
           type: "html",
           url: "/FIFA-Generator/save.php",
-          data: {type: "Cup", "index": index, value: [v1*1, v2*1], id: tournamentId, admin: token }
+          data: {type: "Cup", "index": index, value: [v1*1, v2*1, v3*1, v4*1], id: tournamentId, admin: token }
         })
         .success(function(data){
           if( data !== "" ){

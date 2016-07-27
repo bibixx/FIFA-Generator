@@ -109,9 +109,9 @@
       header("Location: .");
     }
     die();
-  } elseif ($settings["type"] == "Knockout") {
+  } else if ($settings["type"] == "Knockout") {
 
-    // $players = 5;
+    // $players = 4;
 
     $leg = ( isset($settings["legsKnockout"]) ) ? true : false;
     // $leg = true;
@@ -251,9 +251,9 @@
         }
         $results = $results_temp;
 
-        echo json_encode($rounds);
-        echo "<br><br>";
-        echo json_encode($results);
+        // echo json_encode($rounds);
+        // echo "<br><br>";
+        // echo json_encode($results);
       }
 
       $title = (isset($settings["title"]) && !empty($settings["title"])) ? "'".$dbc->real_escape_string(filter_var($settings["title"], FILTER_SANITIZE_STRING))."'" : "NULL";
@@ -264,12 +264,12 @@
 
       $dbc->query('SET NAMES utf8');
       $token = bin2hex(openssl_random_pseudo_bytes(3));
-      echo $token;
+      // echo $token;
       $query = "INSERT INTO `tournaments`(`title`, `type`, `players`, `rounds`, `fixtures`, `admin_token`) VALUES ($title, 'Knockout', '$json', '$rounds', '$results', '".$token."')";
       $data = $dbc->query($query);
       $id = $dbc->insert_id;
 
-      echo "<br>".$id;
+      // echo "<br>".$id;
       mysqli_close($dbc);
 
       header("Location: tournament/$id/scores?admin=$token");

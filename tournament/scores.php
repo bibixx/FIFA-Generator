@@ -192,7 +192,7 @@ if( !isset($_GET["id"]) || empty($_GET["id"]) ){
     <?php
         $disabled = ($admin) ? "" : "disabled";
 
-        include "../class_test.php";
+        include "game_bracket.php";
 
         if( count($players) >= 16 ){
           $stage = 16;
@@ -218,18 +218,23 @@ if( !isset($_GET["id"]) || empty($_GET["id"]) ){
           $column_a .= "<div class='spacer'></div>";
 
           if($x==$n_rounds-1) {
-            $player0 = (array_key_exists(0, $rounds[$x]) && $rounds[$x][0] >= 0) ? $players[ $rounds[$x][0] ]["players"][0]: "";
-            $game = new Game($player0);
+            $player0 = (array_key_exists(0, $rounds[$x]) && $rounds[$x][0] >= 0) ? $players[ $rounds[$x][0] ]["players"]: "";
+            $club0 = (array_key_exists(0, $rounds[$x]) && $rounds[$x][0] >= 0) ? $players[ $rounds[$x][0] ]["club"]: "";
+            $game = new Game($player0, "", $club0);
             $column_a .= $game->outputFinalHTML();
           } else if($x>0){
             for($y=0; $y<count($rounds[$x]); $y++){
               if( array_key_exists(0, $rounds[$x][$y]) && array_key_exists(1, $rounds[$x][$y]) ){
-                $player0 = ($rounds[$x][$y][0] >= 0) ? $players[ $rounds[$x][$y][0] ]["players"][0] : "";
-                $player1 = ($rounds[$x][$y][1] >= 0) ? $players[ $rounds[$x][$y][1] ]["players"][0] : "";
+                $player0 = ($rounds[$x][$y][0] >= 0) ? $players[ $rounds[$x][$y][0] ]["players"] : "";
+                $player1 = ($rounds[$x][$y][1] >= 0) ? $players[ $rounds[$x][$y][1] ]["players"] : "";
+
+                $img0 = ($rounds[$x][$y][0] >= 0) ? $players[ $rounds[$x][$y][0] ]["club"] : "";
+                $img1 = ($rounds[$x][$y][1] >= 0) ? $players[ $rounds[$x][$y][1] ]["club"] : "";
+
                 $result0 = (array_key_exists(0, $results[0][$x][$y])) ? $results[0][$x][$y][0]: "";
                 $result1 = (array_key_exists(1, $results[0][$x][$y])) ? $results[0][$x][$y][1]: "";
-                $disabled0 = !($rounds[$x][$y][0] >= 0);
-                $disabled1 = !($rounds[$x][$y][1] >= 0);
+
+                $disabled = (!($rounds[$x][$y][0] >= 0) || !($rounds[$x][$y][1] >= 0));
 
                 if( count($rounds[$x]) == 1 ){
                   if( Game::$are_two_legs_final ){
@@ -255,19 +260,19 @@ if( !isset($_GET["id"]) || empty($_GET["id"]) ){
                   }
                 }
 
-                $game = new Game($player0, $player1, $results0, $results1, $disabled0, $disabled1);
+                $game = new Game($player0, $player1, $img0, $img1, $results0, $results1, $disabled, $disabled);
               } else {
                 if( count($rounds[$x]) == 1 ){
                   if( Game::$are_two_legs_final ){
-                    $game = new Game("", "", array("", ""), array("", ""), true, true);
+                    $game = new Game("", "", "", "", array("", ""), array("", ""), true, true);
                   } else {
-                    $game = new Game("", "", array(""), array(""), true, true);
+                    $game = new Game("", "", "", "", array(""), array(""), true, true);
                   }
                 } else {
                   if( Game::$are_two_legs ){
-                    $game = new Game("", "", array("", ""), array("", ""), true, true);
+                    $game = new Game("", "", "", "", array("", ""), array("", ""), true, true);
                   } else {
-                    $game = new Game("", "", array(""), array(""), true, true);
+                    $game = new Game("", "", "", "", array(""), array(""), true, true);
                   }
                 }
               }
@@ -281,8 +286,12 @@ if( !isset($_GET["id"]) || empty($_GET["id"]) ){
 
                 if( array_key_exists($y, $rounds[$x] ) ){
                   if( array_key_exists(0, $rounds[$x][$y]) && array_key_exists(1, $rounds[$x][$y]) ){
-                    $player0 = ($rounds[$x][$y][0] >= 0) ? $players[ $rounds[$x][$y][0] ]["players"][0] : "";
-                    $player1 = ($rounds[$x][$y][1] >= 0) ? $players[ $rounds[$x][$y][1] ]["players"][0] : "";
+                    $player0 = ($rounds[$x][$y][0] >= 0) ? $players[ $rounds[$x][$y][0] ]["players"] : "";
+                    $player1 = ($rounds[$x][$y][1] >= 0) ? $players[ $rounds[$x][$y][1] ]["players"] : "";
+
+                    $img0 = ($rounds[$x][$y][0] >= 0) ? $players[ $rounds[$x][$y][0] ]["club"] : "";
+                    $img1 = ($rounds[$x][$y][1] >= 0) ? $players[ $rounds[$x][$y][1] ]["club"] : "";
+
                     $result0 = (array_key_exists(0, $results[0][$x][$y])) ? $results[0][$x][$y][0]: "";
                     $result1 = (array_key_exists(1, $results[0][$x][$y])) ? $results[0][$x][$y][1]: "";
                     $disabled0 = !($rounds[$x][$y][0] >= 0);
@@ -300,7 +309,7 @@ if( !isset($_GET["id"]) || empty($_GET["id"]) ){
                     $results1 = array($result1);
                   }
 
-                  $game = new Game($player0, $player1, $results0, $results1, false, false);
+                  $game = new Game($player0, $player1, $img0, $img1, $results0, $results1, false, false);
 
                   $column_b .= $game->outputHTML();
                 } else {

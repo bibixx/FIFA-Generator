@@ -234,7 +234,7 @@ h1.tournament-name {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 200px;
+  width: 300px;
   list-style: none;
   padding: 0;
 }
@@ -282,9 +282,21 @@ h1.tournament-name {
   justify-content: flex-end;
 }
 
+.bracket .col .game-top > div img, .bracket .col .game-bottom > div img {
+  width: 1em;
+  height: 1em;
+  margin: 0.25em 0.5em;
+}
+
 .bracket .col .game-top > div span, .bracket .col .game-bottom > div span {
   width: 80%;
   line-height: 1.6em;
+  padding: 0 0.3em;
+}
+
+.bracket .col .game-top > div span.small, .bracket .col .game-bottom > div span.small {
+  font-size: 0.7em;
+  line-height: 2.2em;
 }
 
 .bracket .col .game-top > div .score, .bracket .col .game-top > div .score1, .bracket .col .game-top > div .score2, .bracket .col .game-bottom > div .score, .bracket .col .game-bottom > div .score1, .bracket .col .game-bottom > div .score2 {
@@ -295,7 +307,7 @@ h1.tournament-name {
 }
 
 .bracket .col .game-top > div .score.score1:not(:last-child), .bracket .col .game-top > div .score1.score1:not(:last-child), .bracket .col .game-top > div .score2.score1:not(:last-child), .bracket .col .game-bottom > div .score.score1:not(:last-child), .bracket .col .game-bottom > div .score1.score1:not(:last-child), .bracket .col .game-bottom > div .score2.score1:not(:last-child) {
-  border-radius: 0px;
+  border-right: 2px solid #ededed;
 }
 
 .bracket .col:last-child .game-top > div span, .bracket .col .bracket .col .game-bottom > div span {
@@ -309,6 +321,10 @@ h1.tournament-name {
   height: calc(100% - 1px);
   font-size: 0.8em;
   display: block;
+}
+
+.bracket .col > .col.final > div span {
+  padding-right: 1em;
 }
 
 html {
