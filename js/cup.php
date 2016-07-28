@@ -94,13 +94,19 @@ $(document).ready(function() {
           });
 
           console.log( data );
-          console.log( penalties );
+
           if( data !== "" ){
             for(var x=0; x<data.length; x++){
               $col = $(".bracket > .col").eq(x);
 
               for(var y=0; y<data[x].length; y++){
-                var player1 = "", player2 = "", class1 = "", class2 = "";
+                console.log( data[x][y] );
+                var player1 = "", player2 = "", class1 = "", class2 = "",
+                    club1 = ( typeof(playersList[ data[x][y][0] ]) !== "undefined" ) ? playersList[ data[x][y][0] ].club : "",
+                    club2 = ( typeof(playersList[ data[x][y][1] ]) !== "undefined" ) ? playersList[ data[x][y][1] ].club : "",
+                    crest1 = '/FIFA-Generator/logos/16/'+club1.replace(" ", "-").replace("/[^a-zA-Z0-9\-]+/", "").toLowerCase()+".png",
+                    crest2 = '/FIFA-Generator/logos/16/'+club2.replace(" ", "-").replace("/[^a-zA-Z0-9\-]+/", "").toLowerCase()+".png";
+
                 if(data[x][y][0] >= 0) {
                   if(playersList[ data[x][y][0] ].players.length == 1){
                     player1 = playersList[ data[x][y][0] ].players[0];
@@ -119,26 +125,63 @@ $(document).ready(function() {
                   }
                 }
 
-                $gameTop = $col.children(".game-top").eq(y).find("span").first();
-                $gameBottom = $col.children(".game-bottom").eq(y).find("span").first();
+                $gameTop = $col.find(".game-top").eq(y);
+                $gameBottom = $col.find(".game-bottom").eq(y);
+                $gameTopSpan = $gameTop.find("span").first();
+                $gameBottomSpan = $gameBottom.find("span").first();
 
-                if( $gameTop.text() !== player1 || $gameTop.text() === "" ){
+                if( $gameTopSpan.text() !== player1 || $gameTopSpan.text() === "" ){
+
                   if( player1 === "" ){
-                    $gameTop.stop().fadeOut(400, function(){
+
+                    $gameTop.find("input").attr("disabled", true);
+
+                    $gameTop.find("img").first().stop().fadeOut(400, function(){
+                      $(this).remove();
+                    });
+
+                    $gameTopSpan.stop().fadeOut(400, function(){
                       $(this).text( "" ).show();
                     });
+
                   } else {
-                    $gameTop.stop().fadeOut(0).fadeIn(400).text( player1 ).addClass( class1 );
+
+                    if(club1 !== ""){
+                      var $imgTop = $("<img>").attr("src", crest1).css("display", "none");
+                      $gameTopSpan.before( $imgTop );
+                      $imgTop.stop().fadeIn(400);
+                    }
+
+                    $gameTopSpan.stop().fadeOut(0).fadeIn(400).text( player1 ).removeClass( "small" ).addClass( class1 );
+                    $gameTop.find("input").attr("disabled", false);
                   }
+
                 }
 
-                if( $gameBottom.text() !== player2 || $gameBottom.text() === "" ){
+                if( $gameBottomSpan.text() !== player2 || $gameBottomSpan.text() === "" ){
+
                   if( player1 === "" ){
-                    $gameBottom.stop().fadeOut(400, function(){
+
+                    $gameBottom.find("input").attr("disabled", true);
+
+                    $gameBottom.find("img").stop().fadeOut(400, function(){
+                      $(this).remove();
+                    });
+                    $gameBottomSpan.stop().fadeOut(400, function(){
                       $(this).text( "" ).show();
                     });
+
                   } else {
-                    $gameBottom.stop().fadeOut(0).fadeIn(400).text( player2 ).addClass( class2 );
+
+                    if(club2 !== ""){
+                      var $imgBottom = $("<img>").attr("src", crest2).css("display", "none");
+                      $gameBottomSpan.before( $imgBottom );
+                      $imgBottom.stop().fadeIn(400);
+                    }
+
+                    $gameBottomSpan.stop().fadeOut(0).fadeIn(400).text( player2 ).removeClass( "small" ).addClass( class2 );
+                    $gameBottom.find("input").attr("disabled", false);
+
                   }
                 }
               }
