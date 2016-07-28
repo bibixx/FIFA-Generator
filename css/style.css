@@ -62,6 +62,10 @@ body {
   margin: 0;
 }
 
+.text-muted {
+  color: #777 !important;
+}
+
 html {
   width: 100%;
 }
@@ -147,7 +151,9 @@ body {
   display: inline-block;
   position: relative;
   left: 50%;
-  transform: translateX(-50%);
+  -webkit-transform: translateX(-50%);
+      -ms-transform: translateX(-50%);
+          transform: translateX(-50%);
   max-width: 1115px;
 }
 

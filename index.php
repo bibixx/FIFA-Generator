@@ -23,18 +23,13 @@ function print_e($key) {
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <script src="js/jquery-1.12.3.min.js" charset="utf-8"></script>
-  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-  <script src="js/data/accent-map.js" charset="utf-8"></script>
-  <script src="js/data/club-names.js" charset="utf-8"></script>
-
   <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-  <link rel="stylesheet" href="/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-  <link rel="stylesheet" href="/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
   <link rel="stylesheet" href="css/style.css" media="screen" charset="utf-8">
 </head>
 <body>
-  <script src="js/fb.js" charset="utf-8"></script>
+  <!-- <script src="js/fb.js" charset="utf-8"></script> -->
   <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
       <div class="navbar-header">
@@ -54,15 +49,15 @@ function print_e($key) {
         <ul class="nav navbar-nav navbar-right">
           <li class="dropdown"><a href="#" data-toggle="dropdown" class="dropdown-toggle">Login <span class="caret"></span></a>
             <ul class="dropdown-menu">
-              <li><a href="#" onclick="fb_login();">Log in with Facebook</a></li>
-              <li><a href="#">Log in with Google</a></li>
+              <li><a class="text-muted">Log in with Facebook (comming soon)</a></li>
+              <li><a class="text-muted">Log in with Google (comming soon)</a></li>
             </ul>
           </li>
         </ul>
       </div>
     </div>
   </nav>
-  <form method="get" action="generate.php" class="container">
+  <form method="post" action="generate.php" class="container">
     <div id="settings">
       <div class="row">
         <div class="form-horizontal">
@@ -147,8 +142,8 @@ function print_e($key) {
               </label>
             </div>
             <div class="col-md-12 checkbox">
-              <label>
-                <input type="checkbox" name="legsFinal" id="legsFinal" class="checkbox-inline">Do you want to play with two legs in final?
+              <label class="text-muted">
+                <input type="checkbox" name="legsFinal" id="legsFinal" class="checkbox-inline" disabled>Do you want to play with two legs in final? (comming soon)
               </label>
             </div>
           </div>
@@ -220,6 +215,12 @@ function print_e($key) {
       <p class="text-muted">Made with <span class="glyphicon glyphicon-heart"></span> by <a href="https://github.com/bibixx" target="_blank">bibixx</a></p>
     </div>
   </footer>
+
+  <!-- <script src="https://code.jquery.com/jquery-3.1.0.min.js" charset="utf-8"></script> -->
+  <script src="js/jquery-1.12.3.min.js" charset="utf-8"></script>
+  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+  <script src="js/data/accent-map.js" charset="utf-8"></script>
+  <script src="js/data/club-names.js" charset="utf-8"></script>
   <script src="js/script.js" charset="utf-8"></script>
-  <script src="/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 </body>

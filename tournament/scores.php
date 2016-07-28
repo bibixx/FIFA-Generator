@@ -368,6 +368,9 @@ if( !isset($_GET["id"]) || empty($_GET["id"]) ){
 
       case 'Knockout':
       ?>
+    <script>
+      var playersList = <?= json_encode( $players ) ?>;
+    </script>
     <script src="/FIFA-Generator/js/cup.js<?= $params ?>" charset="utf-8"></script>
       <?php
         break;

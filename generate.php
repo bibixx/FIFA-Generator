@@ -6,11 +6,11 @@
   $settings = array();
   $error = false;
 
-  $getKeys = array_keys($_GET);
+  $getKeys = array_keys($_POST);
   $settingKeys = array_search("name0", $getKeys);
 
   for($x=0; $x<$settingKeys; $x++){
-    $settings[$getKeys[$x]] = array_shift($_GET);
+    $settings[$getKeys[$x]] = array_shift($_POST);
   }
 
   $temp = array(
@@ -21,15 +21,15 @@
   for($x=0; $x<count($getKeys); $x++){
     $key = $getKeys[$x];
     if( strpos($key, 'club') !== false ){
-      $temp["club"] = filter_input(INPUT_GET, $key, FILTER_SANITIZE_STRING);
+      $temp["club"] = filter_input(INPUT_POST, $key, FILTER_SANITIZE_STRING);
       array_push($json, $temp);
       $temp = array(
         "players" => array(),
         "club" => ""
       );
     } else if( strpos($key, 'name') !== false ){
-      if( !empty($_GET[$key]) ){
-        array_push($temp["players"], filter_input(INPUT_GET, $key, FILTER_SANITIZE_STRING));
+      if( !empty($_POST[$key]) ){
+        array_push($temp["players"], filter_input(INPUT_POST, $key, FILTER_SANITIZE_STRING));
       } else {
         $error = true;
         $_SESSION["team_e"] = "You have to enter names of all the players!";

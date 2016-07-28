@@ -1,4 +1,5 @@
 <?php
+	header('Content-Type: application/json');
 	include "passwords.php";
   $dbc = new mysqli(HOST, LOGIN, PASSWORD, DATABASE) or die( 'błąd' );
   $dbc->query('SET NAMES utf8');
@@ -10,6 +11,7 @@
   $admin = (isset($_POST["admin"]) && $_POST["admin"] == $adminToken ) ? true: false;
 	$fixtures = json_decode($row["fixtures"], true);
 	$rounds = json_decode($row["rounds"], true);
+	$penalties = 0;
 
   if( $admin ){
 		if( $_POST["type"] == "Knockout" ){
@@ -44,7 +46,7 @@
 						} else if( $_POST["value"][0]*1 < $_POST["value"][1]*1 ){
 							$rounds[$p[0]+1][floor($p[1]/2)][$p[1]%2] = $rounds[$p[0]][$p[1]][1];
 						} else if( $_POST["value"][0]*1 === $_POST["value"][1]*1 ){
-							echo "Penalties";
+							$penalties = 1;
 							$rounds[$p[0]+1][floor($p[1]/2)][$p[1]%2] = -1;
 						}
 					} else {
@@ -60,7 +62,7 @@
 							} else if( $_POST["value"][1]*1 < $_POST["value"][3]*1 ){
 								$rounds[$p[0]+1][floor($p[1]/2)][$p[1]%2] = $rounds[$p[0]][$p[1]][0];
 							} else {
-								echo "Penalties";
+								$penalties = 1;
 								$rounds[$p[0]+1][floor($p[1]/2)][$p[1]%2] = -1;
 							}
 						}
@@ -85,8 +87,13 @@
 			}
 		}
 
+
 		$query1 = "UPDATE `tournaments` SET `fixtures` = '".json_encode( $fixtures )."' WHERE `tournaments`.`id` = ".$dbc->real_escape_string($_POST["id"]);
 		$query2 = "UPDATE `tournaments` SET `rounds` = '".json_encode( $rounds )."' WHERE `tournaments`.`id` = ".$dbc->real_escape_string($_POST["id"]);
+
+		$new_array = array_merge($rounds, array("penalties" => $penalties));
+		echo json_encode( $new_array );
+
 		$data = $dbc->query($query1);
 		$data = $dbc->query($query2);
 		mysqli_close($dbc);

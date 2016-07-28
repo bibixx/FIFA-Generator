@@ -222,11 +222,30 @@ function printTeams(){
 }
 
 function distribute(){
-  var its = $("#players").val()*1;
-  var lengths = its;
+   var items = [];
+   var columns = [];
+   var lengths = [];
+   var its = $("#players").val()*1;
+   var cols = $("#teamsNo").val()*1;
+   for(x=0; x<its; x++){
+   	items.push([]);
+   }
+   for(x=0; x<cols; x++){
+   	columns.push([]);
+   }
 
-  return lengths;
-}
+   for (x=0; x<items.length; x++) {
+     columns[Math.floor(x * columns.length / items.length)].push(items[x]);
+   }
+
+   for(x=0; x<columns.length; x++){
+   	lengths[x] = columns[x].length;
+   }
+
+   lengths.sort(function(a,b){return b-a;});
+
+   return lengths;
+ }
 
 
 $("form").on("submit", function(e){

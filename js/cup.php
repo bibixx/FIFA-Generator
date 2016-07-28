@@ -78,18 +78,71 @@ $(document).ready(function() {
       var v3 = ($m1s2.val() !== "") ? $m1s2.val() : -1;
       var v4 = ($m2s2.val() !== "") ? $m2s2.val() : -1;
 
-      console.log( index+", "+[v1,v2,v3,v4] );
-
       if(!empty && completed){
         $.ajax({
           method: "POST",
-          type: "html",
+          type: "json",
           url: "/FIFA-Generator/save.php",
           data: {type: "Cup", "index": index, value: [v1*1, v2*1, v3*1, v4*1], id: tournamentId, admin: token }
         })
         .success(function(data){
+          var penalties = data.penalties;
+          delete data.penalties;
+
+          data = $.map(data, function(value, index) {
+            return [value];
+          });
+
+          console.log( data );
+          console.log( penalties );
           if( data !== "" ){
-            console.log( data );
+            for(var x=0; x<data.length; x++){
+              $col = $(".bracket > .col").eq(x);
+
+              for(var y=0; y<data[x].length; y++){
+                var player1 = "", player2 = "", class1 = "", class2 = "";
+                if(data[x][y][0] >= 0) {
+                  if(playersList[ data[x][y][0] ].players.length == 1){
+                    player1 = playersList[ data[x][y][0] ].players[0];
+                  } else {
+                    player1 = playersList[ data[x][y][0] ].players[0]+" & "+playersList[ data[x][y][0] ].players[1];
+                    class1 = "small";
+                  }
+                }
+
+                if(data[x][y][1] >= 0) {
+                  if(playersList[ data[x][y][1] ].players.length == 1){
+                    player2 = playersList[ data[x][y][1] ].players[0];
+                  } else {
+                    player2 = playersList[ data[x][y][1] ].players[0]+" & "+playersList[ data[x][y][1] ].players[1];
+                    class2 = "small";
+                  }
+                }
+
+                $gameTop = $col.children(".game-top").eq(y).find("span").first();
+                $gameBottom = $col.children(".game-bottom").eq(y).find("span").first();
+
+                if( $gameTop.text() !== player1 || $gameTop.text() === "" ){
+                  if( player1 === "" ){
+                    $gameTop.stop().fadeOut(400, function(){
+                      $(this).text( "" ).show();
+                    });
+                  } else {
+                    $gameTop.stop().fadeOut(0).fadeIn(400).text( player1 ).addClass( class1 );
+                  }
+                }
+
+                if( $gameBottom.text() !== player2 || $gameBottom.text() === "" ){
+                  if( player1 === "" ){
+                    $gameBottom.stop().fadeOut(400, function(){
+                      $(this).text( "" ).show();
+                    });
+                  } else {
+                    $gameBottom.stop().fadeOut(0).fadeIn(400).text( player2 ).addClass( class2 );
+                  }
+                }
+              }
+            }
           }
         })
         .fail(function(data){
@@ -99,7 +152,7 @@ $(document).ready(function() {
       } else {
         $.ajax({
           method: "POST",
-          type: "html",
+          type: "json",
           url: "/FIFA-Generator/save.php",
           data: {type: "Cup", "index": index, value: [], id: tournamentId, admin: token }
         })
