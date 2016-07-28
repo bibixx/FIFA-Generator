@@ -216,8 +216,7 @@ function print_e($key) {
     </div>
   </footer>
 
-  <!-- <script src="https://code.jquery.com/jquery-3.1.0.min.js" charset="utf-8"></script> -->
-  <script src="js/jquery-1.12.3.min.js" charset="utf-8"></script>
+  <script src="/FIFA-Generator/js/jquery-1.12.3.min.js" charset="utf-8"></script>
   <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
   <script src="js/data/accent-map.js" charset="utf-8"></script>
   <script src="js/data/club-names.js" charset="utf-8"></script>
