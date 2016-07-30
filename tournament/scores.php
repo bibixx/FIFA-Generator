@@ -61,14 +61,10 @@ if( !isset($_GET["id"]) || empty($_GET["id"]) ){
 
       $date = strtotime($row["created_at"]);
 
-      if( empty($date) ){
-        header("Location: /FIFA-Generator/.");
-      }
-
       echo "<div class='row'>";
         echo "<div class='col-xs-12 col-sm-12 col-md-6 col-lg-6'>";
           echo "<h1 class='tournament-name'>$title</h1>";
-          echo "<p>Created on <span class='created_at'>".strftime("%d.%m.%Y</span> at <span class='created_at'>%H:%M:%S", $date)."</span></p>";
+          echo "<p>Created on <span class='created-at'>".strftime("%d.%m.%Y</span> at <span class='created-at'>%H:%M:%S", $date)."</span></p>";
         echo "</div>";
         echo "<div class='col-xs-12 col-sm-12 col-md-6 col-lg-6 text-right-sm'>";
           echo '<div class="btn-group">';
@@ -190,7 +186,7 @@ if( !isset($_GET["id"]) || empty($_GET["id"]) ){
     <?php
         $disabled = ($admin) ? "" : "disabled";
 
-        include "game_bracket.php";
+        include "class.game_bracket.php";
 
         if( count($players) >= 16 ){
           $stage = 16;

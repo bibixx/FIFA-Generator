@@ -9,43 +9,45 @@
     flex-direction: column
     justify-content: center
     width: 300px
-    list-style: none
     padding: 0
+    list-style: none
 
     .spacer, .game-spacer
       flex-grow: 1
 
-    .spacer:first-child, .spacer:last-child
-      flex-grow: .5
+    .spacer
+      &:first-child, &:last-child
+        flex-grow: .5
 
-    &:last-child .spacer
-      flex-grow: 0
+    &:last-child
+      .spacer
+        flex-grow: 0
 
     .game
       height: 1.6em
 
     .game-spacer
-      border-right: 2px solid #ededed
-      min-height: 150px
       height: 1.6em
+      min-height: 150px
+      border-right: 2px solid #ededed
 
     .game-bottom
       margin-bottom: 30px
 
     .game-hidden
-      border: none
+      border: 0
 
     .game-top > div, .game-bottom > div
-      background: #ededed
-      border: 1px solid #ededed
-      border-right-width: 2px
-      min-height: 1.6em
-      border-left: none
-      text-align: center
-      font-family: Roboto
       display: flex
       position: relative
       justify-content: flex-end
+      min-height: 1.6em
+      border: 1px solid #ededed
+      border-left: 0
+      border-right-width: 2px
+      background: #ededed
+      font-family: Roboto
+      text-align: center
 
       img
         width: 1em
@@ -54,17 +56,19 @@
 
       span
         width: 80%
-        line-height: 1.6em
         padding: 0 0.3em
+        line-height: 1.6em
+
         &.small
           font-size: 0.7em
           line-height: 2.2em
 
       .score, .score1, .score2
-        width: 25%
         display: inline-block
-        background: #F5F5F5
+        width: 25%
         padding: 0
+        background: #f5f5f5
+
         &.score1:not(:last-child)
           border-right: 2px solid #ededed
 
@@ -72,12 +76,12 @@
       width: 100%
 
     .home, .away
+      display: block
       min-width: 100%
+      height: calc(100% - 1px)
       margin: 0
       padding: 0
-      height: calc(100% - 1px)
       font-size: 0.8em
-      display: block
 
 .bracket .col > .col.final > div span
   padding-right: 1em

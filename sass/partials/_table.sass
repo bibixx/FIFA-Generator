@@ -1,58 +1,56 @@
-h1.tournament-name
-  margin-top: 0px
+.tournament-name
+  margin-top: 0
 
-.created_at
+.created-at
   font-style: italic
 
 table
-  border-spacing: 0px
-  border-collapse: separate
   width: 100%
-  // display: flex
+  border-collapse: separate
+  border-spacing: 0
 
   tr
     td, th
-      border: none !important
-      border-bottom: 1px solid #A3ABAD !important
-      font-size: 12px
-      padding: 5px
-      text-align: left
       min-width: 42px
       padding: 8px 5px
+      border: 0 !important
+      border-bottom: 1px solid #a3abad !important
+      font-size: 12px
       text-align: center
 
       &:nth-child(1)
         width: 55px
 
       &:nth-child(2)
-        text-align: left
         padding-left: 20px !important
+        text-align: left
 
   thead
     tr
       background: #eceeee
       color: #9fa9ac
       text-transform: uppercase
+
       th
-        font-weight: 500
         padding: 10px 5px
+        font-weight: 500
 
   tbody
     tr
       td
-        margin-top: 10px
-        padding: 3px 0px 0px 0px !important
         height: 50px
+        margin-top: 10px
+        padding: 3px 0 0 !important
+        color: #7f7f7f
         font-size: 12px
         font-weight: 700
+        line-height: 50px !important
         text-transform: uppercase
         vertical-align: middle !important
-        color: #7F7F7F
-        line-height: 50px !important
 
         img
-          height: 70%
           display: inline-block
+          height: 70%
           margin-right: 10px
           line-height: 100%
 
@@ -64,29 +62,29 @@ table
             display: inline-block
             width: 55px
             height: 55px
-            line-height: 55px !important
-            vertical-align: middle
             font-size: 26px
+            line-height: 55px !important
             text-align: center
+            vertical-align: middle
 
       &:nth-child(1)
         td:first-child span
           background: #2159a6
-          color: #ffffff
+          color: #fff
 
       &:nth-child(2)
         td:first-child span
           background: #0491d4
-          color: #ffffff
+          color: #fff
 
       &:nth-child(3)
         td:first-child span
           background: #29842a
-          color: #ffffff
+          color: #fff
 
 @media screen and (max-width: 767px)
   table tr:last-child td
-    border-bottom: none !important
+    border-bottom: 0 !important
 
   .table-responsive
-    border-color: #A3ABAD
+    border-color: #a3abad
