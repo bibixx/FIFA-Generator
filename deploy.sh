@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-
+CIRCLE_PROJECT_REPONAME=fifa-generator
 #(
 #  cd "$DIR/.." # Go to project dir.
 #  ssh $SSH_USERNAME@$SSH_HOSTNAME -o StrictHostKeyChecking=no <<-EOF

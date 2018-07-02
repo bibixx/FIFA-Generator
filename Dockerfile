@@ -1,18 +1,15 @@
-# start from bitnami apache
 FROM bitnami/apache
 
-# Install Node.js, npm and ruby
 RUN apt-get update
-RUN apt-get install -y nodejs && ln -s `which nodejs` /usr/bin/node
+RUN curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
+RUN apt-get install -y nodejs
 
-curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
-echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
-RUN sudo apt-get install yarn
+WORKDIR /usr/src/app
+COPY . ./
 
-RUN yarn
-RUN yarn build
+RUN npm install
+RUN npm run build
 
-# COPY config/php.ini /usr/local/etc/php/
-COPY ./src /var/www/html/
+RUN cp -r ./build /opt/bitnami/apache/htdocs
 
 EXPOSE 80
