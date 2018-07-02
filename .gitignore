@@ -49,3 +49,6 @@ Temporary Items
 .sass-cache/
 *.css.map
 prepros.cfg
+
+passwords.php
+build

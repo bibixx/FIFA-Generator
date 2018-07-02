@@ -1,0 +1,108 @@
+.tournament-name
+  margin-top: 0
+
+.created-at
+  font-style: italic
+
+.round
+  margin-bottom: 40px
+
+  .row
+    display: flex
+    align-items: center
+    justify-content: center
+    padding: 40px
+    background: #ededed
+    font-size: 1.4em
+
+    & > div > div
+      display: inline-block
+
+    &:nth-child(2n+1)
+      background: #f5f5f5
+
+    &.head
+      justify-content: flex-start
+      background: #ccc
+
+      h2
+        margin: 0
+        font-size: 1.3em
+
+    .text-center
+      white-space: nowrap
+
+    div p
+      margin: 0
+
+      &.name
+        font-size: 0.65em
+
+        &::before
+          content: '('
+
+        &::after
+          content: ')'
+
+    & > div:first-child
+      img
+        margin: 0 0 0 10px
+
+    & > div:last-child
+      img
+        margin: 0 10px 0 0
+
+.home, .away
+  margin: 0 10px
+  transition: .2s all ease-in-out
+  border: 0
+  border-radius: 0
+  outline: none
+  background: none
+  font-size: 1.3em
+  text-align: center
+  box-sizing: content-box
+
+  &::-webkit-outer-spin-button, &::-webkit-inner-spin-button
+    margin: 0
+    -webkit-appearance: none
+
+.pagination
+  display: flex
+  justify-content: center
+
+.crest
+  display: inline-block
+  width: 40px
+  height: 40px
+  background: url('/logos/16/legia-warszawa.png')
+  background-color: black
+  background-size: contain
+
+.text-right .crest
+  margin-left: 15px
+
+.text-left .crest
+  margin-right: 15px
+
+@media screen and (max-width: 768px)
+  body
+    font-size: 14px
+
+  .round
+    .row
+      padding: 40px 10px
+
+      &.head
+        padding: 40px
+
+  .home, .away
+    min-width: 20px
+    margin: 0 8px
+
+@media screen and (max-width: 375px)
+  body
+    font-size: 12px
+
+  .home, .away
+    min-width: 15px
