@@ -1,6 +1,8 @@
 version: "3"
 services:
   web:
+    env_file:
+      - .env
     image: fifa-generator:latest
     ports:
       - "8085:80"

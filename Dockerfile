@@ -1,10 +1,11 @@
-FROM bitnami/apache
+FROM php:7.2.0-apache
 
-RUN apt-get update
-RUN curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
+RUN apt-get update && apt-get install -my wget gnupg
+RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
 RUN apt-get install -y nodejs
 
 COPY package.json /tmp/package.json
+COPY package-lock.json /tmp/package-lock.json
 RUN cd /tmp && npm install
 
 WORKDIR /usr/src/app
@@ -15,6 +16,8 @@ COPY . ./
 
 RUN npm run build
 
-RUN cp -r ./build /opt/bitnami/apache/htdocs
+RUN rm -rf /var/www/html/*
+RUN cp -r ./build/* /var/www/html/
+RUN ls /var/www/html/
 
 EXPOSE 80
