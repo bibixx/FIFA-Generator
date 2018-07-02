@@ -4,4 +4,4 @@ It is a tournament generator for FIFA. Currently there are available 2 modes (Cu
 Here is my todo list: [https://trello.com/b/Fq2D6BJd/fifa-generator](https://trello.com/b/Fq2D6BJd/fifa-generator)
 
 ## Working version
-[http://b.legiec.eu/FIFA-Generator/index.php](http://b.legiec.eu/FIFA-Generator/index.php)
+[https://fifa-generator.legiec.io/](https://fifa-generator.legiec.io/)
