@@ -1,7 +1,7 @@
 {
   "scripts": {
     "build": "npm run build:copy && npm run build:sass",
-    "build:copy": "rm -rf ./build && mkdir build && cp -r ./src/* ./build && rm -rf build/sass",
+    "build:copy": "rm -rf ./build && mkdir build && cp -r ./src/. ./build && rm -rf build/sass",
     "build:sass": "node-sass src/sass/ -o build/css/"
   },
   "dependencies": {
