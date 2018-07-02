@@ -1,11 +1,9 @@
 version: "3"
 services:
   web:
-    env_file:
-      - .env
-    image: cytaty:latest
+    image: fifa-generator:latest
     ports:
-      - "8082:80"
+      - "8085:80"
     networks:
       - webnet
 networks:
