@@ -16,8 +16,10 @@ COPY . ./
 
 RUN npm run build
 
-RUN rm -rf /var/www/html/*
-RUN cp -r ./build/* /var/www/html/
+RUN rm -rf /var/www/html/
+RUN mkdir /var/www/html/
+
+RUN cp -r ./build/. /var/www/html/
 RUN ls /var/www/html/
 
 EXPOSE 80
