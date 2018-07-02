@@ -1,4 +1,6 @@
 FROM php:7.2.0-apache
+RUN a2enmod rewrite
+RUN docker-php-ext-install mysqli && docker-php-ext-enable mysqli
 
 RUN apt-get update && apt-get install -my wget gnupg
 RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
@@ -20,6 +22,5 @@ RUN rm -rf /var/www/html/
 RUN mkdir /var/www/html/
 
 RUN cp -r ./build/. /var/www/html/
-RUN ls /var/www/html/
 
 EXPOSE 80
