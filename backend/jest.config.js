@@ -15,5 +15,5 @@ module.exports = {
     '**/*.test.(ts|js)',
   ],
   testEnvironment: 'node',
-  setupFiles: ['<rootDir>/jest-set-up/index.js'],
+  setupFiles: ['<rootDir>/jest-setup/winston.js'],
 };
