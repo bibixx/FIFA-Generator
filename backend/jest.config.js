@@ -12,7 +12,8 @@ module.exports = {
     '^.+\\.(ts|tsx)$': 'ts-jest',
   },
   testMatch: [
-    '**/test/**/*.test.(ts|js)',
+    '**/*.test.(ts|js)',
   ],
   testEnvironment: 'node',
+  setupFiles: ['<rootDir>/jest-set-up/index.js'],
 };

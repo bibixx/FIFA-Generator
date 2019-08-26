@@ -4,14 +4,30 @@
     "ecmaVersion": 2018,
     "sourceType": "module"
   },
-  "plugins": ["@typescript-eslint"],
+  "plugins": ["@typescript-eslint", "jest"],
   "extends": [
+    "plugin:jest/all",
     "plugin:@typescript-eslint/recommended",
     "airbnb-base",
-    "plugin:import/typescript"
+    "plugin:import/typescript",
   ],
   "rules": {
     "@typescript-eslint/indent": 0,
     "no-unused-vars": 0
+  },
+  "overrides": [
+    {
+      "files": ["**/*.test.ts"],
+      "rules": {
+        "@typescript-eslint/explicit-function-return-type": 0,
+        "jest/prefer-expect-assertions": 0,
+        "jest/expect-expect": 0,
+        "import/no-extraneous-dependencies": 0,
+        "jest/no-hooks": 0
+      }
+    }
+  ],
+  "env": {
+    "jest/globals": true
   }
 }

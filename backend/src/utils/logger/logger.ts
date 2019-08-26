@@ -2,6 +2,7 @@ import {
   createLogger, LoggerOptions, transports, format,
 } from 'winston';
 import { StreamOptions } from 'morgan';
+import { LOG_PATH } from '../../constants';
 import isProduction from '../isProduction';
 
 const loggerFormat = format.combine(
@@ -21,7 +22,7 @@ const options: LoggerOptions = {
       ),
     }),
     new transports.File({
-      filename: 'app.log',
+      filename: LOG_PATH,
       level: 'info',
       handleExceptions: true,
       maxsize: 5242880,

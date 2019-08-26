@@ -1,6 +1,6 @@
 import { RequestHandler } from 'express';
 
-const asyncHandler = function ah(...handlers: RequestHandler[]): RequestHandler {
+const asyncHandler = (...handlers: RequestHandler[]): RequestHandler => {
   const innerFn: RequestHandler = async (req, res, next): Promise<void> => {
     try {
       await Promise.all(

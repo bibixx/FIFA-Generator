@@ -16,8 +16,10 @@
     "strictFunctionTypes": true,
     "strictPropertyInitialization": true,
     "noImplicitReturns": true,
-    "noUnusedLocals": true,
+    // "noUnusedLocals": true,
+    "noUnusedLocals": false,
     "noUnusedParameters": true,
+    "experimentalDecorators": true,
     "paths": {
       "*": [
         "node_modules/*",
