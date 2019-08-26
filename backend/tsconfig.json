@@ -16,8 +16,7 @@
     "strictFunctionTypes": true,
     "strictPropertyInitialization": true,
     "noImplicitReturns": true,
-    // "noUnusedLocals": true,
-    "noUnusedLocals": false,
+    "noUnusedLocals": true,
     "noUnusedParameters": true,
     "experimentalDecorators": true,
     "paths": {

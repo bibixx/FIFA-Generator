@@ -17,12 +17,14 @@ export default class User {
 
   @AfterLoad()
   @AfterUpdate()
+  // @ts-ignore
   private loadTempPassword(): void {
     this.tempPassword = this.password;
   }
 
   @BeforeInsert()
   @BeforeUpdate()
+  // @ts-ignore
   private encryptPassword(): void {
     if (this.tempPassword !== this.password) {
       this.password = Buffer.from(this.password).toString('base64');
