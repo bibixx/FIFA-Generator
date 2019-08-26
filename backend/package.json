@@ -14,8 +14,8 @@
     "build-ts": "tsc",
     "watch-ts": "tsc -w",
     "lint": "tsc --noEmit && eslint \"./src/**/*.{js,ts}\"",
-    "dev": "ts-node-dev --respawn src/server.ts",
-    "dev-debug": "ts-node-dev --respawn --inspect src/server.ts",
+    "dev": "ts-node-dev --respawn ./src/server.ts",
+    "dev-debug": "ts-node-dev --respawn --inspect ./src/server.ts",
     "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js"
   },
   "dependencies": {

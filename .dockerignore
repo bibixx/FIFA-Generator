@@ -1,0 +1,5 @@
+./backend/coverage
+./backend/dist
+./backend/node_modules
+./backend/app.log
+./backend/test.txt
