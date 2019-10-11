@@ -1,4 +1,4 @@
-module.exports = {
+{
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaVersion": 2018,
@@ -12,6 +12,18 @@ module.exports = {
   ],
   "rules": {
     "@typescript-eslint/indent": 0,
-    "no-unused-vars": 0
+    "no-unused-vars": 0,
+    "@typescript-eslint/interface-name-prefix": 0,
+    "import/prefer-default-export": 0
+  },
+  "settings": {
+    "import/resolver": {
+      "alias": {
+        "extensions": [".ts"],
+        "map": [
+          ["app", "./src"]
+        ]
+      }
+    }
   }
 }

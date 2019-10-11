@@ -1,6 +1,6 @@
 version: '3'
 services:
-  web:
+  backend:
     env_file:
       - ../.env
     build:
@@ -8,3 +8,23 @@ services:
       dockerfile: ./docker/Dockerfile
     ports:
       - "3000:3000"
+    networks:
+      - backend
+    volumes:
+      - ../backend/src:/app/src
+    depends_on:
+      - mongo
+  mongo:
+    env_file:
+      - ../.env
+    image: mongo:4-bionic
+    networks:
+      - backend
+    volumes:
+      - db-data:/data/db
+
+volumes:
+  db-data:
+
+networks:
+  backend:

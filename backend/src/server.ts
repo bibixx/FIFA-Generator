@@ -1,11 +1,7 @@
-import express from 'express';
-const app = express();
-const { PORT } = process.env;
+import setupMongo from 'app/setup/mongoose';
+import setupApp from 'app/setup/app';
 
-app.get('/health', (_req, res) => {
-  res.json({ ok: true });
-})
-
-app.listen(PORT, () => {
-  console.log(`Server listening on port ${PORT}`);
-})
+(async (): Promise<void> => {
+  await setupMongo();
+  await setupApp();
+})();

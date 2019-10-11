@@ -1,6 +1,6 @@
 FROM node:lts-alpine
 
-WORKDIR /app
+WORKDIR /app/
 
 COPY backend/package.json .
 COPY backend/package-lock.json .

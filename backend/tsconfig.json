@@ -7,7 +7,6 @@
     "moduleResolution": "node",
     "sourceMap": true,
     "outDir": "dist",
-    "baseUrl": ".",
     "strict": true,
     "noImplicitAny": true,
     "noImplicitThis": true,
@@ -19,14 +18,11 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "experimentalDecorators": true,
+    "baseUrl": ".",
+    "removeComments": true,
+    "plugins": [{ "transform": "@zerollup/ts-transform-paths" }],
     "paths": {
-      "*": [
-        "node_modules/*",
-        "src/types/*"
-      ]
+      "app/*": ["src/*"]
     }
-  },
-  "include": [
-    "src/**/*"
-  ]
+  }
 }
