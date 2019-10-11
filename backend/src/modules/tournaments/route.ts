@@ -6,10 +6,12 @@ import {
   deleteTournamentById,
 } from 'app/modules/tournaments/controller';
 
+import asyncHandler from 'app/utils/asyncHandler';
+
 const router = express.Router()
-  .post('/', createTournament)
-  .get('/', getTournaments)
-  .get('/:uuid', getTournamentById)
-  .delete('/:uuid', deleteTournamentById);
+  .post('/', asyncHandler(createTournament))
+  .get('/', asyncHandler(getTournaments))
+  .get('/:uuid', asyncHandler(getTournamentById))
+  .delete('/:uuid', asyncHandler(deleteTournamentById));
 
 export default router;
