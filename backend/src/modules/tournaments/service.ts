@@ -1,7 +1,7 @@
 import Tournament, { ITournament } from './model';
 
-export const createTournament = async (): Promise<ITournament> => {
-  const tournament = new Tournament();
+export const createTournament = async (name?: string): Promise<ITournament> => {
+  const tournament = new Tournament({ name });
 
   tournament.save();
 
@@ -23,3 +23,9 @@ export const getTournamentById = async (uuid: string): Promise<ITournament|null>
 export const deleteTournamentById = async (uuid: string): Promise<void> => {
   await Tournament.deleteOne({ uuid });
 };
+
+export const editTournamentById = async (
+  uuid: string,
+  name: string,
+// eslint-disable-next-line no-return-await
+): Promise<ITournament|null> => await Tournament.findOneAndUpdate({ uuid }, { name });

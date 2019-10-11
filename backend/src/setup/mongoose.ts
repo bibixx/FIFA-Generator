@@ -7,6 +7,7 @@ const setupMongo = async (): Promise<void> => {
       useCreateIndex: true,
       useNewUrlParser: true,
       useUnifiedTopology: true,
+      useFindAndModify: false,
     },
   );
 };
