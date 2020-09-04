@@ -5,6 +5,6 @@
     "build:sass": "node-sass src/sass/ -o build/css/"
   },
   "dependencies": {
-    "node-sass": "^4.9.0"
+    "node-sass": "^4.13.1"
   }
 }
